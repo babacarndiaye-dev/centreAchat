@@ -1,0 +1,327 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Figtree:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0&display=swap');
+
+/*
+ * Migration to UIkit in progress: pages already converted use only `uk-*`
+ * classes (see below). Pages not yet converted still use the Tailwind
+ * utilities/components further down — both frameworks are loaded together
+ * on purpose so unconverted pages keep working while the migration proceeds
+ * file by file. Remove the @tailwind block once every view is converted.
+ */
+@import "uikit/dist/css/uikit.min.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    font-size: 1.25em;
+    line-height: 1;
+    vertical-align: middle;
+    user-select: none;
+}
+.material-symbols-outlined.is-filled {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+@layer base {
+    body {
+        font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+    }
+
+    .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-heading-medium, .uk-heading-large,
+    h1, h2, h3 {
+        font-family: 'Fraunces', serif;
+    }
+}
+
+/* UIkit reskin — precompiled uikit.min.css ships with its default blue theme;
+   these overrides restyle the actual components in use to the Central d'Achat
+   green/terracotta/gold palette instead of recompiling UIkit from SASS. */
+@layer components {
+    .uk-button-primary {
+        background-color: #1D8A4E;
+        border-color: #1D8A4E;
+    }
+    .uk-button-primary:hover {
+        background-color: #156b3c;
+        border-color: #156b3c;
+    }
+    .uk-button-danger,
+    .uk-badge-danger {
+        background-color: #E8604F;
+    }
+    .uk-label,
+    .uk-badge {
+        background-color: #F0A93B;
+        color: #1F2328;
+    }
+    a,
+    .uk-link {
+        color: #1D8A4E;
+    }
+    a:hover,
+    .uk-link:hover {
+        color: #156b3c;
+    }
+    .uk-navbar-nav > li > a:hover,
+    .uk-navbar-nav > li.uk-active > a,
+    .uk-active > a {
+        color: #1D8A4E;
+    }
+    .uk-tab > .uk-active > a {
+        border-color: #1D8A4E;
+        color: #1D8A4E;
+    }
+    .uk-pagination > .uk-active > * {
+        color: #1D8A4E;
+    }
+    .uk-text-primary {
+        color: #1D8A4E !important;
+    }
+}
+
+/* Elegance pass: UIkit's defaults are functional but blunt (sharp shadows,
+   small radius, no motion). These refinements soften cards/buttons and add
+   restrained hover motion so converted pages feel considered, not templated. */
+@layer components {
+    .uk-card {
+        border-radius: 18px;
+        border: 1px solid rgba(31, 35, 40, .06);
+        box-shadow: 0 1px 2px rgba(31, 35, 40, .04);
+        transition: transform .35s cubic-bezier(.22, 1, .36, 1), box-shadow .35s ease;
+    }
+    .uk-card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 24px 48px -20px rgba(31, 35, 40, .18);
+    }
+    .uk-card-default {
+        background-color: #fff;
+    }
+
+    .uk-button {
+        border-radius: 999px;
+        font-weight: 600;
+        letter-spacing: .01em;
+        transition: transform .25s cubic-bezier(.22, 1, .36, 1), box-shadow .25s ease, background-color .25s ease;
+    }
+    .uk-button-primary,
+    .uk-button-default {
+        box-shadow: 0 1px 2px rgba(31, 35, 40, .06);
+    }
+    .uk-button:not(.uk-button-link):hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 24px -10px rgba(29, 138, 78, .35);
+    }
+    .uk-button-default:hover {
+        box-shadow: 0 12px 24px -10px rgba(31, 35, 40, .18);
+    }
+
+    .uk-icon-button {
+        transition: transform .25s cubic-bezier(.22, 1, .36, 1), box-shadow .25s ease;
+    }
+    .uk-icon-button:hover {
+        transform: translateY(-2px) scale(1.04);
+        box-shadow: 0 10px 20px -8px rgba(29, 138, 78, .4);
+    }
+
+    .uk-input,
+    .uk-search-input {
+        border-radius: 999px;
+        transition: border-color .2s ease, box-shadow .2s ease;
+    }
+    .uk-input:focus,
+    .uk-search-input:focus {
+        border-color: #1D8A4E;
+        box-shadow: 0 0 0 3px rgba(29, 138, 78, .12);
+    }
+
+    .uk-navbar-nav > li > a {
+        font-weight: 500;
+        transition: color .2s ease;
+    }
+
+    .uk-badge {
+        border-radius: 999px;
+        font-weight: 600;
+        letter-spacing: .02em;
+        padding: 3px 10px;
+        box-shadow: 0 2px 6px rgba(31, 35, 40, .12);
+    }
+
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-terroir-cream text-terroir-dark antialiased;
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+}
+
+@layer components {
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold tracking-wide transition duration-300 ease-out;
+    }
+
+    .btn-primary {
+        @apply btn bg-terroir-green text-terroir-cream shadow-soft hover:bg-terroir-dark hover:-translate-y-0.5;
+    }
+
+    .btn-outline {
+        @apply btn border border-terroir-green text-terroir-green hover:bg-terroir-green hover:text-terroir-cream hover:-translate-y-0.5;
+    }
+
+    .btn-gold {
+        @apply btn bg-terroir-gold text-terroir-dark shadow-soft hover:bg-terroir-terracotta hover:text-terroir-cream hover:-translate-y-0.5;
+    }
+
+    .section-title {
+        @apply font-display text-3xl md:text-4xl font-semibold text-terroir-dark;
+    }
+
+    .section-eyebrow {
+        @apply inline-block text-xs font-semibold uppercase tracking-[0.25em] text-terroir-terracotta;
+    }
+
+    .card {
+        @apply rounded-xl2 bg-white shadow-soft;
+    }
+
+    .product-card {
+        @apply card overflow-hidden transition duration-500 hover:-translate-y-1 hover:shadow-xl;
+    }
+
+    .input {
+        @apply w-full rounded-lg border border-terroir-green/20 bg-white px-4 py-2.5 text-sm text-terroir-dark placeholder:text-terroir-dark/40 focus:border-terroir-green focus:outline-none focus:ring-2 focus:ring-terroir-green/20;
+    }
+
+    .label {
+        @apply mb-1.5 block text-sm font-medium text-terroir-dark/80;
+    }
+
+    .admin-card {
+        @apply rounded-xl2 bg-white p-6 shadow-soft;
+    }
+
+    .admin-table {
+        @apply w-full text-sm;
+    }
+
+    .admin-table thead tr {
+        @apply border-b border-terroir-dark/10 text-left text-xs uppercase tracking-wide text-terroir-dark/40;
+    }
+
+    .admin-table thead th {
+        @apply pb-2 pr-2;
+    }
+
+    .admin-table tbody {
+        @apply divide-y divide-terroir-dark/5;
+    }
+
+    .admin-table tbody td {
+        @apply py-3 pr-2;
+    }
+
+    .admin-badge {
+        @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium;
+    }
+
+    .admin-badge-success {
+        @apply admin-badge bg-terroir-green/10 text-terroir-green;
+    }
+
+    .admin-badge-neutral {
+        @apply admin-badge bg-terroir-dark/5 text-terroir-dark/60;
+    }
+
+    .admin-badge-danger {
+        @apply admin-badge bg-terroir-terracotta/10 text-terroir-terracotta;
+    }
+
+    .admin-link {
+        @apply font-semibold text-terroir-green hover:underline;
+    }
+
+    .admin-link-danger {
+        @apply font-semibold text-terroir-terracotta hover:underline;
+    }
+}
+
+#page-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F7F8F5;
+    transition: opacity .5s ease, visibility .5s ease;
+}
+#page-loader img {
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+#page-loader img,
+#page-loader span {
+    animation: page-loader-pulse 1.3s ease-in-out infinite;
+}
+#page-loader.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+@keyframes page-loader-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.12); opacity: .7; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #page-loader img,
+    #page-loader span {
+        animation: none;
+    }
+}
+
+.uk-notification {
+    width: auto;
+    max-width: 320px;
+}
+.uk-notification-message {
+    padding: 10px 14px;
+    font-size: .82rem;
+    line-height: 1.4;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px -8px rgba(31, 35, 40, .25);
+}
+
+@layer utilities {
+    .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    }
+
+    .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .reveal {
+            opacity: 1;
+            transform: none;
+            transition: none;
+        }
+    }
+}
