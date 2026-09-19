@@ -6,15 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
+use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
 {
     public function show()
     {
-        return view('auth.login');
+        return Inertia::render('Auth/Login');
     }
 
-    public function login(Request $request): RedirectResponse
+    public function login(Request $request): RedirectResponse|Response
     {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
@@ -33,15 +35,18 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
+        // compte.index/admin.dashboard/portail.dashboard are still Blade pages at this
+        // stage of the migration — Inertia::location() forces a full browser navigation
+        // there instead of an Inertia partial visit (which would fail on a non-Inertia response).
         if (Auth::user()->isStaff()) {
-            return redirect()->intended(route('admin.dashboard'));
+            return Inertia::location(redirect()->intended(route('admin.dashboard')));
         }
 
         if (Auth::user()->supplier) {
-            return redirect()->intended(route('portail.dashboard'));
+            return Inertia::location(redirect()->intended(route('portail.dashboard')));
         }
 
-        return redirect()->intended(route('compte.index'));
+        return Inertia::location(redirect()->intended(route('compte.index')));
     }
 
     public function logout(Request $request): RedirectResponse

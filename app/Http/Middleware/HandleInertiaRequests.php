@@ -47,6 +47,10 @@ class HandleInertiaRequests extends Middleware
                 'success' => fn () => $request->session()->get('success'),
                 'error' => fn () => $request->session()->get('error'),
             ],
+            'site' => [
+                'name' => \App\Models\Setting::get('site_name') ?: "Central d'Achat",
+                'logoUrl' => ($logoPath = \App\Models\Setting::get('logo_path')) ? asset('fichiers/'.$logoPath) : null,
+            ],
         ];
     }
 }

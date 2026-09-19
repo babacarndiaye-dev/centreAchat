@@ -8,15 +8,19 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Inertia\Inertia;
+use Symfony\Component\HttpFoundation\Response;
 
 class RegisterController extends Controller
 {
-    public function show()
+    public function show(Request $request)
     {
-        return view('auth.register');
+        return Inertia::render('Auth/Register', [
+            'initialType' => $request->query('type', 'particulier'),
+        ]);
     }
 
-    public function register(Request $request): RedirectResponse
+    public function register(Request $request): RedirectResponse|Response
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -41,10 +45,13 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
+        // compte.index is still a Blade page at this stage of the migration — see LoginController::login().
         if ($user->b2b_status === 'en_attente') {
-            return redirect()->route('compte.index')->with('success', 'Votre compte professionnel a été créé et est en attente de validation par notre équipe.');
+            return Inertia::location(
+                redirect()->route('compte.index')->with('success', 'Votre compte professionnel a été créé et est en attente de validation par notre équipe.')
+            );
         }
 
-        return redirect()->route('compte.index');
+        return Inertia::location(redirect()->route('compte.index'));
     }
 }

@@ -13,6 +13,7 @@
     <meta name="vapid-public-key" content="{{ config('services.vapid.public_key') }}">
 
     <style>{!! \App\Support\Theme::cssVariables() !!}</style>
+    @routes
     @viteReactRefresh
     @vite(['resources/css/app.css', 'resources/js/inertia-app.jsx'])
     @inertiaHead
