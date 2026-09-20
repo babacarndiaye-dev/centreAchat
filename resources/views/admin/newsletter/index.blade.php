@@ -3,28 +3,28 @@
 @section('title', 'Abonnés newsletter')
 
 @section('content')
-<p class="uk-text-small uk-text-muted">{{ $subscribers->total() }} abonné(s)</p>
+<p class="text-sm text-terroir-dark/50">{{ $subscribers->total() }} abonné(s)</p>
 
-<div class="uk-card uk-card-default uk-margin-top" style="overflow-x:auto; padding:0;">
-    <table class="uk-table uk-table-divider uk-table-middle" style="margin:0;">
+<div class="admin-card mt-6 overflow-x-auto p-0">
+    <table class="admin-table">
         <thead>
             <tr>
-                <th>E-mail</th>
-                <th>Inscrit le</th>
+                <th class="pl-6">E-mail</th>
+                <th class="pr-6">Inscrit le</th>
             </tr>
         </thead>
         <tbody>
             @forelse($subscribers as $subscriber)
                 <tr>
-                    <td style="font-weight:600;">{{ $subscriber->email }}</td>
-                    <td class="uk-text-muted">{{ optional($subscriber->subscribed_at)->format('d/m/Y') }}</td>
+                    <td class="pl-6 font-semibold text-terroir-dark">{{ $subscriber->email }}</td>
+                    <td class="pr-6 text-terroir-dark/60">{{ optional($subscriber->subscribed_at)->format('d/m/Y') }}</td>
                 </tr>
             @empty
-                <tr><td colspan="2" class="uk-text-center uk-text-muted" style="padding:32px 0;">Aucun abonné.</td></tr>
+                <tr><td colspan="2" class="py-8 text-center text-terroir-dark/40">Aucun abonné.</td></tr>
             @endforelse
         </tbody>
     </table>
 </div>
 
-<div class="uk-margin-top">{{ $subscribers->links() }}</div>
+<div class="mt-6">{{ $subscribers->links() }}</div>
 @endsection
