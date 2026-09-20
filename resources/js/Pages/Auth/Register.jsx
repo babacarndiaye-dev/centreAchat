@@ -37,9 +37,18 @@ export default function Register({ initialType = 'particulier' }) {
         <GuestLayout>
             <Head title="Créer un compte — Central d'Achat" />
 
-            <section className="mx-auto flex w-full max-w-lg flex-col px-4 py-12 sm:px-6 lg:px-8">
-                <h1 className="section-title text-center">Créer un compte</h1>
-                <p className="mt-2 text-center text-sm text-terroir-dark/60">
+            <section className="mx-auto flex w-full max-w-6xl flex-1 flex-col lg:my-auto lg:flex-row">
+                <div className="relative hidden overflow-hidden rounded-xl2 bg-terroir-green lg:block lg:w-2/5">
+                    <img
+                        src="/images/mbour-terroir-nobg.png"
+                        alt="Central d'Achat — produits du terroir sénégalais"
+                        className="absolute inset-0 h-full w-full object-cover object-top"
+                    />
+                </div>
+
+                <div className="flex w-full flex-col px-4 py-12 sm:px-6 lg:w-3/5 lg:justify-center lg:px-12 lg:py-16">
+                <h1 className="section-title text-center lg:text-left">Créer un compte</h1>
+                <p className="mt-2 text-center text-sm text-terroir-dark/60 lg:text-left">
                     Particulier, hôtel, restaurant, entreprise... rejoignez Central d'Achat.
                 </p>
 
@@ -164,12 +173,13 @@ export default function Register({ initialType = 'particulier' }) {
                     </button>
                 </form>
 
-                <p className="mt-6 text-center text-sm text-terroir-dark/60">
+                <p className="mt-6 text-center text-sm text-terroir-dark/60 lg:text-left">
                     Déjà un compte ?{' '}
                     <Link href={route('login')} className="font-semibold text-terroir-green hover:underline">
                         Se connecter
                     </Link>
                 </p>
+                </div>
             </section>
         </GuestLayout>
     );
