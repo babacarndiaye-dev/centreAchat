@@ -7,6 +7,7 @@ use App\Models\Setting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
 
 class SettingController extends Controller
 {
@@ -33,7 +34,11 @@ class SettingController extends Controller
             $settings[$key] = Setting::getBool($key, true);
         }
 
-        return view('admin.settings.edit', compact('settings'));
+        return Inertia::render('Admin/Settings/Edit', [
+            'settings' => $settings,
+            'logoUrl' => $settings['logo_path'] ? asset('fichiers/'.$settings['logo_path']) : null,
+            'heroImageUrl' => $settings['hero_image_path'] ? asset('fichiers/'.$settings['hero_image_path']) : null,
+        ]);
     }
 
     public function update(Request $request): RedirectResponse

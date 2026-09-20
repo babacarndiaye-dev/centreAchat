@@ -6,14 +6,23 @@ use App\Http\Controllers\Controller;
 use App\Models\DeliveryZone;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class DeliveryZoneController extends Controller
 {
     public function index()
     {
-        $deliveryZones = DeliveryZone::orderBy('position')->orderBy('name')->get();
+        $deliveryZones = DeliveryZone::orderBy('position')->orderBy('name')->get()->map(fn (DeliveryZone $zone) => [
+            'id' => $zone->id,
+            'name' => $zone->name,
+            'cities' => $zone->cities,
+            'fee' => (float) $zone->fee,
+            'free_above' => $zone->free_above !== null ? (float) $zone->free_above : null,
+            'delay_days' => $zone->delay_days,
+            'is_active' => $zone->is_active,
+        ]);
 
-        return view('admin.commercial.delivery-zones.index', compact('deliveryZones'));
+        return Inertia::render('Admin/Commercial/DeliveryZones', ['deliveryZones' => $deliveryZones]);
     }
 
     public function store(Request $request): RedirectResponse

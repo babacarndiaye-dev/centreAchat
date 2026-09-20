@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\PaymentAccount;
 use App\Models\Product;
+use App\Models\PurchaseOrder;
 use App\Models\Supplier;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class SupplierController extends Controller
 {
@@ -27,14 +30,29 @@ class SupplierController extends Controller
             $query->where('status', $request->string('status'));
         }
 
-        $suppliers = $query->orderBy('name')->paginate(20)->withQueryString();
+        $suppliers = $query->orderBy('name')->paginate(20)->withQueryString()->through(fn (Supplier $supplier) => [
+            'id' => $supplier->id,
+            'name' => $supplier->name,
+            'company_name' => $supplier->company_name,
+            'phone' => $supplier->phone,
+            'city' => $supplier->city,
+            'region' => $supplier->region,
+            'status' => $supplier->status,
+            'status_label' => Supplier::STATUSES[$supplier->status],
+            'status_badge_class' => $supplier->statusBadgeClass(),
+            'balance' => $supplier->balance(),
+        ]);
 
-        return view('admin.suppliers.index', compact('suppliers'));
+        return Inertia::render('Admin/Suppliers/Index', [
+            'suppliers' => $suppliers,
+            'statuses' => Supplier::STATUSES,
+            'filters' => $request->only('q', 'status'),
+        ]);
     }
 
     public function create()
     {
-        return view('admin.suppliers.create');
+        return Inertia::render('Admin/Suppliers/Form', ['statuses' => Supplier::STATUSES]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -47,14 +65,68 @@ class SupplierController extends Controller
     public function show(Supplier $fournisseur)
     {
         $fournisseur->load(['supplierProducts.product', 'purchaseOrders', 'payments', 'user']);
-        $products = Product::orderBy('name')->get();
 
-        return view('admin.suppliers.show', ['supplier' => $fournisseur, 'products' => $products]);
+        return Inertia::render('Admin/Suppliers/Show', [
+            'supplier' => [
+                'id' => $fournisseur->id,
+                'name' => $fournisseur->name,
+                'company_name' => $fournisseur->company_name,
+                'contact_name' => $fournisseur->contact_name,
+                'phone' => $fournisseur->phone,
+                'email' => $fournisseur->email,
+                'address' => $fournisseur->address,
+                'city' => $fournisseur->city,
+                'region' => $fournisseur->region,
+                'payment_terms' => $fournisseur->payment_terms,
+                'delivery_delay_days' => $fournisseur->delivery_delay_days,
+                'notes' => $fournisseur->notes,
+                'status' => $fournisseur->status,
+                'status_label' => Supplier::STATUSES[$fournisseur->status],
+                'total_owed' => $fournisseur->totalOwed(),
+                'total_paid' => $fournisseur->totalPaid(),
+                'balance' => $fournisseur->balance(),
+                'user_email' => $fournisseur->user?->email,
+                'supplier_products' => $fournisseur->supplierProducts->map(fn ($sp) => [
+                    'id' => $sp->id,
+                    'product_name' => $sp->product->name,
+                    'supplier_price' => (float) $sp->supplier_price,
+                    'supplier_reference' => $sp->supplier_reference,
+                ]),
+                'purchase_orders' => $fournisseur->purchaseOrders->map(fn ($po) => [
+                    'id' => $po->id,
+                    'order_number' => $po->order_number,
+                    'order_date' => $po->order_date->format('d/m/Y'),
+                    'status_label' => PurchaseOrder::STATUSES[$po->status],
+                    'total' => (float) $po->total,
+                    'balance' => $po->balance(),
+                ]),
+            ],
+            'products' => Product::orderBy('name')->get(['id', 'name']),
+            'paymentAccounts' => PaymentAccount::where('is_active', true)->get(['id', 'name']),
+        ]);
     }
 
     public function edit(Supplier $fournisseur)
     {
-        return view('admin.suppliers.edit', ['supplier' => $fournisseur]);
+        return Inertia::render('Admin/Suppliers/Form', [
+            'statuses' => Supplier::STATUSES,
+            'supplier' => [
+                'id' => $fournisseur->id,
+                'name' => $fournisseur->name,
+                'company_name' => $fournisseur->company_name,
+                'contact_name' => $fournisseur->contact_name,
+                'phone' => $fournisseur->phone,
+                'email' => $fournisseur->email,
+                'address' => $fournisseur->address,
+                'city' => $fournisseur->city,
+                'region' => $fournisseur->region,
+                'payment_terms' => $fournisseur->payment_terms,
+                'delivery_delay_days' => $fournisseur->delivery_delay_days,
+                'status' => $fournisseur->status,
+                'rating' => $fournisseur->rating !== null ? (float) $fournisseur->rating : null,
+                'notes' => $fournisseur->notes,
+            ],
+        ]);
     }
 
     public function update(Request $request, Supplier $fournisseur): RedirectResponse

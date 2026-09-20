@@ -9,19 +9,30 @@ use App\Support\Permissions;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class RoleController extends Controller
 {
     public function index()
     {
-        $roles = Role::withCount(['users', 'permissions'])->orderBy('name')->get();
+        $roles = Role::withCount(['users', 'permissions'])->orderBy('name')->get()->map(fn (Role $role) => [
+            'id' => $role->id,
+            'name' => $role->name,
+            'description' => $role->description,
+            'is_system' => $role->is_system,
+            'permissions_count' => $role->permissions_count,
+            'users_count' => $role->users_count,
+        ]);
 
-        return view('admin.roles.index', compact('roles'));
+        return Inertia::render('Admin/Roles/Index', ['roles' => $roles]);
     }
 
     public function create()
     {
-        return view('admin.roles.create');
+        return Inertia::render('Admin/Roles/Form', [
+            'modules' => Permissions::MODULES,
+            'actions' => Permissions::ACTIONS,
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -46,9 +57,17 @@ class RoleController extends Controller
 
     public function edit(Role $role)
     {
-        $assignedPermissions = $role->permissions->pluck('permission')->all();
-
-        return view('admin.roles.edit', compact('role', 'assignedPermissions'));
+        return Inertia::render('Admin/Roles/Form', [
+            'modules' => Permissions::MODULES,
+            'actions' => Permissions::ACTIONS,
+            'role' => [
+                'id' => $role->id,
+                'name' => $role->name,
+                'description' => $role->description,
+                'is_system' => $role->is_system,
+            ],
+            'assignedPermissions' => $role->permissions->pluck('permission')->all(),
+        ]);
     }
 
     public function update(Request $request, Role $role): RedirectResponse

@@ -6,14 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\PackagingType;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class PackagingTypeController extends Controller
 {
     public function index()
     {
-        $packagingTypes = PackagingType::orderBy('name')->get();
-
-        return view('admin.products-settings.packaging-types.index', compact('packagingTypes'));
+        return Inertia::render('Admin/ProductSettings/ReferenceList', [
+            'title' => 'Conditionnements',
+            'subtitle' => null,
+            'routeName' => 'admin.produits-parametres.conditionnements',
+            'extraField' => null,
+            'items' => PackagingType::orderBy('name')->get(['id', 'name', 'is_active']),
+        ]);
     }
 
     public function store(Request $request): RedirectResponse

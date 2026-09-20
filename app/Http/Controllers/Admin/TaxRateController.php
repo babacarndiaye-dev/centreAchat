@@ -6,14 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Models\TaxRate;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class TaxRateController extends Controller
 {
     public function index()
     {
-        $taxRates = TaxRate::orderBy('name')->get();
+        $taxRates = TaxRate::orderBy('name')->get()->map(fn (TaxRate $tax) => [
+            'id' => $tax->id,
+            'name' => $tax->name,
+            'rate' => (float) $tax->rate,
+            'is_active' => $tax->is_active,
+            'is_default' => $tax->is_default,
+        ]);
 
-        return view('admin.commercial.tax-rates.index', compact('taxRates'));
+        return Inertia::render('Admin/Commercial/TaxRates', ['taxRates' => $taxRates]);
     }
 
     public function store(Request $request): RedirectResponse

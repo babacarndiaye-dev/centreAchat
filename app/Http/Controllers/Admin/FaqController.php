@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\FaqEntry;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class FaqController extends Controller
 {
@@ -13,12 +14,16 @@ class FaqController extends Controller
     {
         $entries = FaqEntry::orderBy('position')->orderByDesc('hit_count')->get();
 
-        return view('admin.messagerie.faq.index', compact('entries'));
+        return Inertia::render('Admin/Faq/Index', [
+            'entries' => $entries,
+            'aiEnabled' => config('services.openai.chat_enabled') && filled(config('services.openai.api_key')),
+            'aiModel' => config('services.openai.model'),
+        ]);
     }
 
     public function create()
     {
-        return view('admin.messagerie.faq.create');
+        return Inertia::render('Admin/Faq/Create');
     }
 
     public function store(Request $request): RedirectResponse
@@ -32,7 +37,7 @@ class FaqController extends Controller
 
     public function edit(FaqEntry $faq)
     {
-        return view('admin.messagerie.faq.edit', ['entry' => $faq]);
+        return Inertia::render('Admin/Faq/Edit', ['entry' => $faq]);
     }
 
     public function update(Request $request, FaqEntry $faq): RedirectResponse

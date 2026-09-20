@@ -6,14 +6,23 @@ use App\Http\Controllers\Controller;
 use App\Models\PaymentMethod;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class PaymentMethodController extends Controller
 {
     public function index()
     {
-        $paymentMethods = PaymentMethod::orderBy('position')->orderBy('name')->get();
+        $paymentMethods = PaymentMethod::orderBy('position')->orderBy('name')->get()->map(fn (PaymentMethod $method) => [
+            'id' => $method->id,
+            'code' => $method->code,
+            'name' => $method->name,
+            'available_online' => $method->available_online,
+            'available_pos' => $method->available_pos,
+            'requires_b2b' => $method->requires_b2b,
+            'is_active' => $method->is_active,
+        ]);
 
-        return view('admin.commercial.payment-methods.index', compact('paymentMethods'));
+        return Inertia::render('Admin/Commercial/PaymentMethods', ['paymentMethods' => $paymentMethods]);
     }
 
     public function store(Request $request): RedirectResponse

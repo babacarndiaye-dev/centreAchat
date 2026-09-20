@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class ConversationController extends Controller
 {
@@ -23,8 +24,22 @@ class ConversationController extends Controller
         }
 
         $conversations = $query->orderByDesc('last_message_at')->paginate(20)->withQueryString();
+        $conversations->getCollection()->transform(fn (Conversation $c) => [
+            'id' => $c->id,
+            'customer_name' => $c->customerName(),
+            'status' => $c->status,
+            'status_label' => Conversation::STATUSES[$c->status] ?? $c->status,
+            'assignee_name' => $c->assignee?->name,
+            'unread_count' => $c->unread_count,
+            'latest_message_body' => $c->latestMessage?->body,
+            'last_message_at_human' => $c->last_message_at?->diffForHumans(),
+        ]);
 
-        return view('admin.messagerie.index', compact('conversations'));
+        return Inertia::render('Admin/Messagerie/Index', [
+            'conversations' => $conversations,
+            'statuses' => Conversation::STATUSES,
+            'filters' => ['status' => $request->input('status', '')],
+        ]);
     }
 
     public function show(Conversation $conversation)
@@ -32,7 +47,17 @@ class ConversationController extends Controller
         $conversation->load(['user', 'assignee', 'messages.sender']);
         $conversation->messages()->where('sender_type', 'client')->whereNull('read_at')->update(['read_at' => now()]);
 
-        return view('admin.messagerie.show', compact('conversation'));
+        return Inertia::render('Admin/Messagerie/Show', [
+            'conversation' => [
+                'id' => $conversation->id,
+                'customer_name' => $conversation->customerName(),
+                'email' => $conversation->user?->email ?? $conversation->guest_email,
+                'status' => $conversation->status,
+                'bot_enabled' => $conversation->bot_enabled,
+                'assignee' => $conversation->assignee ? ['id' => $conversation->assignee->id, 'name' => $conversation->assignee->name] : null,
+                'messages' => $conversation->messages->map(fn (ChatMessage $m) => $this->messagePayload($m)),
+            ],
+        ]);
     }
 
     public function messages(Conversation $conversation): JsonResponse
@@ -41,16 +66,21 @@ class ConversationController extends Controller
 
         return response()->json([
             'status' => $conversation->status,
-            'messages' => $conversation->messages->map(fn (ChatMessage $message) => [
-                'id' => $message->id,
-                'sender_type' => $message->sender_type,
-                'sender_name' => $message->sender?->name,
-                'body' => $message->body,
-                'links' => $message->meta['links'] ?? [],
-                'source' => $message->meta['source'] ?? null,
-                'created_at' => $message->created_at->format('d/m H:i'),
-            ]),
+            'messages' => $conversation->messages->map(fn (ChatMessage $message) => $this->messagePayload($message)),
         ]);
+    }
+
+    protected function messagePayload(ChatMessage $message): array
+    {
+        return [
+            'id' => $message->id,
+            'sender_type' => $message->sender_type,
+            'sender_name' => $message->sender?->name,
+            'body' => $message->body,
+            'links' => $message->meta['links'] ?? [],
+            'source' => $message->meta['source'] ?? null,
+            'created_at' => $message->created_at->format('d/m H:i'),
+        ];
     }
 
     public function reply(Request $request, Conversation $conversation): RedirectResponse

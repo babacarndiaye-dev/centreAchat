@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
@@ -14,14 +15,14 @@ class CategoryController extends Controller
     {
         $categories = Category::with('parent')->orderBy('position')->paginate(20);
 
-        return view('admin.categories.index', compact('categories'));
+        return Inertia::render('Admin/Categories/Index', compact('categories'));
     }
 
     public function create()
     {
         $parents = Category::whereNull('parent_id')->orderBy('name')->get();
 
-        return view('admin.categories.create', compact('parents'));
+        return Inertia::render('Admin/Categories/Create', compact('parents'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -38,7 +39,7 @@ class CategoryController extends Controller
     {
         $parents = Category::whereNull('parent_id')->where('id', '!=', $category->id)->orderBy('name')->get();
 
-        return view('admin.categories.edit', compact('category', 'parents'));
+        return Inertia::render('Admin/Categories/Edit', compact('category', 'parents'));
     }
 
     public function update(Request $request, Category $category): RedirectResponse

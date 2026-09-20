@@ -1,0 +1,62 @@
+// Route names for admin pages already converted to Inertia + React.
+// Everything else in the admin panel is still a classic Blade view, so
+// links to those routes must use a plain <a> (full page load) instead of
+// an Inertia <Link> — visiting a non-Inertia endpoint via <Link> makes
+// Inertia treat the returned HTML as an error response and display it in
+// its error dialog instead of navigating. Add a route here the moment its
+// controller switches to Inertia::render(...).
+export const ADMIN_INERTIA_ROUTES = new Set([
+    'admin.dashboard',
+    'admin.produits-parametres.unites.index',
+    'admin.produits-parametres.conditionnements.index',
+    'admin.produits-parametres.attributs.index',
+    'admin.categories.index',
+    'admin.producteurs.index',
+    'admin.produits.index',
+    'admin.commandes.index',
+    'admin.b2b.index',
+    'admin.devis.index',
+    'admin.commandes-recurrentes.index',
+    'admin.messagerie.faq.index',
+    'admin.messagerie.index',
+    'admin.commercial.taxes.index',
+    'admin.commercial.paiements.index',
+    'admin.commercial.zones.index',
+    'admin.parametres.edit',
+    'admin.roles.index',
+    'admin.roles.create',
+    'admin.roles.edit',
+    'admin.utilisateurs.index',
+    'admin.utilisateurs.create',
+    'admin.utilisateurs.edit',
+    'admin.notifications.index',
+    'admin.notifications.templates.index',
+    'admin.notifications.templates.edit',
+    'admin.pages.index',
+    'admin.pages.create',
+    'admin.pages.edit',
+    'admin.articles.index',
+    'admin.articles.create',
+    'admin.articles.edit',
+    'admin.avis.index',
+    'admin.avis.create',
+    'admin.avis.edit',
+    'admin.avis-produits.index',
+    'admin.messages.index',
+    'admin.messages.show',
+    'admin.newsletter.index',
+    'admin.fournisseurs.index',
+    'admin.fournisseurs.create',
+    'admin.fournisseurs.show',
+    'admin.fournisseurs.edit',
+    'admin.demandes-achat.index',
+    'admin.demandes-achat.create',
+    'admin.demandes-achat.show',
+    'admin.bons-commande.index',
+    'admin.bons-commande.create',
+    'admin.bons-commande.show',
+]);
+
+export function isAdminInertiaRoute(routeName) {
+    return ADMIN_INERTIA_ROUTES.has(routeName);
+}

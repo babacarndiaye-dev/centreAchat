@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class ProducerController extends Controller
 {
@@ -15,12 +16,12 @@ class ProducerController extends Controller
     {
         $producers = Producer::orderBy('name')->paginate(20);
 
-        return view('admin.producers.index', compact('producers'));
+        return Inertia::render('Admin/Producers/Index', compact('producers'));
     }
 
     public function create()
     {
-        return view('admin.producers.create');
+        return Inertia::render('Admin/Producers/Create');
     }
 
     public function store(Request $request): RedirectResponse
@@ -39,7 +40,12 @@ class ProducerController extends Controller
 
     public function edit(Producer $producer)
     {
-        return view('admin.producers.edit', compact('producer'));
+        return Inertia::render('Admin/Producers/Edit', [
+            'producer' => [
+                ...$producer->only(['id', 'name', 'region', 'description', 'is_featured', 'is_active']),
+                'photo_url' => $producer->photo ? asset('fichiers/'.$producer->photo) : null,
+            ],
+        ]);
     }
 
     public function update(Request $request, Producer $producer): RedirectResponse

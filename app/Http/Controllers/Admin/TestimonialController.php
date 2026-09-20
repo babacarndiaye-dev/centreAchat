@@ -6,19 +6,26 @@ use App\Http\Controllers\Controller;
 use App\Models\Testimonial;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class TestimonialController extends Controller
 {
     public function index()
     {
-        $testimonials = Testimonial::latest()->paginate(20);
+        $testimonials = Testimonial::latest()->paginate(20)->through(fn (Testimonial $testimonial) => [
+            'id' => $testimonial->id,
+            'author_name' => $testimonial->author_name,
+            'author_role' => $testimonial->author_role,
+            'rating' => $testimonial->rating,
+            'is_published' => $testimonial->is_published,
+        ]);
 
-        return view('admin.testimonials.index', compact('testimonials'));
+        return Inertia::render('Admin/Testimonials/Index', ['testimonials' => $testimonials]);
     }
 
     public function create()
     {
-        return view('admin.testimonials.create');
+        return Inertia::render('Admin/Testimonials/Form');
     }
 
     public function store(Request $request): RedirectResponse
@@ -30,7 +37,16 @@ class TestimonialController extends Controller
 
     public function edit(Testimonial $testimonial)
     {
-        return view('admin.testimonials.edit', compact('testimonial'));
+        return Inertia::render('Admin/Testimonials/Form', [
+            'testimonial' => [
+                'id' => $testimonial->id,
+                'author_name' => $testimonial->author_name,
+                'author_role' => $testimonial->author_role,
+                'content' => $testimonial->content,
+                'rating' => $testimonial->rating,
+                'is_published' => $testimonial->is_published,
+            ],
+        ]);
     }
 
     public function update(Request $request, Testimonial $testimonial): RedirectResponse

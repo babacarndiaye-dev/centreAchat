@@ -13,6 +13,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class OrderController extends Controller
 {
@@ -34,17 +35,69 @@ class OrderController extends Controller
         }
 
         $orders = $query->latest()->paginate(20)->withQueryString();
+        $orders->getCollection()->transform(fn (Order $order) => [
+            'id' => $order->id,
+            'order_number' => $order->order_number,
+            'customer_name' => $order->customer_name,
+            'customer_phone' => $order->customer_phone,
+            'created_at' => $order->created_at->format('d/m/Y H:i'),
+            'status' => $order->status,
+            'status_label' => Order::STATUSES[$order->status] ?? $order->status,
+            'status_badge_class' => $order->statusBadgeClass(),
+            'total' => (float) $order->total,
+        ]);
 
-        return view('admin.orders.index', compact('orders'));
+        return Inertia::render('Admin/Orders/Index', [
+            'orders' => $orders,
+            'statuses' => Order::STATUSES,
+            'filters' => ['q' => $request->input('q', ''), 'status' => $request->input('status', '')],
+        ]);
     }
 
     public function show(Order $order, OrderAssistantService $assistant)
     {
         $order->load('items.product');
-        $paymentAccounts = PaymentAccount::where('is_active', true)->get();
+        $paymentAccounts = PaymentAccount::where('is_active', true)->get(['id', 'name']);
         $flags = $assistant->flags($order);
+        $amountPaid = $order->amountPaid();
 
-        return view('admin.orders.show', compact('order', 'paymentAccounts', 'flags'));
+        return Inertia::render('Admin/Orders/Show', [
+            'order' => [
+                'id' => $order->id,
+                'order_number' => $order->order_number,
+                'status' => $order->status,
+                'status_label' => Order::STATUSES[$order->status] ?? $order->status,
+                'customer_name' => $order->customer_name,
+                'customer_phone' => $order->customer_phone,
+                'customer_email' => $order->customer_email,
+                'delivery_address' => $order->delivery_address,
+                'city' => $order->city,
+                'hotel_name' => $order->hotel_name,
+                'room_number' => $order->room_number,
+                'gift_message' => $order->gift_message,
+                'payment_method' => $order->payment_method,
+                'payment_status' => $order->payment_status,
+                'payment_status_label' => Order::PAYMENT_STATUSES[$order->payment_status] ?? $order->payment_status,
+                'notes' => $order->notes,
+                'subtotal' => (float) $order->subtotal,
+                'delivery_fee' => (float) $order->delivery_fee,
+                'total' => (float) $order->total,
+                'amount_paid' => $amountPaid,
+                'amount_due' => max(0, (float) $order->total - $amountPaid),
+                'items' => $order->items->map(fn ($item) => [
+                    'id' => $item->id,
+                    'product_name' => $item->product_name,
+                    'price_tier' => $item->price_tier,
+                    'price_tier_label' => $item->price_tier !== 'retail' ? $item->priceTierLabel() : null,
+                    'unit_price' => (float) $item->unit_price,
+                    'quantity' => $item->quantity,
+                    'total' => (float) $item->total,
+                ]),
+            ],
+            'paymentAccounts' => $paymentAccounts,
+            'flags' => $flags,
+            'statuses' => Order::STATUSES,
+        ]);
     }
 
     public function suggestion(Order $order, OrderAssistantService $assistant): JsonResponse

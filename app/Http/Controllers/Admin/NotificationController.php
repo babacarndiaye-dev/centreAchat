@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class NotificationController extends Controller
 {
@@ -12,9 +13,16 @@ class NotificationController extends Controller
     {
         $notifications = $request->user()->notifications()
             ->where('channel', 'interne')
-            ->paginate(30);
+            ->paginate(30)
+            ->through(fn ($notification) => [
+                'id' => $notification->id,
+                'title' => $notification->title,
+                'body' => $notification->body,
+                'read_at' => $notification->read_at,
+                'created_at_human' => $notification->created_at->diffForHumans(),
+            ]);
 
-        return view('admin.notifications.index', compact('notifications'));
+        return Inertia::render('Admin/Notifications/Index', ['notifications' => $notifications]);
     }
 
     public function markAsRead(Request $request, \App\Models\Notification $notification): RedirectResponse

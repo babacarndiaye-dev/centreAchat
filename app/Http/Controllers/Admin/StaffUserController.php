@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
+use Inertia\Inertia;
 
 class StaffUserController extends Controller
 {
@@ -20,16 +21,27 @@ class StaffUserController extends Controller
                 $query->where('is_admin', true)->orWhereNotNull('role_id');
             })
             ->orderBy('name')
-            ->get();
+            ->get()
+            ->map(fn (User $user) => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'is_admin' => $user->is_admin,
+                'is_active' => $user->is_active,
+                'role_name' => $user->role?->name,
+            ]);
 
-        return view('admin.staff-users.index', compact('users'));
+        return Inertia::render('Admin/StaffUsers/Index', [
+            'users' => $users,
+            'currentUserId' => auth()->id(),
+        ]);
     }
 
     public function create()
     {
-        $roles = Role::orderBy('name')->get();
-
-        return view('admin.staff-users.create', compact('roles'));
+        return Inertia::render('Admin/StaffUsers/Form', [
+            'roles' => Role::orderBy('name')->get(['id', 'name']),
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -57,9 +69,17 @@ class StaffUserController extends Controller
 
     public function edit(User $utilisateur)
     {
-        $roles = Role::orderBy('name')->get();
-
-        return view('admin.staff-users.edit', ['user' => $utilisateur, 'roles' => $roles]);
+        return Inertia::render('Admin/StaffUsers/Form', [
+            'roles' => Role::orderBy('name')->get(['id', 'name']),
+            'user' => [
+                'id' => $utilisateur->id,
+                'name' => $utilisateur->name,
+                'email' => $utilisateur->email,
+                'role_id' => $utilisateur->role_id,
+                'is_admin' => $utilisateur->is_admin,
+                'is_active' => $utilisateur->is_active,
+            ],
+        ]);
     }
 
     public function update(Request $request, User $utilisateur): RedirectResponse

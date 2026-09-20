@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Support\Notifications\NotificationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class B2bController extends Controller
 {
@@ -19,8 +20,21 @@ class B2bController extends Controller
         }
 
         $clients = $query->latest()->paginate(20)->withQueryString();
+        $clients->getCollection()->transform(fn (User $client) => [
+            'id' => $client->id,
+            'name' => $client->name,
+            'email' => $client->email,
+            'company_name' => $client->company_name,
+            'business_registration_number' => $client->business_registration_number,
+            'user_type' => $client->user_type,
+            'b2b_status' => $client->b2b_status,
+            'credit_limit' => $client->credit_limit !== null ? (float) $client->credit_limit : null,
+        ]);
 
-        return view('admin.b2b.index', compact('clients'));
+        return Inertia::render('Admin/B2b/Index', [
+            'clients' => $clients,
+            'filters' => ['status' => $request->input('status', '')],
+        ]);
     }
 
     public function approve(User $user, NotificationService $notifications): RedirectResponse

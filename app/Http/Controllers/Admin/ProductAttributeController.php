@@ -6,14 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\ProductAttribute;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ProductAttributeController extends Controller
 {
     public function index()
     {
-        $productAttributes = ProductAttribute::orderBy('name')->get();
-
-        return view('admin.products-settings.attributes.index', compact('productAttributes'));
+        return Inertia::render('Admin/ProductSettings/ReferenceList', [
+            'title' => 'Attributs',
+            'subtitle' => 'Ces attributs deviennent des champs libres sur les fiches produits.',
+            'routeName' => 'admin.produits-parametres.attributs',
+            'extraField' => null,
+            'items' => ProductAttribute::orderBy('name')->get(['id', 'name', 'is_active']),
+        ]);
     }
 
     public function store(Request $request): RedirectResponse

@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class PurchaseRequestController extends Controller
 {
@@ -22,16 +23,28 @@ class PurchaseRequestController extends Controller
             $query->where('status', $request->string('status'));
         }
 
-        $purchaseRequests = $query->latest()->paginate(20)->withQueryString();
+        $purchaseRequests = $query->latest()->paginate(20)->withQueryString()->through(fn (PurchaseRequest $pr) => [
+            'id' => $pr->id,
+            'reference' => $pr->reference,
+            'requester_name' => $pr->requester?->name,
+            'created_at' => $pr->created_at->format('d/m/Y'),
+            'status' => $pr->status,
+            'status_label' => PurchaseRequest::STATUSES[$pr->status],
+            'status_badge_class' => $pr->statusBadgeClass(),
+        ]);
 
-        return view('admin.purchase-requests.index', compact('purchaseRequests'));
+        return Inertia::render('Admin/PurchaseRequests/Index', [
+            'purchaseRequests' => $purchaseRequests,
+            'statuses' => PurchaseRequest::STATUSES,
+            'filters' => $request->only('status'),
+        ]);
     }
 
     public function create()
     {
-        $products = Product::orderBy('name')->get();
+        $products = Product::orderBy('name')->get(['id', 'name', 'stock_quantity', 'unit']);
 
-        return view('admin.purchase-requests.create', compact('products'));
+        return Inertia::render('Admin/PurchaseRequests/Create', ['products' => $products]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -77,7 +90,31 @@ class PurchaseRequestController extends Controller
     {
         $demandeAchat->load(['items.product', 'requester', 'validator', 'purchaseOrders.supplier']);
 
-        return view('admin.purchase-requests.show', ['purchaseRequest' => $demandeAchat]);
+        return Inertia::render('Admin/PurchaseRequests/Show', [
+            'purchaseRequest' => [
+                'id' => $demandeAchat->id,
+                'reference' => $demandeAchat->reference,
+                'requester_name' => $demandeAchat->requester?->name,
+                'created_at' => $demandeAchat->created_at->format('d/m/Y'),
+                'status' => $demandeAchat->status,
+                'status_label' => PurchaseRequest::STATUSES[$demandeAchat->status],
+                'status_badge_class' => $demandeAchat->statusBadgeClass(),
+                'reason' => $demandeAchat->reason,
+                'items' => $demandeAchat->items->map(fn ($item) => [
+                    'id' => $item->id,
+                    'product_name' => $item->product->name,
+                    'quantity' => $item->quantity,
+                    'unit' => $item->product->unit,
+                ]),
+                'purchase_orders' => $demandeAchat->purchaseOrders->map(fn ($po) => [
+                    'id' => $po->id,
+                    'order_number' => $po->order_number,
+                    'supplier_name' => $po->supplier->name,
+                ]),
+                'validator_name' => $demandeAchat->validator?->name,
+                'validated_at' => $demandeAchat->validated_at?->format('d/m/Y H:i'),
+            ],
+        ]);
     }
 
     public function submit(PurchaseRequest $demandeAchat, NotificationService $notifications): RedirectResponse

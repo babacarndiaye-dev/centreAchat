@@ -15,6 +15,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class ProductController extends Controller
 {
@@ -27,20 +28,31 @@ class ProductController extends Controller
         }
 
         $products = $query->latest()->paginate(20)->withQueryString();
+        $products->getCollection()->transform(fn (Product $product) => [
+            'id' => $product->id,
+            'name' => $product->name,
+            'category' => $product->category ? ['id' => $product->category->id, 'name' => $product->category->name] : null,
+            'price' => (float) $product->price,
+            'stock_quantity' => $product->stock_quantity,
+            'stock_alert_threshold' => $product->stock_alert_threshold,
+            'is_active' => $product->is_active,
+        ]);
 
-        return view('admin.products.index', compact('products'));
+        return Inertia::render('Admin/Products/Index', [
+            'products' => $products,
+            'filters' => ['q' => $request->input('q', '')],
+        ]);
     }
 
     public function create()
     {
-        $categories = Category::orderBy('name')->get();
-        $producers = Producer::orderBy('name')->get();
-        $units = Unit::where('is_active', true)->orderBy('name')->get();
-        $packagingTypes = PackagingType::where('is_active', true)->orderBy('name')->get();
-        $attributes = ProductAttribute::where('is_active', true)->orderBy('name')->get();
-        $attributeValues = collect();
-
-        return view('admin.products.create', compact('categories', 'producers', 'units', 'packagingTypes', 'attributes', 'attributeValues'));
+        return Inertia::render('Admin/Products/Create', [
+            'categories' => Category::orderBy('name')->get(['id', 'name']),
+            'producers' => Producer::orderBy('name')->get(['id', 'name']),
+            'units' => Unit::where('is_active', true)->orderBy('name')->get(['id', 'name', 'abbreviation']),
+            'packagingTypes' => PackagingType::where('is_active', true)->orderBy('name')->get(['id', 'name']),
+            'attributes' => ProductAttribute::where('is_active', true)->orderBy('name')->get(['id', 'name']),
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -59,15 +71,35 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        $categories = Category::orderBy('name')->get();
-        $producers = Producer::orderBy('name')->get();
-        $units = Unit::where('is_active', true)->orderBy('name')->get();
-        $packagingTypes = PackagingType::where('is_active', true)->orderBy('name')->get();
-        $attributes = ProductAttribute::where('is_active', true)->orderBy('name')->get();
         $product->load('images', 'attributeValues');
-        $attributeValues = $product->attributeValues->pluck('value', 'product_attribute_id');
 
-        return view('admin.products.edit', compact('product', 'categories', 'producers', 'units', 'packagingTypes', 'attributes', 'attributeValues'));
+        return Inertia::render('Admin/Products/Edit', [
+            'product' => [
+                ...$product->only([
+                    'id', 'category_id', 'producer_id', 'name', 'reference', 'short_description', 'description',
+                    'origin', 'unit', 'packaging_type_id', 'stock_quantity', 'stock_alert_threshold',
+                    'is_featured', 'is_new', 'is_active',
+                ]),
+                'price' => (float) $product->price,
+                'professional_price' => $product->professional_price !== null ? (float) $product->professional_price : null,
+                'wholesale_price' => $product->wholesale_price !== null ? (float) $product->wholesale_price : null,
+                'promo_price' => $product->promo_price !== null ? (float) $product->promo_price : null,
+                'weight' => $product->weight !== null ? (float) $product->weight : null,
+                'promo_starts_at' => $product->promo_starts_at?->format('Y-m-d\TH:i'),
+                'promo_ends_at' => $product->promo_ends_at?->format('Y-m-d\TH:i'),
+                'expiry_date' => $product->expiry_date?->format('Y-m-d'),
+                'images' => $product->images->map(fn (ProductImage $image) => [
+                    'id' => $image->id,
+                    'url' => asset('fichiers/'.$image->path),
+                ]),
+            ],
+            'attributeValues' => $product->attributeValues->pluck('value', 'product_attribute_id'),
+            'categories' => Category::orderBy('name')->get(['id', 'name']),
+            'producers' => Producer::orderBy('name')->get(['id', 'name']),
+            'units' => Unit::where('is_active', true)->orderBy('name')->get(['id', 'name', 'abbreviation']),
+            'packagingTypes' => PackagingType::where('is_active', true)->orderBy('name')->get(['id', 'name']),
+            'attributes' => ProductAttribute::where('is_active', true)->orderBy('name')->get(['id', 'name']),
+        ]);
     }
 
     public function update(Request $request, Product $product): RedirectResponse

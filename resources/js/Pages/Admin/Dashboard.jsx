@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import AdminLayout from '../../Layouts/AdminLayout';
 
@@ -62,9 +62,9 @@ export default function Dashboard({ stats, recentOrders, lowStockProducts, order
                                 ) : recentOrders.map((order) => (
                                     <tr key={order.id}>
                                         <td className="py-2.5 pr-2">
-                                            <Link href={route('admin.commandes.show', order.id)} className="font-semibold text-terroir-green hover:underline">
+                                            <a href={route('admin.commandes.show', order.id)} className="font-semibold text-terroir-green hover:underline">
                                                 {order.order_number}
-                                            </Link>
+                                            </a>
                                         </td>
                                         <td className="py-2.5 pr-2 text-terroir-dark/70">{order.customer_name}</td>
                                         <td className="py-2.5 pr-2">
@@ -102,9 +102,9 @@ export default function Dashboard({ stats, recentOrders, lowStockProducts, order
                                 ) : lowStockProducts.map((product) => (
                                     <tr key={product.id}>
                                         <td className="py-2.5 pr-2">
-                                            <Link href={route('admin.produits.edit', product.id)} className="font-semibold text-terroir-green hover:underline">
+                                            <a href={route('admin.produits.edit', product.id)} className="font-semibold text-terroir-green hover:underline">
                                                 {product.name}
-                                            </Link>
+                                            </a>
                                         </td>
                                         <td className="py-2.5 pr-2 text-right font-semibold text-terroir-terracotta">{product.stock_quantity}</td>
                                         <td className="py-2.5 text-right text-terroir-dark/50">{product.stock_alert_threshold}</td>

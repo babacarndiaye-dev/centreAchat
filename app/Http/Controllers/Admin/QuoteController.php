@@ -9,6 +9,7 @@ use App\Models\Quote;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class QuoteController extends Controller
 {
@@ -21,15 +22,55 @@ class QuoteController extends Controller
         }
 
         $quotes = $query->latest()->paginate(20)->withQueryString();
+        $quotes->getCollection()->transform(fn (Quote $quote) => [
+            'id' => $quote->id,
+            'quote_number' => $quote->quote_number,
+            'user_name' => $quote->user->name,
+            'created_at' => $quote->created_at->format('d/m/Y'),
+            'status' => $quote->status,
+            'status_label' => Quote::STATUSES[$quote->status],
+            'status_badge_class' => $quote->statusBadgeClass(),
+            'total' => (float) $quote->total,
+        ]);
 
-        return view('admin.quotes.index', compact('quotes'));
+        return Inertia::render('Admin/Quotes/Index', [
+            'quotes' => $quotes,
+            'statuses' => Quote::STATUSES,
+            'filters' => ['status' => $request->input('status', '')],
+        ]);
     }
 
     public function show(Quote $devis)
     {
         $devis->load(['items.product', 'user']);
 
-        return view('admin.quotes.show', ['quote' => $devis]);
+        $editable = in_array($devis->status, ['en_attente', 'envoye'], true);
+
+        return Inertia::render('Admin/Quotes/Show', [
+            'quote' => [
+                'id' => $devis->id,
+                'quote_number' => $devis->quote_number,
+                'notes' => $devis->notes,
+                'status' => $devis->status,
+                'status_label' => Quote::STATUSES[$devis->status],
+                'status_badge_class' => $devis->statusBadgeClass(),
+                'total' => (float) $devis->total,
+                'user' => [
+                    'name' => $devis->user->name,
+                    'company_name' => $devis->user->company_name,
+                    'email' => $devis->user->email,
+                ],
+                'editable' => $editable,
+                'items' => $devis->items->map(fn ($item) => [
+                    'id' => $item->id,
+                    'product_name' => $item->product->name,
+                    'quantity' => $item->quantity,
+                    'unit_price' => $item->unit_price !== null ? (float) $item->unit_price : null,
+                    'suggested_price' => (float) ($item->unit_price ?? $item->product->professional_price ?? $item->product->price),
+                    'total' => (float) $item->total(),
+                ]),
+            ],
+        ]);
     }
 
     public function send(Request $request, Quote $devis): RedirectResponse

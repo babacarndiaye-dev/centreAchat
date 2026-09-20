@@ -6,14 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\Unit;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class UnitController extends Controller
 {
     public function index()
     {
-        $units = Unit::orderBy('name')->get();
-
-        return view('admin.products-settings.units.index', compact('units'));
+        return Inertia::render('Admin/ProductSettings/ReferenceList', [
+            'title' => 'Unités',
+            'subtitle' => null,
+            'routeName' => 'admin.produits-parametres.unites',
+            'extraField' => ['key' => 'abbreviation', 'label' => 'Abréviation'],
+            'items' => Unit::orderBy('name')->get(['id', 'name', 'abbreviation', 'is_active']),
+        ]);
     }
 
     public function store(Request $request): RedirectResponse

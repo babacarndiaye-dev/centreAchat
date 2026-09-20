@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { isAdminInertiaRoute } from '../../Support/adminInertiaRoutes';
 
 function routeBase(name) {
     const idx = name.lastIndexOf('.');
@@ -40,23 +41,31 @@ function NavGroup({ group, unreadChat, currentRoute }) {
                     >
                         {group.items.map((link) => {
                             const active = isLinkActive(link);
+                            const className =
+                                'flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition ' +
+                                (active ? 'bg-terroir-green text-white' : 'text-white/65 hover:bg-white/5 hover:text-white');
+                            const content = (
+                                <>
+                                    <span className="material-symbols-outlined text-lg">{link.icon}</span>
+                                    <span>{link.label}</span>
+                                    {link.route === 'admin.messagerie.index' && unreadChat > 0 && (
+                                        <span className="ml-auto rounded-full bg-terroir-terracotta px-1.5 py-0.5 text-[10px] font-bold text-white">
+                                            {unreadChat}
+                                        </span>
+                                    )}
+                                </>
+                            );
                             return (
                                 <li key={link.route}>
-                                    <Link
-                                        href={route(link.route)}
-                                        className={
-                                            'flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition ' +
-                                            (active ? 'bg-terroir-green text-white' : 'text-white/65 hover:bg-white/5 hover:text-white')
-                                        }
-                                    >
-                                        <span className="material-symbols-outlined text-lg">{link.icon}</span>
-                                        <span>{link.label}</span>
-                                        {link.route === 'admin.messagerie.index' && unreadChat > 0 && (
-                                            <span className="ml-auto rounded-full bg-terroir-terracotta px-1.5 py-0.5 text-[10px] font-bold text-white">
-                                                {unreadChat}
-                                            </span>
-                                        )}
-                                    </Link>
+                                    {isAdminInertiaRoute(link.route) ? (
+                                        <Link href={route(link.route)} className={className}>
+                                            {content}
+                                        </Link>
+                                    ) : (
+                                        <a href={route(link.route)} className={className}>
+                                            {content}
+                                        </a>
+                                    )}
                                 </li>
                             );
                         })}

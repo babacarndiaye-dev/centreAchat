@@ -7,19 +7,25 @@ use App\Models\Page;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class PageController extends Controller
 {
     public function index()
     {
-        $pages = Page::orderBy('title')->paginate(20);
+        $pages = Page::orderBy('title')->paginate(20)->through(fn (Page $page) => [
+            'id' => $page->id,
+            'title' => $page->title,
+            'slug' => $page->slug,
+            'is_published' => $page->is_published,
+        ]);
 
-        return view('admin.pages.index', compact('pages'));
+        return Inertia::render('Admin/Pages/Index', ['pages' => $pages]);
     }
 
     public function create()
     {
-        return view('admin.pages.create');
+        return Inertia::render('Admin/Pages/Form');
     }
 
     public function store(Request $request): RedirectResponse
@@ -34,7 +40,17 @@ class PageController extends Controller
 
     public function edit(Page $page)
     {
-        return view('admin.pages.edit', compact('page'));
+        return Inertia::render('Admin/Pages/Form', [
+            'page' => [
+                'id' => $page->id,
+                'title' => $page->title,
+                'slug' => $page->slug,
+                'content' => $page->content,
+                'meta_title' => $page->meta_title,
+                'meta_description' => $page->meta_description,
+                'is_published' => $page->is_published,
+            ],
+        ]);
     }
 
     public function update(Request $request, Page $page): RedirectResponse

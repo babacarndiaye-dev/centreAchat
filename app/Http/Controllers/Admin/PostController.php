@@ -8,19 +8,25 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::latest()->paginate(20);
+        $posts = Post::latest()->paginate(20)->through(fn (Post $post) => [
+            'id' => $post->id,
+            'title' => $post->title,
+            'type' => $post->type,
+            'is_published' => $post->is_published,
+        ]);
 
-        return view('admin.posts.index', compact('posts'));
+        return Inertia::render('Admin/Posts/Index', ['posts' => $posts]);
     }
 
     public function create()
     {
-        return view('admin.posts.create');
+        return Inertia::render('Admin/Posts/Form');
     }
 
     public function store(Request $request): RedirectResponse
@@ -43,7 +49,17 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        return Inertia::render('Admin/Posts/Form', [
+            'post' => [
+                'id' => $post->id,
+                'title' => $post->title,
+                'type' => $post->type,
+                'excerpt' => $post->excerpt,
+                'content' => $post->content,
+                'is_published' => $post->is_published,
+                'cover_image_url' => $post->cover_image ? asset('fichiers/'.$post->cover_image) : null,
+            ],
+        ]);
     }
 
     public function update(Request $request, Post $post): RedirectResponse
