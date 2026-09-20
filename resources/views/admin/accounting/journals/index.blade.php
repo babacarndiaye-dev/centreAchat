@@ -3,33 +3,31 @@
 @section('title', 'Journaux comptables')
 
 @section('content')
-<div class="uk-card uk-card-default" style="max-width:40rem; padding:32px;">
-    <h2 style="font-family:'Fraunces',serif; font-weight:600; font-size:1.125rem;">Nouveau journal</h2>
-    <form action="{{ route('admin.comptabilite.journaux.store') }}" method="POST" class="uk-grid-small uk-child-width-1-4@s uk-margin-top" uk-grid>
+<div class="admin-card max-w-2xl">
+    <h2 class="font-display text-lg font-semibold">Nouveau journal</h2>
+    <form action="{{ route('admin.comptabilite.journaux.store') }}" method="POST" class="mt-3 flex flex-wrap gap-3">
         @csrf
-        <div><input type="text" name="code" placeholder="Code" required class="uk-input"></div>
-        <div class="uk-width-1-2@s"><input type="text" name="name" placeholder="Intitulé" required class="uk-input"></div>
-        <div>
-            <select name="type" required class="uk-select">
-                @foreach(\App\Models\Journal::TYPES as $value => $label)
-                    <option value="{{ $value }}">{{ $label }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="uk-width-1-1"><button type="submit" class="uk-button uk-button-primary uk-width-1-1">Ajouter</button></div>
+        <input type="text" name="code" placeholder="Code" required class="input w-28">
+        <input type="text" name="name" placeholder="Intitulé" required class="input min-w-[180px] flex-1">
+        <select name="type" required class="input w-40">
+            @foreach(\App\Models\Journal::TYPES as $value => $label)
+                <option value="{{ $value }}">{{ $label }}</option>
+            @endforeach
+        </select>
+        <button type="submit" class="btn-primary w-full justify-center">Ajouter</button>
     </form>
 
-    <div class="uk-margin-top" style="display:flex; flex-direction:column; gap:8px;">
+    <div class="mt-4 flex flex-col gap-2">
         @foreach($journals as $journal)
-            <div class="uk-flex uk-flex-between uk-flex-middle" style="border-radius:8px; background:#F7F8F5; padding:12px 16px;">
+            <div class="flex items-center justify-between rounded-lg bg-terroir-cream px-4 py-3">
                 <div>
-                    <span style="font-family:monospace; font-weight:600;">{{ $journal->code }}</span>
-                    <span style="margin-left:8px;">{{ $journal->name }}</span>
-                    <span class="uk-text-small uk-text-muted" style="margin-left:8px;">({{ \App\Models\Journal::TYPES[$journal->type] }})</span>
+                    <span class="font-mono font-semibold">{{ $journal->code }}</span>
+                    <span class="ml-2">{{ $journal->name }}</span>
+                    <span class="ml-2 text-sm text-terroir-dark/50">({{ \App\Models\Journal::TYPES[$journal->type] }})</span>
                 </div>
                 <form action="{{ route('admin.comptabilite.journaux.destroy', $journal) }}" method="POST" onsubmit="return confirm('Supprimer ce journal ?')">
                     @csrf @method('DELETE')
-                    <button type="submit" style="font-weight:600; color:#E8604F; background:none; border:none; cursor:pointer;">Supprimer</button>
+                    <button type="submit" class="admin-link-danger bg-transparent">Supprimer</button>
                 </form>
             </div>
         @endforeach

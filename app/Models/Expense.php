@@ -43,4 +43,13 @@ class Expense extends Model
     {
         return $this->belongsTo(User::class, 'validated_by');
     }
+
+    public function statusBadgeClass(): string
+    {
+        return match ($this->status) {
+            'validee' => 'admin-badge-success',
+            'rejetee' => 'admin-badge-danger',
+            default => 'admin-badge-warning',
+        };
+    }
 }

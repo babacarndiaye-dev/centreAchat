@@ -3,34 +3,34 @@
 @section('title', 'Balance générale')
 
 @section('content')
-<div class="uk-card uk-card-default" style="overflow-x:auto; padding:0;">
-    <table class="uk-table uk-table-divider uk-table-small uk-table-middle" style="margin:0;">
+<div class="admin-card overflow-x-auto p-0">
+    <table class="admin-table">
         <thead>
             <tr>
-                <th>Compte</th>
-                <th class="uk-text-right">Débit</th>
-                <th class="uk-text-right">Crédit</th>
-                <th class="uk-text-right">Solde</th>
+                <th class="pl-6">Compte</th>
+                <th class="text-right">Débit</th>
+                <th class="text-right">Crédit</th>
+                <th class="pr-6 text-right">Solde</th>
             </tr>
         </thead>
         <tbody>
             @forelse($accounts as $account)
                 <tr>
-                    <td><a href="{{ route('admin.comptabilite.grand-livre.index', ['compte' => $account->id]) }}" style="font-family:monospace; color:#1D8A4E;">{{ $account->code }}</a> — {{ $account->name }}</td>
-                    <td class="uk-text-right">{{ number_format($account->debit_total, 0, ',', ' ') }}</td>
-                    <td class="uk-text-right">{{ number_format($account->credit_total, 0, ',', ' ') }}</td>
-                    <td class="uk-text-right" style="font-weight:600; {{ $account->solde < 0 ? 'color:#E8604F;' : '' }}">{{ number_format($account->solde, 0, ',', ' ') }}</td>
+                    <td class="pl-6"><a href="{{ route('admin.comptabilite.grand-livre.index', ['compte' => $account->id]) }}" class="font-mono text-terroir-green">{{ $account->code }}</a> — {{ $account->name }}</td>
+                    <td class="text-right">{{ number_format($account->debit_total, 0, ',', ' ') }}</td>
+                    <td class="text-right">{{ number_format($account->credit_total, 0, ',', ' ') }}</td>
+                    <td class="pr-6 text-right font-semibold {{ $account->solde < 0 ? 'text-terroir-terracotta' : '' }}">{{ number_format($account->solde, 0, ',', ' ') }}</td>
                 </tr>
             @empty
-                <tr><td colspan="4" class="uk-text-center uk-text-muted" style="padding:32px 0;">Aucune écriture enregistrée.</td></tr>
+                <tr><td colspan="4" class="py-8 text-center text-terroir-dark/40">Aucune écriture enregistrée.</td></tr>
             @endforelse
         </tbody>
         <tfoot>
-            <tr style="border-top:2px solid rgba(31,35,40,.2); font-weight:700; color:#1D8A4E;">
-                <td>Total</td>
-                <td class="uk-text-right">{{ number_format($totalDebit, 0, ',', ' ') }}</td>
-                <td class="uk-text-right">{{ number_format($totalCredit, 0, ',', ' ') }}</td>
-                <td class="uk-text-right">{{ round($totalDebit, 2) === round($totalCredit, 2) ? 'Équilibrée ✓' : 'Écart' }}</td>
+            <tr class="border-t-2 border-terroir-dark/20 font-bold text-terroir-green">
+                <td class="pl-6">Total</td>
+                <td class="text-right">{{ number_format($totalDebit, 0, ',', ' ') }}</td>
+                <td class="text-right">{{ number_format($totalCredit, 0, ',', ' ') }}</td>
+                <td class="pr-6 text-right">{{ round($totalDebit, 2) === round($totalCredit, 2) ? 'Équilibrée ✓' : 'Écart' }}</td>
             </tr>
         </tfoot>
     </table>
