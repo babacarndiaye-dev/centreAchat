@@ -9,6 +9,7 @@ use App\Support\Chat\ChatbotService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class ChatController extends Controller
 {
@@ -89,9 +90,16 @@ class ChatController extends Controller
         $conversations = Conversation::where('user_id', Auth::id())
             ->with('latestMessage')
             ->orderByDesc('last_message_at')
-            ->paginate(15);
+            ->paginate(15)
+            ->through(fn (Conversation $conversation) => [
+                'id' => $conversation->id,
+                'status' => $conversation->status,
+                'status_label' => Conversation::STATUSES[$conversation->status] ?? $conversation->status,
+                'latest_message_body' => optional($conversation->latestMessage)->body,
+                'last_message_at' => optional($conversation->last_message_at)->format('d/m/Y à H:i'),
+            ]);
 
-        return view('account.messages.index', compact('conversations'));
+        return Inertia::render('Account/Messages/Index', ['conversations' => $conversations]);
     }
 
     public function historyShow(Request $request, Conversation $conversation)
@@ -100,7 +108,20 @@ class ChatController extends Controller
 
         $conversation->load('messages');
 
-        return view('account.messages.show', compact('conversation'));
+        return Inertia::render('Account/Messages/Show', [
+            'conversation' => [
+                'id' => $conversation->id,
+                'created_at' => $conversation->created_at->format('d/m/Y'),
+                'status' => $conversation->status,
+                'messages' => $conversation->messages->map(fn (ChatMessage $message) => [
+                    'id' => $message->id,
+                    'sender_type' => $message->sender_type,
+                    'body' => $message->body,
+                    'links' => $message->meta['links'] ?? [],
+                    'created_at' => $message->created_at->format('d/m H:i'),
+                ])->all(),
+            ],
+        ]);
     }
 
     protected function formatMessages(Conversation $conversation): array

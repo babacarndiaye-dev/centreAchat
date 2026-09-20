@@ -53,7 +53,7 @@ export default function AccountIndex({ orders, isProfessional, isApprovedB2b, cr
                     </div>
                     <div className="flex flex-wrap gap-3">
                         {vapidPublicKey && <PushNotificationButton vapidPublicKey={vapidPublicKey} />}
-                        <a href={route('compte.messages.index')} className="btn-outline">💬 Mes conversations</a>
+                        <Link href={route('compte.messages.index')} className="btn-outline">💬 Mes conversations</Link>
                         <form action={route('logout')} method="POST">
                             <input type="hidden" name="_token" value={document.querySelector('meta[name=csrf-token]')?.content} />
                             <button type="submit" className="btn-outline">Se déconnecter</button>
@@ -78,8 +78,8 @@ export default function AccountIndex({ orders, isProfessional, isApprovedB2b, cr
                             </div>
                             {isApprovedB2b && (
                                 <div className="flex gap-3">
-                                    <a href={route('compte.devis.index')} className="btn-outline">Mes devis</a>
-                                    <a href={route('compte.commandes-recurrentes.index')} className="btn-outline">Commandes récurrentes</a>
+                                    <Link href={route('compte.devis.index')} className="btn-outline">Mes devis</Link>
+                                    <Link href={route('compte.commandes-recurrentes.index')} className="btn-outline">Commandes récurrentes</Link>
                                 </div>
                             )}
                         </div>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { usePage } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 
 const QUICK_REPLIES = [
     { emoji: '🛒', label: 'Voir les produits', text: 'Comment voir vos produits ?' },
@@ -292,9 +292,9 @@ export default function ChatWidget() {
                             </button>
                         </div>
                         {isAuthenticated && (
-                            <a href={route('compte.messages.index')} className="mt-2 block text-center text-xs text-terroir-dark/40 hover:underline">
+                            <Link href={route('compte.messages.index')} className="mt-2 block text-center text-xs text-terroir-dark/40 hover:underline">
                                 Historique de mes conversations
-                            </a>
+                            </Link>
                         )}
                     </form>
                 </div>

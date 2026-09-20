@@ -9,21 +9,38 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class RecurringOrderController extends Controller
 {
     public function index()
     {
-        $recurringOrders = Auth::user()->recurringOrders()->with('items.product')->latest()->get();
+        $recurringOrders = Auth::user()->recurringOrders()->with('items.product')->latest()->get()
+            ->map(fn (RecurringOrder $ro) => [
+                'id' => $ro->id,
+                'frequency_label' => RecurringOrder::FREQUENCIES[$ro->frequency],
+                'next_run_date' => $ro->next_run_date->format('d/m/Y'),
+                'city' => $ro->city,
+                'status' => $ro->status,
+                'items' => $ro->items->map(fn ($item) => [
+                    'id' => $item->id,
+                    'quantity' => $item->quantity,
+                    'product_name' => $item->product->name,
+                ]),
+            ]);
 
-        return view('account.recurring-orders.index', compact('recurringOrders'));
+        return Inertia::render('Account/RecurringOrders/Index', ['recurringOrders' => $recurringOrders]);
     }
 
     public function create()
     {
-        $products = Product::where('is_active', true)->orderBy('name')->get();
+        $products = Product::where('is_active', true)->orderBy('name')->get(['id', 'name']);
+        $user = Auth::user();
 
-        return view('account.recurring-orders.create', compact('products'));
+        return Inertia::render('Account/RecurringOrders/Create', [
+            'products' => $products,
+            'canPayOnCredit' => $user->isApprovedB2B() && $user->credit_limit,
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
