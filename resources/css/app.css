@@ -39,6 +39,11 @@
     h1, h2, h3 {
         font-family: 'Fraunces', serif;
     }
+
+    p {
+        text-align: justify;
+        hyphens: auto;
+    }
 }
 
 /* UIkit reskin — precompiled uikit.min.css ships with its default blue theme;
