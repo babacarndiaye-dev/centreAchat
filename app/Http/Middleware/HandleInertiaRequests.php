@@ -35,7 +35,7 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        return [
+        $shared = [
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
@@ -56,5 +56,19 @@ class HandleInertiaRequests extends Middleware
                 'showNewsletter' => \App\Models\Setting::getBool('show_newsletter', true),
             ],
         ];
+
+        $user = $request->user();
+        if ($user && $request->routeIs('admin.*') && $user->isStaff()) {
+            $unreadChat = $user->hasPermission('messagerie.voir') ? \App\Models\Conversation::unreadForStaffCount() : 0;
+
+            $shared['admin'] = [
+                'nav' => \App\Support\AdminNav::forUser($user),
+                'unreadChat' => $unreadChat,
+                'unreadNotifications' => $user->unreadNotificationsCount(),
+                'vapidPublicKey' => config('services.vapid.public_key'),
+            ];
+        }
+
+        return $shared;
     }
 }
