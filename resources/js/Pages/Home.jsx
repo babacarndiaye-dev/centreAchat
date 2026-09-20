@@ -481,7 +481,7 @@ export default function Home({
                     {showNewsletter && (
                         <Reveal className="flex h-full flex-col justify-center rounded-xl2 bg-terroir-green p-8 text-white shadow-soft sm:p-11">
                             <h3 className="font-display text-2xl font-semibold">Restez informé de nos nouveautés</h3>
-                            <p className="mt-2 text-white/85">Recevez nos nouveaux produits et offres par e-mail.</p>
+                            <p className="mt-2 text-white">Recevez nos nouveaux produits et offres par e-mail.</p>
                             <form action={route('newsletter.store')} method="POST" className="mt-6 flex flex-col gap-2.5 sm:flex-row">
                                 <input type="hidden" name="_token" value={document.querySelector('meta[name=csrf-token]')?.content} />
                                 <input
@@ -501,7 +501,7 @@ export default function Home({
                             <span className="material-symbols-outlined text-xl text-terroir-gold">location_on</span>
                             Rond-Point Malicounda, Mbour – Sénégal
                         </h3>
-                        <p className="mt-2 text-white/70">Visitez notre boutique ou passez commande en ligne, livraison partout au Sénégal.</p>
+                        <p className="mt-2 text-white">Visitez notre boutique ou passez commande en ligne, livraison partout au Sénégal.</p>
                         <MotionLink
                             whileHover={{ y: -2 }}
                             whileTap={{ scale: 0.97 }}
