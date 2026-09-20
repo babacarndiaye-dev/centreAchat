@@ -3,42 +3,45 @@
 @section('title', 'Messagerie')
 
 @section('content')
-<div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap" style="gap:12px;">
-    <div class="uk-flex uk-flex-wrap uk-text-small" style="gap:8px;">
-        <a href="{{ route('admin.messagerie.index') }}" style="border-radius:999px; padding:6px 14px; {{ request('status') ? 'color:rgba(31,35,40,.6);' : 'background:#1D8A4E; color:#fff; font-weight:600;' }}">Toutes</a>
+<div class="flex flex-wrap items-center justify-between gap-3">
+    <div class="flex flex-wrap gap-2 text-sm">
+        <a href="{{ route('admin.messagerie.index') }}" class="rounded-full px-3.5 py-1.5 {{ request('status') ? 'text-terroir-dark/60' : 'bg-terroir-green font-semibold text-white' }}">Toutes</a>
         @foreach(\App\Models\Conversation::STATUSES as $key => $label)
-            <a href="{{ route('admin.messagerie.index', ['status' => $key]) }}" style="border-radius:999px; padding:6px 14px; {{ request('status') === $key ? 'background:#1D8A4E; color:#fff; font-weight:600;' : 'color:rgba(31,35,40,.6);' }}">{{ $label }}</a>
+            <a href="{{ route('admin.messagerie.index', ['status' => $key]) }}" class="rounded-full px-3.5 py-1.5 {{ request('status') === $key ? 'bg-terroir-green font-semibold text-white' : 'text-terroir-dark/60' }}">{{ $label }}</a>
         @endforeach
     </div>
-    <a href="{{ route('admin.messagerie.faq.index') }}" style="font-weight:600; color:#1D8A4E;">📚 Base de connaissances</a>
+    <a href="{{ route('admin.messagerie.faq.index') }}" class="admin-link">📚 Base de connaissances</a>
 </div>
 
-<div class="uk-card uk-card-default uk-margin-top" style="padding:0;">
+<div class="admin-card mt-6 p-0">
     @forelse($conversations as $conversation)
-        <a href="{{ route('admin.messagerie.show', $conversation) }}" class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap" style="gap:16px; padding:16px 20px; border-bottom:1px solid rgba(31,35,40,.08); {{ $conversation->unread_count > 0 ? 'background:rgba(29,138,78,.05);' : '' }}">
-            <div style="min-width:0;">
-                <p style="font-weight:600;">
+        <a
+            href="{{ route('admin.messagerie.show', $conversation) }}"
+            class="flex flex-wrap items-center justify-between gap-4 border-b border-terroir-dark/[0.08] px-5 py-4 {{ $conversation->unread_count > 0 ? 'bg-terroir-green/5' : '' }}"
+        >
+            <div class="min-w-0">
+                <p class="font-semibold">
                     {{ $conversation->customerName() }}
-                    <span class="uk-label" style="background:#F7F8F5; color:rgba(31,35,40,.6); margin-left:8px;">{{ \App\Models\Conversation::STATUSES[$conversation->status] ?? $conversation->status }}</span>
+                    <span class="admin-badge-neutral ml-2">{{ \App\Models\Conversation::STATUSES[$conversation->status] ?? $conversation->status }}</span>
                     @if($conversation->assignee)
-                        <span class="uk-text-small" style="color:rgba(31,35,40,.4);">— {{ $conversation->assignee->name }}</span>
+                        <span class="text-sm text-terroir-dark/40">— {{ $conversation->assignee->name }}</span>
                     @endif
                 </p>
-                <p class="uk-margin-small-top uk-text-small uk-text-muted" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ optional($conversation->latestMessage)->body }}</p>
+                <p class="mt-1.5 truncate text-sm text-terroir-dark/50">{{ optional($conversation->latestMessage)->body }}</p>
             </div>
-            <div class="uk-flex uk-flex-middle" style="gap:12px; flex-shrink:0;">
+            <div class="flex shrink-0 items-center gap-3">
                 @if($conversation->unread_count > 0)
-                    <span class="uk-label" style="background:#E8604F; color:#fff; border-radius:999px; min-width:20px; height:20px; display:inline-flex; align-items:center; justify-content:center; padding:0 6px;">{{ $conversation->unread_count }}</span>
+                    <span class="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-terroir-terracotta px-1.5 text-xs font-semibold text-white">{{ $conversation->unread_count }}</span>
                 @endif
-                <span class="uk-text-small" style="color:rgba(31,35,40,.4);">{{ optional($conversation->last_message_at)->diffForHumans() }}</span>
+                <span class="text-sm text-terroir-dark/40">{{ optional($conversation->last_message_at)->diffForHumans() }}</span>
             </div>
         </a>
     @empty
-        <p class="uk-text-center uk-text-muted" style="padding:32px 0;">Aucune conversation.</p>
+        <p class="py-8 text-center text-terroir-dark/40">Aucune conversation.</p>
     @endforelse
 </div>
 
-<div class="uk-margin-top">
+<div class="mt-6">
     {{ $conversations->links() }}
 </div>
 @endsection

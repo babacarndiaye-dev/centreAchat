@@ -3,37 +3,37 @@
 @section('title', 'Nouvel utilisateur')
 
 @section('content')
-<form action="{{ route('admin.utilisateurs.store') }}" method="POST" class="uk-card uk-card-default" style="max-width:36rem; padding:32px;">
+<form action="{{ route('admin.utilisateurs.store') }}" method="POST" class="admin-card max-w-xl">
     @csrf
     <div>
-        <label class="uk-form-label">Nom</label>
-        <input type="text" name="name" value="{{ old('name') }}" required class="uk-input">
+        <label class="label">Nom</label>
+        <input type="text" name="name" value="{{ old('name') }}" required class="input">
     </div>
-    <div class="uk-margin-top">
-        <label class="uk-form-label">Email</label>
-        <input type="email" name="email" value="{{ old('email') }}" required class="uk-input">
+    <div class="mt-4">
+        <label class="label">Email</label>
+        <input type="email" name="email" value="{{ old('email') }}" required class="input">
     </div>
-    <div class="uk-margin-top">
-        <label class="uk-form-label">Mot de passe</label>
-        <input type="password" name="password" required class="uk-input">
+    <div class="mt-4">
+        <label class="label">Mot de passe</label>
+        <input type="password" name="password" required class="input">
     </div>
-    <div class="uk-margin-top">
-        <label class="uk-form-label">Rôle</label>
-        <select name="role_id" class="uk-select">
+    <div class="mt-4">
+        <label class="label">Rôle</label>
+        <select name="role_id" class="input">
             <option value="">— Aucun —</option>
             @foreach($roles as $role)
                 <option value="{{ $role->id }}" @selected(old('role_id') == $role->id)>{{ $role->name }}</option>
             @endforeach
         </select>
     </div>
-    <label class="uk-flex uk-flex-middle uk-text-small uk-margin-top" style="gap:8px;">
-        <input type="checkbox" name="is_admin" value="1" @checked(old('is_admin')) class="uk-checkbox">
+    <label class="mt-4 flex items-center gap-2 text-sm">
+        <input type="checkbox" name="is_admin" value="1" @checked(old('is_admin')) class="rounded border-terroir-green/30 text-terroir-green focus:ring-terroir-green/20">
         Super administrateur (accès complet, ignore les permissions du rôle)
     </label>
 
-    <div class="uk-margin-top">
-        <button type="submit" class="uk-button uk-button-primary">Créer</button>
-        <a href="{{ route('admin.utilisateurs.index') }}" style="margin-left:12px; font-size:.875rem; font-weight:600; color:rgba(31,35,40,.6);">Annuler</a>
+    <div class="mt-6">
+        <button type="submit" class="btn-primary">Créer</button>
+        <a href="{{ route('admin.utilisateurs.index') }}" class="ml-3 text-sm font-semibold text-terroir-dark/60">Annuler</a>
     </div>
 </form>
 @endsection

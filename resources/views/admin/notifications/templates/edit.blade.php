@@ -3,48 +3,48 @@
 @section('title', 'Modifier le modèle')
 
 @section('content')
-<form action="{{ route('admin.notifications.templates.update', $template) }}" method="POST" class="uk-card uk-card-default" style="max-width:40rem; padding:32px;">
+<form action="{{ route('admin.notifications.templates.update', $template) }}" method="POST" class="admin-card max-w-2xl">
     @csrf
     @method('PATCH')
 
-    <div class="uk-text-small uk-text-muted">
+    <div class="text-sm text-terroir-dark/50">
         {{ \App\Support\Notifications\NotificationEvents::label($template->event_key) }} —
         {{ \App\Support\Notifications\NotificationEvents::CHANNELS[$template->channel] ?? $template->channel }}
     </div>
 
     @if(in_array($template->channel, ['email']))
-        <div class="uk-margin-top">
-            <label class="uk-form-label">Objet</label>
-            <input type="text" name="subject" value="{{ old('subject', $template->subject) }}" class="uk-input">
+        <div class="mt-4">
+            <label class="label">Objet</label>
+            <input type="text" name="subject" value="{{ old('subject', $template->subject) }}" class="input">
         </div>
     @endif
 
-    <div class="uk-margin-top">
-        <label class="uk-form-label">Message</label>
-        <textarea name="body" rows="6" required class="uk-textarea">{{ old('body', $template->body) }}</textarea>
+    <div class="mt-4">
+        <label class="label">Message</label>
+        <textarea name="body" rows="6" required class="input">{{ old('body', $template->body) }}</textarea>
     </div>
 
     @if(count($placeholders))
-        <div class="uk-margin-top uk-text-small uk-text-muted" style="background:#F7F8F5; border-radius:8px; padding:12px 16px;">
+        <div class="mt-4 rounded-lg bg-terroir-cream px-4 py-3 text-sm text-terroir-dark/50">
             Variables disponibles :
             @foreach($placeholders as $placeholder)
                 @php($tag = '{'.'{'.$placeholder.'}'.'}')
-                <code style="margin:0 2px; background:#fff; border-radius:4px; padding:2px 6px;">{{ $tag }}</code>
+                <code class="mx-0.5 rounded bg-white px-1.5 py-0.5">{{ $tag }}</code>
             @endforeach
         </div>
     @endif
 
-    <label class="uk-flex uk-flex-middle uk-text-small uk-margin-top" style="gap:8px;">
-        <input type="checkbox" name="is_active" value="1" @checked(old('is_active', $template->is_active)) class="uk-checkbox">
+    <label class="mt-4 flex items-center gap-2 text-sm">
+        <input type="checkbox" name="is_active" value="1" @checked(old('is_active', $template->is_active)) class="rounded border-terroir-green/30 text-terroir-green focus:ring-terroir-green/20">
         Actif
         @if(in_array($template->channel, ['sms', 'whatsapp']))
-            <span style="font-size:.75rem; color:rgba(31,35,40,.4);">(nécessite une passerelle {{ $template->channel === 'sms' ? 'SMS' : 'WhatsApp' }} configurée)</span>
+            <span class="text-xs text-terroir-dark/40">(nécessite une passerelle {{ $template->channel === 'sms' ? 'SMS' : 'WhatsApp' }} configurée)</span>
         @endif
     </label>
 
-    <div class="uk-margin-top">
-        <button type="submit" class="uk-button uk-button-primary">Enregistrer</button>
-        <a href="{{ route('admin.notifications.templates.index') }}" style="margin-left:12px; font-size:.875rem; font-weight:600; color:rgba(31,35,40,.6);">Annuler</a>
+    <div class="mt-6">
+        <button type="submit" class="btn-primary">Enregistrer</button>
+        <a href="{{ route('admin.notifications.templates.index') }}" class="ml-3 text-sm font-semibold text-terroir-dark/60">Annuler</a>
     </div>
 </form>
 @endsection
