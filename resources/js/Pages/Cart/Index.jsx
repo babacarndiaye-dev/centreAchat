@@ -89,9 +89,9 @@ export default function CartIndex({ items, subtotal }) {
                                 <span className="font-medium text-terroir-dark/70">Sous-total</span>
                                 <span className="font-bold text-terroir-green">{formatFcfa(subtotal)}</span>
                             </div>
-                            <a href={route('commande.index')} className="btn-primary w-full max-w-xs justify-center">
+                            <Link href={route('commande.index')} className="btn-primary w-full max-w-xs justify-center">
                                 Passer la commande
-                            </a>
+                            </Link>
                             <a href={route('produits.index')} className="text-sm text-terroir-dark/60 hover:text-terroir-terracotta">
                                 ← Continuer mes achats
                             </a>

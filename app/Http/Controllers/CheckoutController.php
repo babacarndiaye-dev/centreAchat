@@ -14,6 +14,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class CheckoutController extends Controller
 {
@@ -34,13 +35,19 @@ class CheckoutController extends Controller
         $taxAmount = $taxRate ? round($subtotal * ((float) $taxRate->rate / 100), 2) : 0;
 
         $total = $subtotal + $deliveryFee + $taxAmount;
-        $creditAvailable = Auth::check() ? Auth::user()->creditAvailable() : 0;
-        $paymentMethods = $this->availablePaymentMethods();
 
-        return view('checkout.index', compact(
-            'items', 'subtotal', 'deliveryZones', 'selectedZone', 'deliveryFee',
-            'taxRate', 'taxAmount', 'total', 'creditAvailable', 'paymentMethods'
-        ));
+        return Inertia::render('Checkout/Index', [
+            'items' => $items,
+            'subtotal' => $subtotal,
+            'deliveryZones' => $deliveryZones->map(fn ($z) => [
+                'id' => (string) $z->id,
+                'name' => $z->name,
+                'fee' => (float) $z->fee,
+                'free_above' => $z->free_above !== null ? (float) $z->free_above : null,
+            ]),
+            'selectedZoneId' => $selectedZone?->id ? (string) $selectedZone->id : null,
+            'taxRate' => $taxRate ? ['name' => $taxRate->name, 'rate' => (float) $taxRate->rate] : null,
+        ]);
     }
 
     public function store(Request $request, AccountingService $accounting, NotificationService $notifications): RedirectResponse
@@ -150,7 +157,7 @@ class CheckoutController extends Controller
     {
         $order = Order::with('items')->where('order_number', $orderNumber)->firstOrFail();
 
-        return view('checkout.confirmation', compact('order'));
+        return Inertia::render('Checkout/Confirmation', ['order' => $order]);
     }
 
     protected function availablePaymentMethods()
