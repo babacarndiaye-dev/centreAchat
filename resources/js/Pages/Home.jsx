@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import SiteLayout from '../Layouts/SiteLayout';
 import Reveal from '../Components/Reveal';
 import ProductCard from '../Components/ProductCard';
+import MotionLink from '../Components/MotionLink';
 
 const CATEGORY_ICONS = {
     'infusions-boissons-locales': 'emoji_food_beverage',
@@ -44,7 +45,7 @@ function HeroCarousel({ slides }) {
     return (
         <div className="relative aspect-square overflow-hidden rounded-xl2 shadow-soft">
             <AnimatePresence mode="wait">
-                <motion.a
+                <MotionLink
                     key={slide.slug}
                     href={route('produits.show', slide.slug)}
                     initial={{ opacity: 0, scale: 1.03 }}
@@ -59,7 +60,7 @@ function HeroCarousel({ slides }) {
                         <h3 className="mt-1 font-display text-xl font-semibold">{slide.name}</h3>
                         <p className="mt-1 font-bold">{formatFcfa(slide.price)}</p>
                     </div>
-                </motion.a>
+                </MotionLink>
             </AnimatePresence>
             <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-1.5">
                 {slides.map((s, i) => (
@@ -184,18 +185,18 @@ export default function Home({
                                 {heroSubtitle || "Des producteurs locaux aux hôtels, professionnels et consommateurs, Central d'Achat facilite l'accès à des produits authentiques, frais et de qualité."}
                             </p>
                             <div className="mt-8 flex flex-wrap gap-3.5">
-                                <motion.a whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} href={route('produits.index')} className="btn-gold">
+                                <MotionLink whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} href={route('produits.index')} className="btn-gold">
                                     Découvrir nos produits
                                     <span className="material-symbols-outlined text-lg">arrow_forward</span>
-                                </motion.a>
-                                <motion.a
+                                </MotionLink>
+                                <MotionLink
                                     whileHover={{ y: -2 }}
                                     whileTap={{ scale: 0.97 }}
                                     href={route('pages.show', 'coffrets-cadeaux')}
                                     className="btn border border-white/35 bg-white/10 text-white hover:bg-white/20"
                                 >
                                     Voir les coffrets
-                                </motion.a>
+                                </MotionLink>
                             </div>
                         </motion.div>
 
@@ -272,7 +273,7 @@ export default function Home({
                     <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-4">
                         {categories.map((category, i) => (
                             <Reveal key={category.id} delay={i * 0.06} y={16}>
-                                <motion.a
+                                <MotionLink
                                     whileHover={{ y: -4 }}
                                     href={route('produits.index', { categorie: category.slug })}
                                     className="group flex flex-col items-center rounded-xl2 border border-terroir-dark/5 bg-white p-8 text-center shadow-soft transition-shadow duration-300 hover:shadow-xl"
@@ -288,7 +289,7 @@ export default function Home({
                                         Voir
                                         <span className="material-symbols-outlined text-sm transition group-hover:translate-x-0.5">arrow_forward</span>
                                     </span>
-                                </motion.a>
+                                </MotionLink>
                             </Reveal>
                         ))}
                     </div>
@@ -304,10 +305,10 @@ export default function Home({
                                 <span className="section-eyebrow">Sélection</span>
                                 <h2 className="section-title mt-1">Produits en vedette</h2>
                             </div>
-                            <a href={route('produits.index')} className="inline-flex items-center gap-1.5 text-sm font-semibold text-terroir-green hover:text-terroir-dark">
+                            <Link href={route('produits.index')} className="inline-flex items-center gap-1.5 text-sm font-semibold text-terroir-green hover:text-terroir-dark">
                                 Voir tous les produits
                                 <span className="material-symbols-outlined text-lg">arrow_forward</span>
-                            </a>
+                            </Link>
                         </Reveal>
                         <div className="mt-12 grid grid-cols-2 gap-5 md:grid-cols-4">
                             {featuredProducts.map((product, i) => (
@@ -345,9 +346,9 @@ export default function Home({
                                     <CountdownTimer target={promoProduct.promo_ends_at} />
                                 </>
                             )}
-                            <motion.a whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} href={route('produits.show', promoProduct.slug)} className="btn-primary mt-6 self-start">
+                            <MotionLink whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} href={route('produits.show', promoProduct.slug)} className="btn-primary mt-6 self-start">
                                 Voir l'offre
-                            </motion.a>
+                            </MotionLink>
                         </div>
                         <div className="flex items-center justify-center bg-white/50 p-11">
                             {promoProduct.image ? (
@@ -370,9 +371,9 @@ export default function Home({
                             </span>
                             <h3 className="mt-4.5 font-display text-xl font-semibold">Hôtels &amp; Professionnels</h3>
                             <p className="mt-3 leading-relaxed text-white/85">Tarifs dégressifs, commandes en gros, devis personnalisés et facturation professionnelle.</p>
-                            <motion.a whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} href={route('pages.show', 'hotels-professionnels')} className="btn mt-6 self-start bg-white text-terroir-green">
+                            <MotionLink whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} href={route('pages.show', 'hotels-professionnels')} className="btn mt-6 self-start bg-white text-terroir-green">
                                 Découvrir l'offre B2B
-                            </motion.a>
+                            </MotionLink>
                         </Reveal>
                         <Reveal delay={0.08} className="flex h-full flex-col rounded-xl2 bg-terroir-gold p-11 text-terroir-dark shadow-soft">
                             <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/40 text-2xl">
@@ -380,9 +381,9 @@ export default function Home({
                             </span>
                             <h3 className="mt-4.5 font-display text-xl font-semibold">Coffrets &amp; Cadeaux</h3>
                             <p className="mt-3 leading-relaxed text-terroir-dark/80">Des coffrets prêts à offrir, composés à partir de notre gamme locale.</p>
-                            <motion.a whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} href={route('pages.show', 'coffrets-cadeaux')} className="btn-primary mt-6 self-start">
+                            <MotionLink whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} href={route('pages.show', 'coffrets-cadeaux')} className="btn-primary mt-6 self-start">
                                 Voir les coffrets
-                            </motion.a>
+                            </MotionLink>
                         </Reveal>
                     </div>
                 </div>
@@ -396,10 +397,10 @@ export default function Home({
                             <span className="section-eyebrow">Fraîchement arrivé</span>
                             <h2 className="section-title mt-1">Nouveautés</h2>
                         </div>
-                        <a href={route('produits.index')} className="inline-flex items-center gap-1.5 text-sm font-semibold text-terroir-green hover:text-terroir-dark">
+                        <Link href={route('produits.index')} className="inline-flex items-center gap-1.5 text-sm font-semibold text-terroir-green hover:text-terroir-dark">
                             Voir tout
                             <span className="material-symbols-outlined text-lg">arrow_forward</span>
-                        </a>
+                        </Link>
                     </Reveal>
                     <div className="mt-12 grid grid-cols-2 gap-5 md:grid-cols-4">
                         {newProducts.map((product, i) => (
@@ -425,9 +426,9 @@ export default function Home({
                             </p>
                         )}
                         {producer.description && <p className="mx-auto mt-5 max-w-lg leading-loose text-white/90">{producer.description}</p>}
-                        <motion.a whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} href={route('producteurs.show', producer.slug)} className="btn mt-6 bg-white text-terroir-green">
+                        <MotionLink whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} href={route('producteurs.show', producer.slug)} className="btn mt-6 bg-white text-terroir-green">
                             Voir tous les produits
-                        </motion.a>
+                        </MotionLink>
                     </Reveal>
                 </section>
             )}
@@ -497,9 +498,9 @@ export default function Home({
                         </h3>
                         <p className="mt-2 text-white/70">Visitez notre boutique ou passez commande en ligne, livraison partout au Sénégal.</p>
                     </div>
-                    <motion.a whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} href={route('pages.show', 'contact')} className="btn-gold shrink-0 whitespace-nowrap">
+                    <MotionLink whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} href={route('pages.show', 'contact')} className="btn-gold shrink-0 whitespace-nowrap">
                         Nous contacter
-                    </motion.a>
+                    </MotionLink>
                 </Reveal>
             </section>
         </SiteLayout>

@@ -1,4 +1,4 @@
-import { router } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 
 function formatFcfa(amount) {
@@ -19,7 +19,7 @@ export default function ProductCard({ product, showProPrice }) {
     return (
         <div className="product-card group flex h-full flex-col border border-terroir-dark/[0.06]">
             <div className="relative">
-                <a href={route('produits.show', product.slug)} className="block">
+                <Link href={route('produits.show', product.slug)} className="block">
                     <div className="aspect-square overflow-hidden bg-terroir-cream p-5">
                         {product.image ? (
                             <img
@@ -49,7 +49,7 @@ export default function ProductCard({ product, showProPrice }) {
                             <span className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-terroir-dark">Rupture de stock</span>
                         </div>
                     )}
-                </a>
+                </Link>
 
                 <motion.button
                     onClick={toggleFavorite}
@@ -79,9 +79,9 @@ export default function ProductCard({ product, showProPrice }) {
                     <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-terroir-terracotta/90">{product.category_name}</p>
                 )}
 
-                <a href={route('produits.show', product.slug)} className="text-terroir-dark">
+                <Link href={route('produits.show', product.slug)} className="text-terroir-dark">
                     <h3 className="mt-1.5 font-display text-[1.05rem] font-semibold leading-snug transition group-hover:text-terroir-green">{product.name}</h3>
-                </a>
+                </Link>
 
                 {(product.rating || product.producer_name) && (
                     <div className="mt-1.5 flex items-center gap-1.5 text-xs text-terroir-dark/45">

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Head, useForm, usePage } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import SiteLayout from '../../Layouts/SiteLayout';
 import Reveal from '../../Components/Reveal';
@@ -119,11 +119,11 @@ export default function ProductsShow({ product, reviews, related }) {
 
             <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
                 <nav className="text-xs text-terroir-dark/50">
-                    <a href={route('accueil')} className="hover:text-terroir-terracotta">Accueil</a> /{' '}
-                    <a href={route('produits.index')} className="hover:text-terroir-terracotta">Produits</a> /{' '}
+                    <Link href={route('accueil')} className="hover:text-terroir-terracotta">Accueil</Link> /{' '}
+                    <Link href={route('produits.index')} className="hover:text-terroir-terracotta">Produits</Link> /{' '}
                     {product.category && (
                         <>
-                            <a href={route('produits.index', { categorie: product.category.slug })} className="hover:text-terroir-terracotta">{product.category.name}</a> /{' '}
+                            <Link href={route('produits.index', { categorie: product.category.slug })} className="hover:text-terroir-terracotta">{product.category.name}</Link> /{' '}
                         </>
                     )}
                     <span className="text-terroir-dark">{product.name}</span>
@@ -144,7 +144,7 @@ export default function ProductsShow({ product, reviews, related }) {
 
                         {product.producer && (
                             <p className="mt-2 text-sm text-terroir-dark/60">
-                                Producteur : <a href={route('producteurs.show', product.producer.slug)} className="font-semibold text-terroir-green hover:underline">{product.producer.name}</a>
+                                Producteur : <Link href={route('producteurs.show', product.producer.slug)} className="font-semibold text-terroir-green hover:underline">{product.producer.name}</Link>
                             </p>
                         )}
                         {product.origin && <p className="mt-1 text-sm text-terroir-dark/60">Origine : {product.origin}</p>}
@@ -197,7 +197,7 @@ export default function ProductsShow({ product, reviews, related }) {
                             >
                                 Ajouter au panier
                             </motion.button>
-                            <a href={route('compte.devis.create')} className="btn-outline">Demander un devis</a>
+                            <Link href={route('compte.devis.create')} className="btn-outline">Demander un devis</Link>
                         </form>
 
                         {product.description && (
@@ -227,7 +227,7 @@ export default function ProductsShow({ product, reviews, related }) {
                         product.can_review && <ReviewForm productId={product.id} />
                     ) : (
                         <p className="mt-4 text-sm text-terroir-dark/60">
-                            <a href={route('login')} className="font-semibold text-terroir-green hover:underline">Connectez-vous</a> pour laisser un avis si vous avez déjà commandé ce produit.
+                            <Link href={route('login')} className="font-semibold text-terroir-green hover:underline">Connectez-vous</Link> pour laisser un avis si vous avez déjà commandé ce produit.
                         </p>
                     )}
 

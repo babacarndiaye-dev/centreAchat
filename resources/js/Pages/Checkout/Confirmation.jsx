@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import SiteLayout from '../../Layouts/SiteLayout';
 
@@ -53,7 +53,7 @@ export default function CheckoutConfirmation({ order }) {
                     </div>
                 </motion.div>
 
-                <a href={route('produits.index')} className="btn-primary mt-10 inline-block">Continuer mes achats</a>
+                <Link href={route('produits.index')} className="btn-primary mt-10 inline-block">Continuer mes achats</Link>
             </section>
         </SiteLayout>
     );

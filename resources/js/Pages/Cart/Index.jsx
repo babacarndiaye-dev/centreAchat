@@ -31,7 +31,7 @@ export default function CartIndex({ items, subtotal }) {
                     >
                         <p className="text-6xl">🛒</p>
                         <p className="mt-4">Votre panier est vide pour le moment.</p>
-                        <a href={route('produits.index')} className="btn-primary mt-6">Découvrir nos produits</a>
+                        <Link href={route('produits.index')} className="btn-primary mt-6">Découvrir nos produits</Link>
                     </motion.div>
                 ) : (
                     <>
@@ -58,12 +58,12 @@ export default function CartIndex({ items, subtotal }) {
                                             </div>
 
                                             <div className="min-w-[180px] flex-1">
-                                                <a
+                                                <Link
                                                     href={route('produits.show', item.product.slug)}
                                                     className="font-semibold text-terroir-dark hover:text-terroir-terracotta"
                                                 >
                                                     {item.product.name}
-                                                </a>
+                                                </Link>
                                                 <p className="text-sm text-terroir-dark/50">
                                                     {formatFcfa(item.unit_price)} / {item.product.unit}
                                                 </p>
@@ -125,9 +125,9 @@ export default function CartIndex({ items, subtotal }) {
                             <Link href={route('commande.index')} className="btn-primary w-full max-w-xs justify-center">
                                 Passer la commande
                             </Link>
-                            <a href={route('produits.index')} className="text-sm text-terroir-dark/60 hover:text-terroir-terracotta">
+                            <Link href={route('produits.index')} className="text-sm text-terroir-dark/60 hover:text-terroir-terracotta">
                                 ← Continuer mes achats
-                            </a>
+                            </Link>
                         </motion.div>
                     </>
                 )}

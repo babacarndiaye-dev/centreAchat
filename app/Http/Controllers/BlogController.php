@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class BlogController extends Controller
 {
@@ -15,9 +16,19 @@ class BlogController extends Controller
             $query->where('type', $request->string('type'));
         }
 
-        $posts = $query->paginate(9)->withQueryString();
+        $posts = $query->paginate(9)->withQueryString()->through(fn (Post $post) => [
+            'slug' => $post->slug,
+            'type' => $post->type,
+            'title' => $post->title,
+            'excerpt' => $post->excerpt,
+            'cover_image' => $post->cover_image,
+            'published_at' => optional($post->published_at)->format('d/m/Y'),
+        ]);
 
-        return view('blog.index', compact('posts'));
+        return Inertia::render('Blog/Index', [
+            'posts' => $posts,
+            'currentType' => $request->string('type', '')->toString(),
+        ]);
     }
 
     public function show(string $slug)
@@ -26,6 +37,16 @@ class BlogController extends Controller
 
         $related = Post::where('type', $post->type)->where('id', '!=', $post->id)->where('is_published', true)->take(3)->get();
 
-        return view('blog.show', compact('post', 'related'));
+        return Inertia::render('Blog/Show', [
+            'post' => [
+                'slug' => $post->slug,
+                'type' => $post->type,
+                'title' => $post->title,
+                'content' => $post->content,
+                'cover_image' => $post->cover_image,
+                'published_at' => optional($post->published_at)->translatedFormat('d F Y'),
+            ],
+            'related' => $related->map(fn (Post $p) => ['slug' => $p->slug, 'title' => $p->title])->values(),
+        ]);
     }
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import ChatWidget from '../Components/ChatWidget';
 import PageTransition from '../Components/PageTransition';
@@ -58,6 +58,12 @@ export default function SiteLayout({ children }) {
     const user = props.auth?.user ?? null;
     const cartCount = props.cart?.count ?? 0;
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [search, setSearch] = useState('');
+
+    function submitSearch(e) {
+        e.preventDefault();
+        router.get(route('produits.index'), search ? { q: search } : {});
+    }
 
     return (
         <div className="flex min-h-screen flex-col bg-white">
@@ -87,31 +93,32 @@ export default function SiteLayout({ children }) {
 
             <header className="sticky top-0 z-50 bg-white/60 backdrop-blur transition-colors duration-300">
                 <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-                    <a href={route('accueil')} className="flex items-center gap-2">
+                    <Link href={route('accueil')} className="flex items-center gap-2">
                         {logoUrl ? (
                             <img src={logoUrl} alt={siteName} className="h-9 w-9 rounded-full object-cover" />
                         ) : (
                             <span className="text-2xl">🌿</span>
                         )}
                         <span className="font-display text-xl font-semibold text-terroir-green">{siteName}</span>
-                    </a>
+                    </Link>
 
                     <nav className="ml-10 hidden items-center gap-7 lg:flex">
                         {NAV_LINKS.map((link) => (
-                            <a
+                            <Link
                                 key={link.label}
                                 href={link.href()}
                                 className="text-sm font-medium text-terroir-dark/80 transition hover:text-terroir-terracotta"
                             >
                                 {link.label}
-                            </a>
+                            </Link>
                         ))}
                     </nav>
 
-                    <form action={route('produits.index')} method="GET" className="relative mx-4 hidden max-w-xs flex-1 xl:flex">
+                    <form onSubmit={submitSearch} className="relative mx-4 hidden max-w-xs flex-1 xl:flex">
                         <input
                             type="search"
-                            name="q"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
                             placeholder="Rechercher un produit..."
                             className="w-full rounded-full border border-terroir-green/15 bg-terroir-cream/60 py-2 pl-4 pr-9 text-sm text-terroir-dark placeholder:text-terroir-dark/40 focus:border-terroir-green focus:outline-none"
                         />
@@ -137,12 +144,12 @@ export default function SiteLayout({ children }) {
                             </Link>
                         )}
 
-                        <a
+                        <Link
                             href={route('produits.index')}
                             className="hidden rounded-full bg-terroir-terracotta px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white transition hover:-translate-y-0.5 hover:bg-terroir-dark sm:inline-block"
                         >
                             Commander
-                        </a>
+                        </Link>
 
                         {user && (
                             <Link
@@ -178,39 +185,47 @@ export default function SiteLayout({ children }) {
                     </div>
                 </div>
 
-                {mobileOpen && (
-                    <div className="border-t border-terroir-green/10 bg-white px-4 pb-6 pt-2 lg:hidden">
-                        <nav className="flex flex-col gap-1">
-                            {NAV_LINKS.map((link) => (
-                                <a
-                                    key={link.label}
-                                    href={link.href()}
-                                    className="rounded-lg px-3 py-3 text-sm font-medium text-terroir-dark transition-colors hover:bg-terroir-cream active:bg-terroir-cream"
-                                >
-                                    {link.label}
-                                </a>
-                            ))}
-                            {user ? (
-                                user.is_admin ? (
-                                    <a href={route('admin.dashboard')} className="rounded-lg px-3 py-3 text-sm font-medium text-terroir-dark transition-colors hover:bg-terroir-cream active:bg-terroir-cream">
-                                        Administration
-                                    </a>
-                                ) : (
-                                    <Link href={route('compte.index')} className="rounded-lg px-3 py-3 text-sm font-medium text-terroir-dark transition-colors hover:bg-terroir-cream active:bg-terroir-cream">
-                                        Mon compte
+                <AnimatePresence>
+                    {mobileOpen && (
+                        <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="overflow-hidden border-t border-terroir-green/10 bg-white lg:hidden"
+                        >
+                            <nav className="flex flex-col gap-1 px-4 pb-6 pt-2">
+                                {NAV_LINKS.map((link) => (
+                                    <Link
+                                        key={link.label}
+                                        href={link.href()}
+                                        className="rounded-lg px-3 py-3 text-sm font-medium text-terroir-dark transition-colors hover:bg-terroir-cream active:bg-terroir-cream"
+                                    >
+                                        {link.label}
                                     </Link>
-                                )
-                            ) : (
-                                <Link
-                                    href={route('login')}
-                                    className="rounded-lg px-3 py-3 text-sm font-medium text-terroir-dark transition-colors hover:bg-terroir-cream active:bg-terroir-cream"
-                                >
-                                    Connexion
-                                </Link>
-                            )}
-                        </nav>
-                    </div>
-                )}
+                                ))}
+                                {user ? (
+                                    user.is_admin ? (
+                                        <a href={route('admin.dashboard')} className="rounded-lg px-3 py-3 text-sm font-medium text-terroir-dark transition-colors hover:bg-terroir-cream active:bg-terroir-cream">
+                                            Administration
+                                        </a>
+                                    ) : (
+                                        <Link href={route('compte.index')} className="rounded-lg px-3 py-3 text-sm font-medium text-terroir-dark transition-colors hover:bg-terroir-cream active:bg-terroir-cream">
+                                            Mon compte
+                                        </Link>
+                                    )
+                                ) : (
+                                    <Link
+                                        href={route('login')}
+                                        className="rounded-lg px-3 py-3 text-sm font-medium text-terroir-dark transition-colors hover:bg-terroir-cream active:bg-terroir-cream"
+                                    >
+                                        Connexion
+                                    </Link>
+                                )}
+                            </nav>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </header>
 
             <main className="flex-1">
@@ -247,23 +262,23 @@ function SiteFooter({ siteName, logoUrl, address, showNewsletter }) {
                     <div className="hidden sm:block">
                         <h4 className="font-semibold text-white">Découvrir</h4>
                         <ul className="mt-3 space-y-2 text-sm text-white/70">
-                            <li><a href={route('produits.index')} className="hover:text-white">Nos produits</a></li>
-                            <li><a href={route('producteurs.index')} className="hover:text-white">Nos producteurs</a></li>
-                            <li><a href={route('pages.show', 'a-propos')} className="hover:text-white">À propos</a></li>
-                            <li><a href={route('blog.index')} className="hover:text-white">Actualités &amp; recettes</a></li>
-                            <li><a href={route('pages.show', 'devenir-fournisseur')} className="hover:text-white">Devenir fournisseur</a></li>
+                            <li><Link href={route('produits.index')} className="hover:text-white">Nos produits</Link></li>
+                            <li><Link href={route('producteurs.index')} className="hover:text-white">Nos producteurs</Link></li>
+                            <li><Link href={route('pages.show', 'a-propos')} className="hover:text-white">À propos</Link></li>
+                            <li><Link href={route('blog.index')} className="hover:text-white">Actualités &amp; recettes</Link></li>
+                            <li><Link href={route('pages.show', 'devenir-fournisseur')} className="hover:text-white">Devenir fournisseur</Link></li>
                         </ul>
                     </div>
 
                     <div className="hidden sm:block">
                         <h4 className="font-semibold text-white">Assistance</h4>
                         <ul className="mt-3 space-y-2 text-sm text-white/70">
-                            <li><a href={route('pages.show', 'faq')} className="hover:text-white">FAQ</a></li>
-                            <li><a href={route('pages.show', 'livraison')} className="hover:text-white">Livraison</a></li>
-                            <li><a href={route('pages.show', 'contact')} className="hover:text-white">Contact</a></li>
-                            <li><a href={route('pages.show', 'mentions-legales')} className="hover:text-white">Mentions légales</a></li>
-                            <li><a href={route('pages.show', 'politique-de-confidentialite')} className="hover:text-white">Confidentialité</a></li>
-                            <li><a href={route('pages.show', 'conditions-generales')} className="hover:text-white">CGV</a></li>
+                            <li><Link href={route('pages.show', 'faq')} className="hover:text-white">FAQ</Link></li>
+                            <li><Link href={route('pages.show', 'livraison')} className="hover:text-white">Livraison</Link></li>
+                            <li><Link href={route('pages.show', 'contact')} className="hover:text-white">Contact</Link></li>
+                            <li><Link href={route('pages.show', 'mentions-legales')} className="hover:text-white">Mentions légales</Link></li>
+                            <li><Link href={route('pages.show', 'politique-de-confidentialite')} className="hover:text-white">Confidentialité</Link></li>
+                            <li><Link href={route('pages.show', 'conditions-generales')} className="hover:text-white">CGV</Link></li>
                         </ul>
                     </div>
 
