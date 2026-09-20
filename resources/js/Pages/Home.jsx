@@ -171,14 +171,14 @@ export default function Home({
                         >
                             {promoProduct?.promo_ends_at && (
                                 <>
-                                    <span className="mb-3 inline-flex items-center rounded-full bg-terroir-terracotta/90 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
+                                    <span className="mb-3 inline-flex items-center rounded-[2px] bg-terroir-gold px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-terroir-dark">
                                         Offre à durée limitée
                                     </span>
                                     <br />
                                 </>
                             )}
                             <span className="section-eyebrow !text-terroir-gold">Fabriqué au Sénégal</span>
-                            <h1 className="mt-3 max-w-lg font-display text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">
+                            <h1 className="mt-3 max-w-lg font-display text-4xl font-semibold leading-tight tracking-tight text-white sm:text-6xl">
                                 {heroTitle || 'Le meilleur du terroir local, sélectionné pour vous.'}
                             </h1>
                             <p className="mt-4 max-w-md text-lg leading-relaxed text-white/70">
@@ -192,10 +192,10 @@ export default function Home({
                                 <MotionLink
                                     whileHover={{ y: -2 }}
                                     whileTap={{ scale: 0.97 }}
-                                    href={route('pages.show', 'coffrets-cadeaux')}
+                                    href={route('pages.show', 'contact')}
                                     className="btn border border-white/35 bg-white/10 text-white hover:bg-white/20"
                                 >
-                                    Voir les coffrets
+                                    Nous contacter
                                 </MotionLink>
                             </div>
                         </motion.div>
@@ -211,7 +211,7 @@ export default function Home({
                                     initial={{ scale: 0, rotate: -20 }}
                                     animate={{ scale: 1, rotate: 6 }}
                                     transition={{ type: 'spring', stiffness: 260, damping: 18, delay: 0.5 }}
-                                    className="absolute -right-3 -top-3 z-10 flex h-20 w-20 flex-col items-center justify-center rounded-full bg-terroir-terracotta text-center text-white shadow-soft sm:-right-4 sm:-top-4 sm:h-24 sm:w-24"
+                                    className="absolute -right-3 -top-3 z-10 flex h-20 w-20 flex-col items-center justify-center rounded-full bg-terroir-gold text-center text-terroir-dark shadow-soft sm:-right-4 sm:-top-4 sm:h-24 sm:w-24"
                                 >
                                     <span className="text-[10px] font-semibold uppercase leading-none">Jusqu'à</span>
                                     <span className="font-display text-2xl font-bold leading-tight sm:text-3xl">-{heroDiscount}%</span>
@@ -330,7 +330,7 @@ export default function Home({
                             <h2 className="section-title mt-1">{promoProduct.name}</h2>
                             <p className="mt-2.5 leading-relaxed text-terroir-dark/60">{promoProduct.short_description}</p>
                             <div className="mt-3 flex items-center gap-3.5">
-                                <span className="font-display text-3xl font-bold text-terroir-terracotta">{formatFcfa(promoProduct.promo_price)}</span>
+                                <span className="font-display text-3xl font-bold text-terroir-gold">{formatFcfa(promoProduct.promo_price)}</span>
                                 <span className="text-terroir-dark/35 line-through">{formatFcfa(promoProduct.price)}</span>
                             </div>
                             {promoProduct.stock_quantity > 0 && (

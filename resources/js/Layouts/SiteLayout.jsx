@@ -85,7 +85,7 @@ export default function SiteLayout({ children }) {
             </div>
 
             {announcementActive && announcementText && (
-                <div className="flex items-center justify-center gap-2 bg-terroir-terracotta px-4 py-2.5 text-center text-sm font-medium text-white">
+                <div className="flex items-center justify-center gap-2 bg-terroir-gold px-4 py-2.5 text-center text-sm font-medium text-terroir-dark">
                     <span className="material-symbols-outlined is-filled text-base">campaign</span>
                     <span>{announcementText}</span>
                 </div>
@@ -107,7 +107,7 @@ export default function SiteLayout({ children }) {
                             <Link
                                 key={link.label}
                                 href={link.href()}
-                                className="text-sm font-medium text-terroir-dark/80 transition hover:text-terroir-terracotta"
+                                className="text-xs font-semibold uppercase tracking-wide text-terroir-dark/80 transition hover:text-terroir-gold"
                             >
                                 {link.label}
                             </Link>
@@ -120,7 +120,7 @@ export default function SiteLayout({ children }) {
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             placeholder="Rechercher un produit..."
-                            className="w-full rounded-full border border-terroir-green/15 bg-terroir-cream/60 py-2 pl-4 pr-9 text-sm text-terroir-dark placeholder:text-terroir-dark/40 focus:border-terroir-green focus:outline-none"
+                            className="w-full rounded-[2px] border border-terroir-green/15 bg-terroir-cream/60 py-2 pl-4 pr-9 text-sm text-terroir-dark placeholder:text-terroir-dark/40 focus:border-terroir-green focus:outline-none"
                         />
                         <button type="submit" className="absolute right-2.5 top-1/2 -translate-y-1/2 text-lg text-terroir-dark/40" aria-label="Rechercher">
                             <span className="material-symbols-outlined">search</span>
@@ -130,23 +130,26 @@ export default function SiteLayout({ children }) {
                     <div className="flex items-center gap-3">
                         {user ? (
                             user.is_admin ? (
-                                <a href={route('admin.dashboard')} className="hidden text-sm font-medium text-terroir-dark/80 hover:text-terroir-terracotta sm:block">
+                                <a href={route('admin.dashboard')} className="hidden text-xs font-semibold uppercase tracking-wide text-terroir-dark/80 hover:text-terroir-gold sm:block">
                                     Administration
                                 </a>
                             ) : (
-                                <Link href={route('compte.index')} className="hidden text-sm font-medium text-terroir-dark/80 hover:text-terroir-terracotta sm:block">
+                                <Link href={route('compte.index')} className="hidden text-xs font-semibold uppercase tracking-wide text-terroir-dark/80 hover:text-terroir-gold sm:block">
                                     Mon compte
                                 </Link>
                             )
                         ) : (
-                            <Link href={route('login')} className="hidden text-sm font-medium text-terroir-dark/80 hover:text-terroir-terracotta sm:block">
-                                Connexion
+                            <Link
+                                href={route('login')}
+                                className="btn-outline hidden !px-5 !py-2.5 !text-xs sm:inline-flex"
+                            >
+                                Se connecter
                             </Link>
                         )}
 
                         <Link
                             href={route('produits.index')}
-                            className="hidden rounded-full bg-terroir-terracotta px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white transition hover:-translate-y-0.5 hover:bg-terroir-dark sm:inline-block"
+                            className="btn-gold hidden !px-5 !py-2.5 !text-xs sm:inline-flex"
                         >
                             Commander
                         </Link>
@@ -154,7 +157,7 @@ export default function SiteLayout({ children }) {
                         {user && (
                             <Link
                                 href={route('compte.favoris.index')}
-                                className="hidden h-10 w-10 items-center justify-center rounded-full text-xl text-terroir-dark/70 transition hover:bg-terroir-cream sm:inline-flex"
+                                className="hidden h-10 w-10 items-center justify-center rounded-[2px] text-xl text-terroir-dark/70 transition hover:bg-terroir-cream sm:inline-flex"
                                 aria-label="Mes favoris"
                             >
                                 <span className="material-symbols-outlined">favorite</span>
@@ -163,12 +166,12 @@ export default function SiteLayout({ children }) {
 
                         <Link
                             href={route('panier.index')}
-                            className="relative inline-flex h-10 w-10 items-center justify-center rounded-full bg-terroir-green text-xl text-terroir-cream transition hover:bg-terroir-dark"
+                            className="relative inline-flex h-10 w-10 items-center justify-center rounded-[2px] bg-terroir-green text-xl text-terroir-cream transition hover:bg-terroir-dark"
                             aria-label="Panier"
                         >
                             <span className="material-symbols-outlined">shopping_cart</span>
                             {cartCount > 0 && (
-                                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-terroir-terracotta text-[11px] font-bold text-white">
+                                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-terroir-gold text-[11px] font-bold text-terroir-dark">
                                     {cartCount}
                                 </span>
                             )}
@@ -177,7 +180,7 @@ export default function SiteLayout({ children }) {
                         <button
                             onClick={() => setMobileOpen((v) => !v)}
                             type="button"
-                            className="inline-flex h-10 w-10 items-center justify-center rounded-full text-2xl text-terroir-dark lg:hidden"
+                            className="inline-flex h-10 w-10 items-center justify-center rounded-[2px] text-2xl text-terroir-dark lg:hidden"
                             aria-label="Menu"
                         >
                             <span className="material-symbols-outlined">{mobileOpen ? 'close' : 'menu'}</span>
@@ -199,25 +202,25 @@ export default function SiteLayout({ children }) {
                                     <Link
                                         key={link.label}
                                         href={link.href()}
-                                        className="rounded-lg px-3 py-3 text-sm font-medium text-terroir-dark transition-colors hover:bg-terroir-cream active:bg-terroir-cream"
+                                        className="rounded-[2px] px-3 py-3 text-sm font-medium text-terroir-dark transition-colors hover:bg-terroir-cream active:bg-terroir-cream"
                                     >
                                         {link.label}
                                     </Link>
                                 ))}
                                 {user ? (
                                     user.is_admin ? (
-                                        <a href={route('admin.dashboard')} className="rounded-lg px-3 py-3 text-sm font-medium text-terroir-dark transition-colors hover:bg-terroir-cream active:bg-terroir-cream">
+                                        <a href={route('admin.dashboard')} className="rounded-[2px] px-3 py-3 text-sm font-medium text-terroir-dark transition-colors hover:bg-terroir-cream active:bg-terroir-cream">
                                             Administration
                                         </a>
                                     ) : (
-                                        <Link href={route('compte.index')} className="rounded-lg px-3 py-3 text-sm font-medium text-terroir-dark transition-colors hover:bg-terroir-cream active:bg-terroir-cream">
+                                        <Link href={route('compte.index')} className="rounded-[2px] px-3 py-3 text-sm font-medium text-terroir-dark transition-colors hover:bg-terroir-cream active:bg-terroir-cream">
                                             Mon compte
                                         </Link>
                                     )
                                 ) : (
                                     <Link
                                         href={route('login')}
-                                        className="rounded-lg px-3 py-3 text-sm font-medium text-terroir-dark transition-colors hover:bg-terroir-cream active:bg-terroir-cream"
+                                        className="rounded-[2px] px-3 py-3 text-sm font-medium text-terroir-dark transition-colors hover:bg-terroir-cream active:bg-terroir-cream"
                                     >
                                         Connexion
                                     </Link>
@@ -262,7 +265,7 @@ function SiteFooter({ siteName, logoUrl, address, showNewsletter }) {
                     </div>
 
                     <div className="hidden sm:block">
-                        <h4 className="font-semibold text-white">Découvrir</h4>
+                        <h4 className="text-xs font-semibold uppercase tracking-widest text-terroir-gold">Découvrir</h4>
                         <ul className="mt-3 space-y-2 text-sm text-white/70">
                             <li><Link href={route('produits.index')} className="hover:text-white">Nos produits</Link></li>
                             <li><Link href={route('producteurs.index')} className="hover:text-white">Nos producteurs</Link></li>
@@ -273,7 +276,7 @@ function SiteFooter({ siteName, logoUrl, address, showNewsletter }) {
                     </div>
 
                     <div className="hidden sm:block">
-                        <h4 className="font-semibold text-white">Assistance</h4>
+                        <h4 className="text-xs font-semibold uppercase tracking-widest text-terroir-gold">Assistance</h4>
                         <ul className="mt-3 space-y-2 text-sm text-white/70">
                             <li><Link href={route('pages.show', 'faq')} className="hover:text-white">FAQ</Link></li>
                             <li><Link href={route('pages.show', 'livraison')} className="hover:text-white">Livraison</Link></li>
@@ -286,7 +289,7 @@ function SiteFooter({ siteName, logoUrl, address, showNewsletter }) {
 
                     {showNewsletter && (
                         <div>
-                            <h4 className="font-semibold text-white">Newsletter</h4>
+                            <h4 className="text-xs font-semibold uppercase tracking-widest text-terroir-gold">Newsletter</h4>
                             <p className="mt-3 text-sm text-white/70">Recevez nos nouveautés et offres du terroir.</p>
                             <form action={route('newsletter.store')} method="POST" className="mt-3 space-y-2">
                                 <input type="hidden" name="_token" value={document.querySelector('meta[name=csrf-token]')?.content} />
