@@ -8,7 +8,7 @@
         ? $purchaseRequest->items->map(fn ($item) => ['product_id' => $item->product_id, 'quantity' => $item->quantity, 'unit_price' => 0])->values()
         : collect([['product_id' => '', 'quantity' => 1, 'unit_price' => 0]]);
 @endphp
-<div class="uk-card uk-card-default" style="max-width:64rem; padding:32px;" x-data="{
+<div class="admin-card max-w-4xl" x-data="{
     rows: {{ $initialRows->toJson() }},
     products: {{ $products->map(fn ($p) => ['id' => $p->id, 'name' => $p->name])->toJson() }},
     addRow() { this.rows.push({ product_id: '', quantity: 1, unit_price: 0 }) },
@@ -16,7 +16,7 @@
     total() { return this.rows.reduce((sum, r) => sum + (Number(r.quantity) || 0) * (Number(r.unit_price) || 0), 0) }
 }">
     @if($purchaseRequest)
-        <div class="uk-margin-bottom" style="border-radius:8px; background:#F7F8F5; padding:12px 16px; font-size:.875rem;">
+        <div class="mb-4 rounded-lg bg-terroir-cream px-4 py-3 text-sm">
             Créé à partir de la demande d'achat <strong>{{ $purchaseRequest->reference }}</strong>.
         </div>
     @endif
@@ -27,10 +27,10 @@
             <input type="hidden" name="purchase_request_id" value="{{ $purchaseRequest->id }}">
         @endif
 
-        <div class="uk-grid-small uk-child-width-1-3@s" uk-grid>
+        <div class="grid gap-4 sm:grid-cols-3">
             <div>
-                <label class="uk-form-label" for="supplier_id">Fournisseur</label>
-                <select id="supplier_id" name="supplier_id" required class="uk-select">
+                <label class="label" for="supplier_id">Fournisseur</label>
+                <select id="supplier_id" name="supplier_id" required class="input">
                     <option value="">Choisir...</option>
                     @foreach($suppliers as $supplier)
                         <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
@@ -38,49 +38,49 @@
                 </select>
             </div>
             <div>
-                <label class="uk-form-label" for="order_date">Date de commande</label>
-                <input type="date" id="order_date" name="order_date" value="{{ old('order_date', now()->format('Y-m-d')) }}" required class="uk-input">
+                <label class="label" for="order_date">Date de commande</label>
+                <input type="date" id="order_date" name="order_date" value="{{ old('order_date', now()->format('Y-m-d')) }}" required class="input">
             </div>
             <div>
-                <label class="uk-form-label" for="expected_date">Livraison attendue</label>
-                <input type="date" id="expected_date" name="expected_date" class="uk-input">
+                <label class="label" for="expected_date">Livraison attendue</label>
+                <input type="date" id="expected_date" name="expected_date" class="input">
             </div>
         </div>
 
-        <div class="uk-margin-top" style="border-top:1px solid rgba(31,35,40,.08); padding-top:24px;">
-            <h3 style="font-family:'Fraunces',serif; font-weight:600; font-size:1rem;">Articles commandés</h3>
+        <div class="mt-6 border-t border-terroir-dark/10 pt-6">
+            <h3 class="font-display text-base font-semibold">Articles commandés</h3>
 
-            <div class="uk-margin-small-top" style="display:flex; flex-direction:column; gap:12px;">
+            <div class="mt-3 flex flex-col gap-3">
                 <template x-for="(row, i) in rows" :key="i">
-                    <div class="uk-flex uk-flex-wrap uk-flex-middle" style="gap:12px;">
-                        <select :name="'product_id[' + i + ']'" x-model="row.product_id" required class="uk-select" style="flex:1; min-width:200px;">
+                    <div class="flex flex-wrap items-center gap-3">
+                        <select :name="'product_id[' + i + ']'" x-model="row.product_id" required class="input min-w-[200px] flex-1">
                             <option value="">Produit...</option>
                             <template x-for="p in products" :key="p.id">
                                 <option :value="p.id" x-text="p.name" :selected="row.product_id == p.id"></option>
                             </template>
                         </select>
-                        <input type="number" :name="'quantity[' + i + ']'" x-model.number="row.quantity" min="1" placeholder="Qté" required class="uk-input" style="width:6rem;">
-                        <input type="number" step="0.01" :name="'unit_price[' + i + ']'" x-model.number="row.unit_price" min="0" placeholder="Prix unitaire" required class="uk-input" style="width:8rem;">
-                        <button type="button" @click="removeRow(i)" style="color:#E8604F; font-weight:600; background:none; border:none; cursor:pointer;" aria-label="Retirer">✕</button>
+                        <input type="number" :name="'quantity[' + i + ']'" x-model.number="row.quantity" min="1" placeholder="Qté" required class="input w-24">
+                        <input type="number" step="0.01" :name="'unit_price[' + i + ']'" x-model.number="row.unit_price" min="0" placeholder="Prix unitaire" required class="input w-32">
+                        <button type="button" @click="removeRow(i)" class="font-semibold text-terroir-terracotta" aria-label="Retirer">✕</button>
                     </div>
                 </template>
             </div>
 
-            <button type="button" @click="addRow()" class="uk-button uk-button-default uk-margin-top">+ Ajouter un article</button>
+            <button type="button" @click="addRow()" class="btn-outline mt-4">+ Ajouter un article</button>
 
-            <div class="uk-margin-top" style="text-align:right; font-size:1.125rem; font-weight:700; color:#1D8A4E;">
+            <div class="mt-4 text-right text-lg font-bold text-terroir-green">
                 Total : <span x-text="total().toLocaleString('fr-FR') + ' FCFA'"></span>
             </div>
         </div>
 
-        <div class="uk-margin-top">
-            <label class="uk-form-label" for="notes">Notes</label>
-            <textarea id="notes" name="notes" rows="2" class="uk-textarea"></textarea>
+        <div class="mt-6">
+            <label class="label" for="notes">Notes</label>
+            <textarea id="notes" name="notes" rows="2" class="input"></textarea>
         </div>
 
-        <div class="uk-flex uk-margin-top" style="gap:12px;">
-            <button type="submit" class="uk-button uk-button-primary">Créer le bon de commande</button>
-            <a href="{{ route('admin.bons-commande.index') }}" class="uk-button uk-button-default">Annuler</a>
+        <div class="mt-6 flex gap-3">
+            <button type="submit" class="btn-primary">Créer le bon de commande</button>
+            <a href="{{ route('admin.bons-commande.index') }}" class="btn-outline">Annuler</a>
         </div>
     </form>
 </div>

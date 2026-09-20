@@ -246,6 +246,10 @@
         @apply admin-badge bg-terroir-terracotta/10 text-terroir-terracotta;
     }
 
+    .admin-badge-warning {
+        @apply admin-badge bg-terroir-gold/15 text-terroir-brown;
+    }
+
     .admin-link {
         @apply font-semibold text-terroir-green hover:underline;
     }

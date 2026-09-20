@@ -50,4 +50,14 @@ class PurchaseRequest extends Model
     {
         return 'DA-'.now()->format('Ymd').'-'.strtoupper(substr(uniqid(), -5));
     }
+
+    public function statusBadgeClass(): string
+    {
+        return match ($this->status) {
+            'validee', 'convertie' => 'admin-badge-success',
+            'rejetee', 'annulee' => 'admin-badge-danger',
+            'brouillon' => 'admin-badge-neutral',
+            default => 'admin-badge-warning',
+        };
+    }
 }

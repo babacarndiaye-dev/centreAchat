@@ -55,4 +55,13 @@ class Supplier extends Model
     {
         return $this->totalOwed() - $this->totalPaid();
     }
+
+    public function statusBadgeClass(): string
+    {
+        return match ($this->status) {
+            'actif' => 'admin-badge-success',
+            'suspendu' => 'admin-badge-danger',
+            default => 'admin-badge-warning',
+        };
+    }
 }

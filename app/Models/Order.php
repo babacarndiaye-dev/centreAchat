@@ -94,4 +94,14 @@ class Order extends Model
     {
         return 'CA-'.now()->format('Ymd').'-'.strtoupper(substr(uniqid(), -6));
     }
+
+    public function statusBadgeClass(): string
+    {
+        return match ($this->status) {
+            'payee', 'livree', 'terminee' => 'admin-badge-success',
+            'annulee', 'remboursee' => 'admin-badge-danger',
+            'brouillon' => 'admin-badge-neutral',
+            default => 'admin-badge-warning',
+        };
+    }
 }

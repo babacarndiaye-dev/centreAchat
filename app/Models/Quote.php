@@ -45,4 +45,14 @@ class Quote extends Model
     {
         return 'DEV-'.now()->format('Ymd').'-'.strtoupper(substr(uniqid(), -5));
     }
+
+    public function statusBadgeClass(): string
+    {
+        return match ($this->status) {
+            'accepte', 'converti' => 'admin-badge-success',
+            'refuse' => 'admin-badge-danger',
+            'expire' => 'admin-badge-neutral',
+            default => 'admin-badge-warning',
+        };
+    }
 }

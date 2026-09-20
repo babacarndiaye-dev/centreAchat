@@ -5,8 +5,7 @@
 @section('content')
 
 <div
-    class="uk-card uk-card-default uk-margin-bottom"
-    style="padding:24px;"
+    class="admin-card mb-6"
     x-data="{
         note: null,
         customerMessage: null,
@@ -30,70 +29,65 @@
         },
     }"
 >
-    <div class="uk-flex uk-flex-between uk-flex-middle">
-        <h2 style="font-family:'Fraunces',serif; font-weight:600; font-size:1.125rem;">🧠 Assistant commande</h2>
-        <button
-            type="button"
-            @click="fetchSuggestion()"
-            :disabled="loading"
-            style="font-size:.875rem; font-weight:600; color:#1D8A4E; background:none; border:none; cursor:pointer;"
-        >
+    <div class="flex items-center justify-between">
+        <h2 class="font-display text-lg font-semibold">🧠 Assistant commande</h2>
+        <button type="button" @click="fetchSuggestion()" :disabled="loading" class="text-sm font-semibold text-terroir-green disabled:opacity-50">
             <span x-show="!loading" x-text="checked ? 'Réanalyser' : 'Analyser avec l\'IA'"></span>
             <span x-show="loading">Analyse en cours…</span>
         </button>
     </div>
-    <p class="uk-text-small uk-text-muted uk-margin-small-top">Si l'IA juge un message au client utile, il est envoyé automatiquement via le chat — sans validation supplémentaire.</p>
+    <p class="mt-1.5 text-sm text-terroir-dark/50">Si l'IA juge un message au client utile, il est envoyé automatiquement via le chat — sans validation supplémentaire.</p>
 
     @if(count($flags))
-        <ul class="uk-margin-top" style="list-style:none; padding:0; display:flex; flex-direction:column; gap:8px;">
+        <ul class="mt-4 flex flex-col gap-2">
             @foreach($flags as $flag)
-                <li class="uk-flex" style="gap:8px; align-items:flex-start; border-radius:8px; padding:8px 12px; font-size:.875rem; {{ $flag['severity'] === 'critical' ? 'background:rgba(232,96,79,.1); color:#E8604F;' : 'background:rgba(240,169,59,.1); color:#8a5a1f;' }}">
+                <li class="flex items-start gap-2 rounded-lg px-3 py-2 text-sm {{ $flag['severity'] === 'critical' ? 'bg-terroir-terracotta/10 text-terroir-terracotta' : 'bg-terroir-gold/15 text-terroir-brown' }}">
                     <span>{{ $flag['severity'] === 'critical' ? '⚠️' : '👁' }}</span>
                     <span>{{ $flag['label'] }}</span>
                 </li>
             @endforeach
         </ul>
     @else
-        <p class="uk-text-small uk-text-muted uk-margin-small-top">Aucune alerte détectée sur cette commande.</p>
+        <p class="mt-1.5 text-sm text-terroir-dark/50">Aucune alerte détectée sur cette commande.</p>
     @endif
 
-    <div x-show="checked" x-cloak class="uk-margin-top" style="display:flex; flex-direction:column; gap:12px; border-top:1px solid rgba(31,35,40,.08); padding-top:16px;">
+    <div x-show="checked" x-cloak class="mt-4 flex flex-col gap-3 border-t border-terroir-dark/10 pt-4">
         <template x-if="available && note">
             <div>
-                <p class="uk-text-small uk-text-muted" style="font-size:.6875rem; font-weight:600; text-transform:uppercase; letter-spacing:.03em;">Note pour l'équipe</p>
-                <p class="uk-margin-small-top uk-text-small" style="white-space:pre-line;" x-text="note"></p>
+                <p class="text-[11px] font-semibold uppercase tracking-wide text-terroir-dark/40">Note pour l'équipe</p>
+                <p class="mt-1.5 whitespace-pre-line text-sm" x-text="note"></p>
             </div>
         </template>
         <template x-if="sent && customerMessage">
-            <div style="border-radius:8px; background:rgba(29,138,78,.1); padding:10px 12px;">
-                <p style="font-size:.6875rem; font-weight:600; text-transform:uppercase; letter-spacing:.03em; color:#1D8A4E;">✅ Message envoyé au client</p>
-                <p class="uk-margin-small-top uk-text-small" style="white-space:pre-line;" x-text="customerMessage"></p>
+            <div class="rounded-lg bg-terroir-green/10 px-3 py-2.5">
+                <p class="text-[11px] font-semibold uppercase tracking-wide text-terroir-green">✅ Message envoyé au client</p>
+                <p class="mt-1.5 whitespace-pre-line text-sm" x-text="customerMessage"></p>
             </div>
         </template>
         <template x-if="!sent && customerMessage">
-            <div style="border-radius:8px; background:rgba(240,169,59,.1); padding:10px 12px;">
-                <p style="font-size:.6875rem; font-weight:600; text-transform:uppercase; letter-spacing:.03em; color:#8a5a1f;">Message rédigé mais non envoyé</p>
-                <p class="uk-margin-small-top uk-text-small" style="white-space:pre-line;" x-text="customerMessage"></p>
-                <p class="uk-text-small uk-text-muted uk-margin-small-top">Ce client n'a pas de compte associé à la commande — l'envoi automatique via le chat n'est possible que pour les clients connectés.</p>
+            <div class="rounded-lg bg-terroir-gold/15 px-3 py-2.5">
+                <p class="text-[11px] font-semibold uppercase tracking-wide text-terroir-brown">Message rédigé mais non envoyé</p>
+                <p class="mt-1.5 whitespace-pre-line text-sm" x-text="customerMessage"></p>
+                <p class="mt-1.5 text-sm text-terroir-dark/50">Ce client n'a pas de compte associé à la commande — l'envoi automatique via le chat n'est possible que pour les clients connectés.</p>
             </div>
         </template>
         <template x-if="!available">
-            <p class="uk-text-small uk-text-muted">Suggestion IA indisponible pour le moment (aucune clé configurée ou service temporairement inaccessible) — les alertes ci-dessus restent fiables, elles ne dépendent pas de l'IA.</p>
+            <p class="text-sm text-terroir-dark/50">Suggestion IA indisponible pour le moment (aucune clé configurée ou service temporairement inaccessible) — les alertes ci-dessus restent fiables, elles ne dépendent pas de l'IA.</p>
         </template>
     </div>
 </div>
 
-<div class="uk-grid-small uk-child-width-1-1 uk-child-width-2-3@l" uk-grid>
-    <div>
-        <div class="uk-card uk-card-default" style="padding:24px;">
-            <h2 style="font-family:'Fraunces',serif; font-weight:600; font-size:1.125rem;">Articles</h2>
-            <table class="uk-table uk-table-divider uk-margin-small-top">
+<div class="grid gap-6 lg:grid-cols-3">
+    <div class="lg:col-span-2">
+        <div class="admin-card">
+            <h2 class="font-display text-lg font-semibold">Articles</h2>
+            <table class="admin-table mt-3">
                 <thead>
                     <tr>
                         <th>Produit</th>
-                        <th class="uk-text-right">Prix unitaire</th>
-                        <th class="uk-text-right">Quantité</th>
-                        <th class="uk-text-right">Total</th>
+                        <th class="text-right">Prix unitaire</th>
+                        <th class="text-right">Quantité</th>
+                        <th class="text-right">Total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -102,25 +96,25 @@
                             <td>
                                 {{ $item->product_name }}
                                 @if($item->price_tier !== 'retail')
-                                    <span class="uk-label" style="background:rgba(240,169,59,.2); color:#8a5a1f; margin-left:4px; font-size:.625rem;">{{ $item->priceTierLabel() }}</span>
+                                    <span class="ml-1 rounded-full bg-terroir-gold/20 px-2 py-0.5 text-[10px] font-medium text-terroir-brown">{{ $item->priceTierLabel() }}</span>
                                 @endif
                             </td>
-                            <td class="uk-text-right">{{ number_format($item->unit_price, 0, ',', ' ') }} FCFA</td>
-                            <td class="uk-text-right">{{ $item->quantity }}</td>
-                            <td class="uk-text-right" style="font-weight:600;">{{ number_format($item->total, 0, ',', ' ') }} FCFA</td>
+                            <td class="text-right">{{ number_format($item->unit_price, 0, ',', ' ') }} FCFA</td>
+                            <td class="text-right">{{ $item->quantity }}</td>
+                            <td class="text-right font-semibold">{{ number_format($item->total, 0, ',', ' ') }} FCFA</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
 
-            <div class="uk-margin-top" style="margin-left:auto; max-width:20rem; display:flex; flex-direction:column; gap:8px; border-top:1px solid rgba(31,35,40,.08); padding-top:16px; font-size:.875rem;">
-                <div class="uk-flex uk-flex-between"><span class="uk-text-muted">Sous-total</span><span>{{ number_format($order->subtotal, 0, ',', ' ') }} FCFA</span></div>
-                <div class="uk-flex uk-flex-between"><span class="uk-text-muted">Livraison</span><span>{{ number_format($order->delivery_fee, 0, ',', ' ') }} FCFA</span></div>
-                <div class="uk-flex uk-flex-between" style="font-size:1rem; font-weight:700; color:#1D8A4E;"><span>Total</span><span>{{ number_format($order->total, 0, ',', ' ') }} FCFA</span></div>
+            <div class="ml-auto mt-4 flex max-w-xs flex-col gap-2 border-t border-terroir-dark/10 pt-4 text-sm">
+                <div class="flex justify-between"><span class="text-terroir-dark/60">Sous-total</span><span>{{ number_format($order->subtotal, 0, ',', ' ') }} FCFA</span></div>
+                <div class="flex justify-between"><span class="text-terroir-dark/60">Livraison</span><span>{{ number_format($order->delivery_fee, 0, ',', ' ') }} FCFA</span></div>
+                <div class="flex justify-between text-base font-bold text-terroir-green"><span>Total</span><span>{{ number_format($order->total, 0, ',', ' ') }} FCFA</span></div>
             </div>
 
             @if($order->notes)
-                <div class="uk-margin-top uk-text-small" style="border-radius:8px; background:#F7F8F5; padding:16px;">
+                <div class="mt-4 rounded-lg bg-terroir-cream p-4 text-sm">
                     <strong>Notes :</strong> {{ $order->notes }}
                 </div>
             @endif
@@ -128,53 +122,53 @@
     </div>
 
     <div>
-        <div class="uk-card uk-card-default" style="padding:24px;">
-            <h2 style="font-family:'Fraunces',serif; font-weight:600; font-size:1.125rem;">Client</h2>
-            <dl class="uk-margin-top uk-text-small" style="display:flex; flex-direction:column; gap:8px;">
-                <div><dt class="uk-text-muted">Nom</dt><dd style="font-weight:600;">{{ $order->customer_name }}</dd></div>
-                <div><dt class="uk-text-muted">Téléphone</dt><dd style="font-weight:600;">{{ $order->customer_phone }}</dd></div>
+        <div class="admin-card">
+            <h2 class="font-display text-lg font-semibold">Client</h2>
+            <dl class="mt-3 flex flex-col gap-2 text-sm">
+                <div><dt class="text-terroir-dark/50">Nom</dt><dd class="font-semibold">{{ $order->customer_name }}</dd></div>
+                <div><dt class="text-terroir-dark/50">Téléphone</dt><dd class="font-semibold">{{ $order->customer_phone }}</dd></div>
                 @if($order->customer_email)
-                    <div><dt class="uk-text-muted">E-mail</dt><dd style="font-weight:600;">{{ $order->customer_email }}</dd></div>
+                    <div><dt class="text-terroir-dark/50">E-mail</dt><dd class="font-semibold">{{ $order->customer_email }}</dd></div>
                 @endif
-                <div><dt class="uk-text-muted">Adresse</dt><dd style="font-weight:600;">{{ $order->delivery_address }}, {{ $order->city }}</dd></div>
+                <div><dt class="text-terroir-dark/50">Adresse</dt><dd class="font-semibold">{{ $order->delivery_address }}, {{ $order->city }}</dd></div>
                 @if($order->hotel_name)
-                    <div><dt class="uk-text-muted">🧳 Livraison hôtel</dt><dd style="font-weight:600;">{{ $order->hotel_name }}{{ $order->room_number ? ' — Chambre '.$order->room_number : '' }}</dd></div>
+                    <div><dt class="text-terroir-dark/50">🧳 Livraison hôtel</dt><dd class="font-semibold">{{ $order->hotel_name }}{{ $order->room_number ? ' — Chambre '.$order->room_number : '' }}</dd></div>
                 @endif
                 @if($order->gift_message)
-                    <div><dt class="uk-text-muted">🎁 Message cadeau</dt><dd style="border-radius:8px; background:rgba(240,169,59,.1); padding:8px; font-weight:600; font-style:italic;">« {{ $order->gift_message }} »</dd></div>
+                    <div><dt class="text-terroir-dark/50">🎁 Message cadeau</dt><dd class="rounded-lg bg-terroir-gold/10 p-2 font-semibold italic">« {{ $order->gift_message }} »</dd></div>
                 @endif
-                <div><dt class="uk-text-muted">Paiement</dt><dd style="font-weight:600;">{{ ucfirst(str_replace('_', ' ', $order->payment_method)) }} — {{ \App\Models\Order::PAYMENT_STATUSES[$order->payment_status] ?? $order->payment_status }}</dd></div>
+                <div><dt class="text-terroir-dark/50">Paiement</dt><dd class="font-semibold">{{ ucfirst(str_replace('_', ' ', $order->payment_method)) }} — {{ \App\Models\Order::PAYMENT_STATUSES[$order->payment_status] ?? $order->payment_status }}</dd></div>
             </dl>
         </div>
 
         @if($order->payment_status !== 'paye')
-            <div class="uk-card uk-card-default uk-margin-top" style="padding:24px;">
-                <h2 style="font-family:'Fraunces',serif; font-weight:600; font-size:1.125rem;">Enregistrer un paiement</h2>
-                <p class="uk-text-small uk-text-muted uk-margin-small-top">Génère automatiquement l'écriture comptable d'encaissement.</p>
-                <form action="{{ route('admin.commandes.payment', $order) }}" method="POST" class="uk-margin-top" style="display:flex; flex-direction:column; gap:12px;">
+            <div class="admin-card mt-6">
+                <h2 class="font-display text-lg font-semibold">Enregistrer un paiement</h2>
+                <p class="mt-1.5 text-sm text-terroir-dark/50">Génère automatiquement l'écriture comptable d'encaissement.</p>
+                <form action="{{ route('admin.commandes.payment', $order) }}" method="POST" class="mt-4 flex flex-col gap-3">
                     @csrf
-                    <select name="payment_account_id" required class="uk-select">
+                    <select name="payment_account_id" required class="input">
                         <option value="">Compte de paiement</option>
                         @foreach($paymentAccounts as $account)
                             <option value="{{ $account->id }}">{{ $account->name }}</option>
                         @endforeach
                     </select>
-                    <input type="number" step="0.01" name="amount" value="{{ $order->total - $order->amountPaid() }}" max="{{ $order->total }}" required class="uk-input">
-                    <button type="submit" class="uk-button uk-button-primary uk-width-1-1">Encaisser</button>
+                    <input type="number" step="0.01" name="amount" value="{{ $order->total - $order->amountPaid() }}" max="{{ $order->total }}" required class="input">
+                    <button type="submit" class="btn-primary w-full justify-center">Encaisser</button>
                 </form>
             </div>
         @endif
 
-        <div class="uk-card uk-card-default uk-margin-top" style="padding:24px;">
-            <h2 style="font-family:'Fraunces',serif; font-weight:600; font-size:1.125rem;">Statut de la commande</h2>
-            <form action="{{ route('admin.commandes.status', $order) }}" method="POST" class="uk-margin-top" style="display:flex; flex-direction:column; gap:12px;">
+        <div class="admin-card mt-6">
+            <h2 class="font-display text-lg font-semibold">Statut de la commande</h2>
+            <form action="{{ route('admin.commandes.status', $order) }}" method="POST" class="mt-4 flex flex-col gap-3">
                 @csrf @method('PATCH')
-                <select name="status" class="uk-select">
+                <select name="status" class="input">
                     @foreach(\App\Models\Order::STATUSES as $value => $label)
                         <option value="{{ $value }}" @selected($order->status === $value)>{{ $label }}</option>
                     @endforeach
                 </select>
-                <button type="submit" class="uk-button uk-button-primary uk-width-1-1">Mettre à jour</button>
+                <button type="submit" class="btn-primary w-full justify-center">Mettre à jour</button>
             </form>
         </div>
     </div>

@@ -3,74 +3,64 @@
 @section('title', $purchaseOrder->order_number)
 
 @section('content')
-@php
-    $poStatusColors = [
-        'brouillon' => ['bg' => 'rgba(240,169,59,.15)', 'color' => '#F0A93B'],
-        'envoyee' => ['bg' => 'rgba(240,169,59,.15)', 'color' => '#F0A93B'],
-        'confirmee' => ['bg' => 'rgba(31,35,40,.08)', 'color' => 'rgba(31,35,40,.6)'],
-        'partiellement_recue' => ['bg' => 'rgba(240,169,59,.15)', 'color' => '#F0A93B'],
-        'recue' => ['bg' => 'rgba(29,138,78,.12)', 'color' => '#1D8A4E'],
-        'annulee' => ['bg' => 'rgba(232,96,79,.12)', 'color' => '#E8604F'],
-    ];
-@endphp
-<div class="uk-flex uk-flex-wrap uk-flex-middle uk-flex-between" style="gap:16px;">
+<div class="flex flex-wrap items-center justify-between gap-4">
     <div>
-        <h2 style="font-family:'Fraunces',serif; font-weight:600; font-size:1.5rem;">{{ $purchaseOrder->order_number }}</h2>
-        <p class="uk-text-small uk-text-muted">Fournisseur : <a href="{{ route('admin.fournisseurs.show', $purchaseOrder->supplier) }}" style="font-weight:600; color:#1D8A4E;">{{ $purchaseOrder->supplier->name }}</a></p>
+        <h2 class="font-display text-2xl font-semibold">{{ $purchaseOrder->order_number }}</h2>
+        <p class="text-sm text-terroir-dark/50">Fournisseur : <a href="{{ route('admin.fournisseurs.show', $purchaseOrder->supplier) }}" class="admin-link">{{ $purchaseOrder->supplier->name }}</a></p>
     </div>
-    <span class="uk-label" style="background:{{ $poStatusColors[$purchaseOrder->status]['bg'] }}; color:{{ $poStatusColors[$purchaseOrder->status]['color'] }}; padding:8px 16px; font-size:.875rem;">{{ \App\Models\PurchaseOrder::STATUSES[$purchaseOrder->status] }}</span>
+    <span class="{{ $purchaseOrder->statusBadgeClass() }} px-4 py-1.5 text-sm">{{ \App\Models\PurchaseOrder::STATUSES[$purchaseOrder->status] }}</span>
 </div>
 
-<div class="uk-grid-small uk-margin-top" uk-grid>
-    <div class="uk-width-2-3@l">
-        <div class="uk-card uk-card-default" style="padding:24px;">
-            <h3 style="font-family:'Fraunces',serif; font-weight:600; font-size:1rem;">Articles</h3>
-            <table class="uk-table uk-table-divider uk-table-middle uk-margin-small-top">
+<div class="mt-6 grid gap-6 lg:grid-cols-3">
+    <div class="lg:col-span-2">
+        <div class="admin-card">
+            <h3 class="font-display text-base font-semibold">Articles</h3>
+            <table class="admin-table mt-3">
                 <thead>
                     <tr>
                         <th>Produit</th>
-                        <th class="uk-text-right">Commandé</th>
-                        <th class="uk-text-right">Reçu</th>
-                        <th class="uk-text-right">Prix unitaire</th>
-                        <th class="uk-text-right">Total</th>
+                        <th class="text-right">Commandé</th>
+                        <th class="text-right">Reçu</th>
+                        <th class="text-right">Prix unitaire</th>
+                        <th class="text-right">Total</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($purchaseOrder->items as $item)
                         <tr>
                             <td>{{ $item->product->name }}</td>
-                            <td class="uk-text-right">{{ $item->quantity_ordered }}</td>
-                            <td class="uk-text-right" style="font-weight:600; color:{{ $item->quantity_received < $item->quantity_ordered ? '#E8604F' : '#1D8A4E' }};">{{ $item->quantity_received }}</td>
-                            <td class="uk-text-right">{{ number_format($item->unit_price, 0, ',', ' ') }} FCFA</td>
-                            <td class="uk-text-right" style="font-weight:600;">{{ number_format($item->total, 0, ',', ' ') }} FCFA</td>
+                            <td class="text-right">{{ $item->quantity_ordered }}</td>
+                            <td class="text-right font-semibold {{ $item->quantity_received < $item->quantity_ordered ? 'text-terroir-terracotta' : 'text-terroir-green' }}">{{ $item->quantity_received }}</td>
+                            <td class="text-right">{{ number_format($item->unit_price, 0, ',', ' ') }} FCFA</td>
+                            <td class="text-right font-semibold">{{ number_format($item->total, 0, ',', ' ') }} FCFA</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-            <div class="uk-margin-top uk-text-right" style="margin-left:auto; max-width:20rem; font-size:1rem; font-weight:700; color:#1D8A4E;">
+            <div class="ml-auto mt-4 max-w-xs text-right text-base font-bold text-terroir-green">
                 Total : {{ number_format($purchaseOrder->total, 0, ',', ' ') }} FCFA
             </div>
             @if($purchaseOrder->notes)
-                <div class="uk-margin-top" style="border-radius:8px; background:#F7F8F5; padding:16px; font-size:.875rem;">{{ $purchaseOrder->notes }}</div>
+                <div class="mt-4 rounded-lg bg-terroir-cream p-4 text-sm">{{ $purchaseOrder->notes }}</div>
             @endif
         </div>
 
         @if(!in_array($purchaseOrder->status, ['recue', 'annulee']))
-            <div class="uk-card uk-card-default uk-margin-top" style="padding:24px;">
-                <h3 style="font-family:'Fraunces',serif; font-weight:600; font-size:1rem;">Enregistrer une réception</h3>
-                <p class="uk-text-small uk-text-muted">Indiquez les quantités reçues et leur conformité. Le stock sera mis à jour automatiquement pour les articles conformes.</p>
+            <div class="admin-card mt-6">
+                <h3 class="font-display text-base font-semibold">Enregistrer une réception</h3>
+                <p class="text-sm text-terroir-dark/50">Indiquez les quantités reçues et leur conformité. Le stock sera mis à jour automatiquement pour les articles conformes.</p>
 
-                <form action="{{ route('admin.bons-commande.receptions.store', $purchaseOrder) }}" method="POST" class="uk-margin-top">
+                <form action="{{ route('admin.bons-commande.receptions.store', $purchaseOrder) }}" method="POST" class="mt-4">
                     @csrf
-                    <input type="date" name="reception_date" value="{{ now()->format('Y-m-d') }}" required class="uk-input" style="max-width:16rem;">
+                    <input type="date" name="reception_date" value="{{ now()->format('Y-m-d') }}" required class="input max-w-xs">
 
-                    <div class="uk-margin-top" style="display:flex; flex-direction:column; gap:12px;">
+                    <div class="mt-4 flex flex-col gap-3">
                         @foreach($purchaseOrder->items as $item)
                             @if($item->remainingQuantity() > 0)
-                                <div class="uk-flex uk-flex-wrap uk-flex-middle" style="gap:12px; border-radius:8px; background:rgba(247,248,245,.8); padding:10px 16px;">
-                                    <span style="flex:1; font-size:.875rem; font-weight:600;">{{ $item->product->name }} <span class="uk-text-small uk-text-muted">(reste {{ $item->remainingQuantity() }})</span></span>
-                                    <input type="number" name="quantity_received[{{ $item->id }}]" min="0" max="{{ $item->remainingQuantity() }}" placeholder="Qté reçue" class="uk-input" style="width:7rem;">
-                                    <select name="quality_status[{{ $item->id }}]" class="uk-select" style="width:10rem;">
+                                <div class="flex flex-wrap items-center gap-3 rounded-lg bg-terroir-cream/80 px-4 py-2.5">
+                                    <span class="flex-1 text-sm font-semibold">{{ $item->product->name }} <span class="text-sm font-normal text-terroir-dark/50">(reste {{ $item->remainingQuantity() }})</span></span>
+                                    <input type="number" name="quantity_received[{{ $item->id }}]" min="0" max="{{ $item->remainingQuantity() }}" placeholder="Qté reçue" class="input w-28">
+                                    <select name="quality_status[{{ $item->id }}]" class="input w-40">
                                         <option value="conforme">Conforme</option>
                                         <option value="non_conforme">Non conforme</option>
                                     </select>
@@ -79,30 +69,30 @@
                         @endforeach
                     </div>
 
-                    <textarea name="notes" rows="2" placeholder="Notes de contrôle qualité (optionnel)" class="uk-textarea uk-margin-top"></textarea>
+                    <textarea name="notes" rows="2" placeholder="Notes de contrôle qualité (optionnel)" class="input mt-4"></textarea>
 
-                    <button type="submit" class="uk-button uk-button-primary uk-margin-top">Enregistrer la réception</button>
+                    <button type="submit" class="btn-primary mt-4">Enregistrer la réception</button>
                 </form>
             </div>
         @endif
 
         @if($purchaseOrder->receptions->isNotEmpty())
-            <div class="uk-card uk-card-default uk-margin-top" style="padding:24px;">
-                <h3 style="font-family:'Fraunces',serif; font-weight:600; font-size:1rem;">Historique des réceptions</h3>
-                <div class="uk-margin-top" style="display:flex; flex-direction:column; gap:16px;">
+            <div class="admin-card mt-6">
+                <h3 class="font-display text-base font-semibold">Historique des réceptions</h3>
+                <div class="mt-4 flex flex-col gap-4">
                     @foreach($purchaseOrder->receptions as $reception)
-                        <div style="border:1px solid rgba(31,35,40,.08); border-radius:8px; padding:16px;">
-                            <div class="uk-flex uk-flex-middle uk-flex-between" style="font-size:.875rem;">
-                                <span style="font-weight:600;">{{ $reception->reception_date->format('d/m/Y') }}</span>
-                                <span class="uk-label" style="background:#F7F8F5; color:#1F2328;">{{ \App\Models\PurchaseReception::QUALITY_STATUSES[$reception->quality_status] }}</span>
+                        <div class="rounded-lg border border-terroir-dark/10 p-4">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="font-semibold">{{ $reception->reception_date->format('d/m/Y') }}</span>
+                                <span class="admin-badge-neutral">{{ \App\Models\PurchaseReception::QUALITY_STATUSES[$reception->quality_status] }}</span>
                             </div>
-                            <ul class="uk-margin-small-top uk-list" style="font-size:.75rem; color:rgba(31,35,40,.7);">
+                            <ul class="mt-1.5 space-y-0.5 text-xs text-terroir-dark/70">
                                 @foreach($reception->items as $item)
                                     <li>{{ $item->orderItem->product->name }} — {{ $item->quantity_received }} ({{ $item->quality_status === 'conforme' ? 'Conforme' : 'Non conforme' }})</li>
                                 @endforeach
                             </ul>
                             @if($reception->notes)
-                                <p class="uk-margin-small-top uk-text-muted" style="font-size:.75rem; font-style:italic;">{{ $reception->notes }}</p>
+                                <p class="mt-1.5 text-xs italic text-terroir-dark/50">{{ $reception->notes }}</p>
                             @endif
                         </div>
                     @endforeach
@@ -111,70 +101,70 @@
         @endif
     </div>
 
-    <div class="uk-width-1-3@l">
-        <div class="uk-card uk-card-default" style="padding:24px;">
-            <h3 style="font-family:'Fraunces',serif; font-weight:600; font-size:1rem;">Statut</h3>
-            <dl class="uk-margin-small-top" style="font-size:.875rem;">
-                <div class="uk-margin-small-bottom"><dt style="color:rgba(31,35,40,.5);">Date de commande</dt><dd style="font-weight:600; margin-top:2px;">{{ $purchaseOrder->order_date->format('d/m/Y') }}</dd></div>
+    <div>
+        <div class="admin-card">
+            <h3 class="font-display text-base font-semibold">Statut</h3>
+            <dl class="mt-3 space-y-2 text-sm">
+                <div><dt class="text-terroir-dark/50">Date de commande</dt><dd class="mt-0.5 font-semibold">{{ $purchaseOrder->order_date->format('d/m/Y') }}</dd></div>
                 @if($purchaseOrder->expected_date)
-                    <div class="uk-margin-small-bottom"><dt style="color:rgba(31,35,40,.5);">Livraison attendue</dt><dd style="font-weight:600; margin-top:2px;">{{ $purchaseOrder->expected_date->format('d/m/Y') }}</dd></div>
+                    <div><dt class="text-terroir-dark/50">Livraison attendue</dt><dd class="mt-0.5 font-semibold">{{ $purchaseOrder->expected_date->format('d/m/Y') }}</dd></div>
                 @endif
             </dl>
 
             @if($purchaseOrder->status === 'brouillon')
-                <form action="{{ route('admin.bons-commande.status', $purchaseOrder) }}" method="POST" class="uk-margin-top">
+                <form action="{{ route('admin.bons-commande.status', $purchaseOrder) }}" method="POST" class="mt-4">
                     @csrf @method('PATCH')
                     <input type="hidden" name="status" value="envoyee">
-                    <button type="submit" class="uk-button uk-button-primary uk-width-1-1">Envoyer au fournisseur</button>
+                    <button type="submit" class="btn-primary w-full justify-center">Envoyer au fournisseur</button>
                 </form>
             @endif
 
             @if($purchaseOrder->status === 'envoyee')
-                <form action="{{ route('admin.bons-commande.status', $purchaseOrder) }}" method="POST" class="uk-margin-top">
+                <form action="{{ route('admin.bons-commande.status', $purchaseOrder) }}" method="POST" class="mt-4">
                     @csrf @method('PATCH')
                     <input type="hidden" name="status" value="confirmee">
-                    <button type="submit" class="uk-button uk-button-primary uk-width-1-1">Marquer confirmée</button>
+                    <button type="submit" class="btn-primary w-full justify-center">Marquer confirmée</button>
                 </form>
             @endif
 
             @if(!in_array($purchaseOrder->status, ['recue', 'annulee']))
-                <form action="{{ route('admin.bons-commande.status', $purchaseOrder) }}" method="POST" class="uk-margin-small-top" onsubmit="return confirm('Annuler ce bon de commande ?')">
+                <form action="{{ route('admin.bons-commande.status', $purchaseOrder) }}" method="POST" class="mt-3" onsubmit="return confirm('Annuler ce bon de commande ?')">
                     @csrf @method('PATCH')
                     <input type="hidden" name="status" value="annulee">
-                    <button type="submit" class="uk-button uk-button-default uk-width-1-1">Annuler le bon de commande</button>
+                    <button type="submit" class="btn-outline w-full justify-center">Annuler le bon de commande</button>
                 </form>
             @endif
         </div>
 
-        <div class="uk-card uk-card-default uk-margin-top" style="padding:24px;">
-            <h3 style="font-family:'Fraunces',serif; font-weight:600; font-size:1rem;">Paiement fournisseur</h3>
-            <dl class="uk-margin-small-top" style="font-size:.875rem;">
-                <div class="uk-margin-small-bottom"><dt style="color:rgba(31,35,40,.5);">Total</dt><dd style="font-weight:600; margin-top:2px;">{{ number_format($purchaseOrder->total, 0, ',', ' ') }} FCFA</dd></div>
-                <div class="uk-margin-small-bottom"><dt style="color:rgba(31,35,40,.5);">Payé</dt><dd style="font-weight:600; margin-top:2px; color:#1D8A4E;">{{ number_format($purchaseOrder->amount_paid, 0, ',', ' ') }} FCFA</dd></div>
-                <div class="uk-margin-small-bottom"><dt style="color:rgba(31,35,40,.5);">Solde dû</dt><dd style="font-weight:600; margin-top:2px; color:#E8604F;">{{ number_format($purchaseOrder->balance(), 0, ',', ' ') }} FCFA</dd></div>
+        <div class="admin-card mt-6">
+            <h3 class="font-display text-base font-semibold">Paiement fournisseur</h3>
+            <dl class="mt-3 space-y-2 text-sm">
+                <div><dt class="text-terroir-dark/50">Total</dt><dd class="mt-0.5 font-semibold">{{ number_format($purchaseOrder->total, 0, ',', ' ') }} FCFA</dd></div>
+                <div><dt class="text-terroir-dark/50">Payé</dt><dd class="mt-0.5 font-semibold text-terroir-green">{{ number_format($purchaseOrder->amount_paid, 0, ',', ' ') }} FCFA</dd></div>
+                <div><dt class="text-terroir-dark/50">Solde dû</dt><dd class="mt-0.5 font-semibold text-terroir-terracotta">{{ number_format($purchaseOrder->balance(), 0, ',', ' ') }} FCFA</dd></div>
             </dl>
 
             @if($purchaseOrder->balance() > 0)
-                <form action="{{ route('admin.fournisseurs.paiements.store', $purchaseOrder->supplier) }}" method="POST" class="uk-margin-top" style="display:flex; flex-direction:column; gap:8px;">
+                <form action="{{ route('admin.fournisseurs.paiements.store', $purchaseOrder->supplier) }}" method="POST" class="mt-4 flex flex-col gap-2">
                     @csrf
                     <input type="hidden" name="purchase_order_id" value="{{ $purchaseOrder->id }}">
-                    <input type="number" step="0.01" name="amount" placeholder="Montant" max="{{ $purchaseOrder->balance() }}" required class="uk-input">
-                    <input type="date" name="payment_date" value="{{ now()->format('Y-m-d') }}" required class="uk-input">
-                    <input type="text" name="method" placeholder="Mode de paiement" class="uk-input">
-                    <select name="payment_account_id" class="uk-select">
+                    <input type="number" step="0.01" name="amount" placeholder="Montant" max="{{ $purchaseOrder->balance() }}" required class="input">
+                    <input type="date" name="payment_date" value="{{ now()->format('Y-m-d') }}" required class="input">
+                    <input type="text" name="method" placeholder="Mode de paiement" class="input">
+                    <select name="payment_account_id" class="input">
                         <option value="">Compte de paiement (pour l'écriture comptable)</option>
                         @foreach(\App\Models\PaymentAccount::where('is_active', true)->get() as $account)
                             <option value="{{ $account->id }}">{{ $account->name }}</option>
                         @endforeach
                     </select>
-                    <button type="submit" class="uk-button uk-button-primary uk-width-1-1">Enregistrer le paiement</button>
+                    <button type="submit" class="btn-primary w-full justify-center">Enregistrer le paiement</button>
                 </form>
             @endif
 
             @if($purchaseOrder->payments->isNotEmpty())
-                <ul class="uk-margin-top uk-list" style="border-top:1px solid rgba(31,35,40,.08); padding-top:12px; font-size:.75rem; color:rgba(31,35,40,.6);">
+                <ul class="mt-4 space-y-1 border-t border-terroir-dark/10 pt-3 text-xs text-terroir-dark/60">
                     @foreach($purchaseOrder->payments as $payment)
-                        <li class="uk-flex uk-flex-between"><span>{{ $payment->payment_date->format('d/m/Y') }}</span><span>{{ number_format($payment->amount, 0, ',', ' ') }} FCFA</span></li>
+                        <li class="flex justify-between"><span>{{ $payment->payment_date->format('d/m/Y') }}</span><span>{{ number_format($payment->amount, 0, ',', ' ') }} FCFA</span></li>
                     @endforeach
                 </ul>
             @endif

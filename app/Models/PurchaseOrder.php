@@ -79,4 +79,14 @@ class PurchaseOrder extends Model
     {
         return 'BC-'.now()->format('Ymd').'-'.strtoupper(substr(uniqid(), -5));
     }
+
+    public function statusBadgeClass(): string
+    {
+        return match ($this->status) {
+            'recue' => 'admin-badge-success',
+            'annulee' => 'admin-badge-danger',
+            'brouillon' => 'admin-badge-neutral',
+            default => 'admin-badge-warning',
+        };
+    }
 }
