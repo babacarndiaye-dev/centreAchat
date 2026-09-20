@@ -74,6 +74,85 @@ function DevenirFournisseurSection() {
     );
 }
 
+function HotelsExcellenceSection() {
+    const engagements = [
+        ['verified', 'Sélection exigeante'],
+        ['fact_check', 'Contrôle qualité'],
+        ['route', 'Traçabilité'],
+        ['local_shipping', 'Approvisionnement fiable'],
+        ['support_agent', 'Service professionnel'],
+    ];
+
+    return (
+        <div className="mt-16">
+            <Reveal>
+                <span className="section-eyebrow">Notre engagement</span>
+                <h2 className="mt-3 font-display text-4xl font-bold leading-[1.05] tracking-tight text-terroir-dark sm:text-5xl">
+                    L'excellence locale<br className="hidden sm:block" /> au service de l'hôtellerie
+                </h2>
+                <span className="mt-6 block h-px w-16 bg-terroir-gold" />
+            </Reveal>
+
+            <div className="mt-10 grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:gap-14">
+                <Reveal delay={0.08} className="space-y-5 text-[17px] leading-relaxed text-terroir-dark/75">
+                    <p className="font-display text-xl font-semibold leading-snug text-terroir-dark">
+                        Au Centre d'Achat de Mbour, nous mettons le meilleur des produits locaux à la disposition des hôtels, restaurants et établissements touristiques.
+                    </p>
+                    <p>
+                        Nous sélectionnons nos produits avec exigence auprès de fournisseurs et producteurs partenaires, en accordant une attention particulière à leur{' '}
+                        <strong className="font-semibold text-terroir-dark">qualité, leur fraîcheur, leur conformité et leur traçabilité</strong>.
+                    </p>
+                    <p>
+                        Chaque produit est soumis à un <strong className="font-semibold text-terroir-dark">processus de contrôle rigoureux</strong> avant d'être proposé à nos clients.
+                        Notre objectif : garantir une qualité constante et répondre aux standards les plus exigeants du secteur hôtelier.
+                    </p>
+                </Reveal>
+
+                <Reveal delay={0.16} className="relative rounded-[2px] border border-terroir-gold/25 bg-terroir-gold/5 p-8">
+                    <span className="pointer-events-none absolute -top-7 left-7 font-display text-8xl leading-none text-terroir-gold/30">“</span>
+                    <p className="relative font-display text-xl font-semibold leading-snug text-terroir-dark">
+                        De la sélection à la livraison, nous maîtrisons chaque étape pour vous offrir une expérience d'achat fiable, professionnelle et sans compromis sur la qualité.
+                    </p>
+                    <span className="mt-5 block h-px w-10 bg-terroir-gold/60" />
+                </Reveal>
+            </div>
+
+            <Reveal delay={0.22} className="mt-16">
+                <span className="section-eyebrow">Nos engagements</span>
+                <div className="mt-6 grid gap-x-8 gap-y-6 sm:grid-cols-2">
+                    {engagements.map(([icon, label], i) => (
+                        <motion.div
+                            key={label}
+                            initial={{ opacity: 0, x: -12 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, margin: '-60px' }}
+                            transition={{ duration: 0.4, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                            whileHover={{ x: 4 }}
+                            className="flex items-center gap-4"
+                        >
+                            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[2px] bg-terroir-green/10 text-2xl text-terroir-green">
+                                <span className="material-symbols-outlined">{icon}</span>
+                            </span>
+                            <span className="font-display text-lg font-semibold text-terroir-dark">{label}</span>
+                        </motion.div>
+                    ))}
+                </div>
+            </Reveal>
+
+            <Reveal delay={0.3} className="relative mt-16 w-screen overflow-hidden bg-terroir-dark px-6 py-16 text-center sm:py-20" style={{ marginLeft: 'calc(50% - 50vw)', marginRight: 'calc(50% - 50vw)' }}>
+                <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-terroir-gold/10 blur-3xl" />
+                <div className="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-terroir-green/25 blur-3xl" />
+                <div
+                    className="pointer-events-none absolute inset-0 opacity-[0.06]"
+                    style={{ backgroundImage: 'repeating-linear-gradient(45deg, #C9A227 0, #C9A227 1px, transparent 1px, transparent 16px)' }}
+                />
+                <p className="relative font-display text-3xl font-bold leading-snug text-white sm:text-4xl">Le Centre d'Achat de Mbour</p>
+                <p className="relative mx-auto mt-4 max-w-lg text-lg text-terroir-gold">L'excellence locale, au service de vos établissements.</p>
+            </Reveal>
+        </div>
+    );
+}
+
 function HotelsProfessionnelsSection() {
     const cards = [
         ['sell', 'Tarifs professionnels & de gros', 'Prix dégressifs automatiquement appliqués sur nos produits éligibles dès validation de votre compte, et tarif de gros à partir de 10 unités.'],
@@ -83,8 +162,10 @@ function HotelsProfessionnelsSection() {
     ];
 
     return (
-        <div className="mt-16">
-            <div className="grid gap-6 sm:grid-cols-2">
+        <div>
+            <HotelsExcellenceSection />
+
+            <div className="mt-16 grid gap-6 sm:grid-cols-2">
                 {cards.map(([icon, title, text], i) => (
                     <Reveal key={title} delay={i * 0.06} className="card p-6">
                         <span className="material-symbols-outlined text-2xl text-terroir-green">{icon}</span>
@@ -191,7 +272,7 @@ export default function StaticPage({ page, contactInfo, souvenirProducts, coffre
                 {page.meta_description && <meta name="description" content={page.meta_description} />}
             </Head>
 
-            <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+            <section className="mx-auto max-w-4xl overflow-x-hidden px-4 py-16 sm:px-6 lg:px-8">
                 <Reveal className="text-center">
                     <span className="section-eyebrow">Central d'Achat</span>
                     <h1 className="section-title mt-2">{page.title}</h1>
