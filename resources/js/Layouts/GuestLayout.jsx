@@ -1,4 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
+import PageTransition from '../Components/PageTransition';
 
 export default function GuestLayout({ children }) {
     const { props } = usePage();
@@ -19,7 +20,9 @@ export default function GuestLayout({ children }) {
                 </div>
             </header>
 
-            <main className="flex flex-1 flex-col">{children}</main>
+            <main className="flex flex-1 flex-col">
+                <PageTransition className="flex flex-1 flex-col">{children}</PageTransition>
+            </main>
 
             <footer className="py-8 text-center text-xs text-terroir-dark/40">
                 &copy; {new Date().getFullYear()} {siteName}. Tous droits réservés.

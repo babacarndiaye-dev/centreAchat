@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import ChatWidget from '../Components/ChatWidget';
+import PageTransition from '../Components/PageTransition';
 
 const NAV_LINKS = [
     { href: () => route('produits.index'), label: 'Nos produits' },
@@ -202,7 +203,9 @@ export default function SiteLayout({ children }) {
                 )}
             </header>
 
-            <main className="flex-1">{children}</main>
+            <main className="flex-1">
+                <PageTransition>{children}</PageTransition>
+            </main>
 
             <SiteFooter siteName={siteName} logoUrl={logoUrl} address={address} showNewsletter={showNewsletter} />
 
