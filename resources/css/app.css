@@ -27,6 +27,7 @@
 @layer base {
     body {
         font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+        overscroll-behavior-y: contain;
     }
 
     .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-heading-medium, .uk-heading-large,

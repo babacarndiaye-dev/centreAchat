@@ -3,6 +3,7 @@ import { usePage } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import SidebarNav from '../Components/Admin/SidebarNav';
 import PageTransition from '../Components/PageTransition';
+import PullToRefresh from '../Components/PullToRefresh';
 
 function PushNotificationButton({ vapidPublicKey }) {
     const [status, setStatus] = useState('unsupported');
@@ -154,7 +155,9 @@ export default function AdminLayout({ title, children }) {
                 )}
 
                 <main className="flex-1 p-6">
-                    <PageTransition>{children}</PageTransition>
+                    <PullToRefresh>
+                        <PageTransition>{children}</PageTransition>
+                    </PullToRefresh>
                 </main>
             </div>
         </div>

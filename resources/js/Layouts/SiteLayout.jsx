@@ -3,6 +3,7 @@ import { Link, router, usePage } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import ChatWidget from '../Components/ChatWidget';
 import PageTransition from '../Components/PageTransition';
+import PullToRefresh from '../Components/PullToRefresh';
 
 const NAV_LINKS = [
     { href: () => route('produits.index'), label: 'Nos produits' },
@@ -231,7 +232,9 @@ export default function SiteLayout({ children }) {
             </header>
 
             <main className="flex-1">
-                <PageTransition>{children}</PageTransition>
+                <PullToRefresh>
+                    <PageTransition>{children}</PageTransition>
+                </PullToRefresh>
             </main>
 
             <SiteFooter siteName={siteName} logoUrl={logoUrl} address={address} showNewsletter={showNewsletter} />
