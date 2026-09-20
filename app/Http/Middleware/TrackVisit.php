@@ -10,7 +10,7 @@ use App\Services\Analytics\UaParser;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class TrackVisit
@@ -35,18 +35,22 @@ class TrackVisit
             return $next($request);
         }
 
-        $visitor = $this->resolveVisitor($request);
-        $session = $this->resolveSession($request, $visitor);
+        try {
+            $visitor = $this->resolveVisitor($request);
+            $session = $this->resolveSession($request, $visitor);
 
-        if ($request->isMethod('get')) {
-            AnalyticsPageView::create([
-                'session_id' => $session->id,
-                'url' => $request->path(),
-                'viewed_at' => now(),
-            ]);
+            if ($request->isMethod('get')) {
+                AnalyticsPageView::create([
+                    'session_id' => $session->id,
+                    'url' => $request->path(),
+                    'viewed_at' => now(),
+                ]);
+            }
+
+            $request->attributes->set('analytics_session_id', $session->id);
+        } catch (\Throwable $e) {
+            Log::warning('TrackVisit failed', ['message' => $e->getMessage()]);
         }
-
-        $request->attributes->set('analytics_session_id', $session->id);
 
         return $next($request);
     }
@@ -57,14 +61,18 @@ class TrackVisit
             return;
         }
 
-        $location = GeoLocator::lookup($this->visitorIp);
+        try {
+            $location = GeoLocator::lookup($this->visitorIp);
 
-        if (! $location) {
-            return;
+            if (! $location) {
+                return;
+            }
+
+            AnalyticsVisitor::where('visitor_uid', $request->cookie(self::VISITOR_COOKIE))
+                ->update(['country' => $location['country'], 'city' => $location['city']]);
+        } catch (\Throwable $e) {
+            Log::warning('TrackVisit geolocation failed', ['message' => $e->getMessage()]);
         }
-
-        AnalyticsVisitor::where('visitor_uid', $request->cookie(self::VISITOR_COOKIE))
-            ->update(['country' => $location['country'], 'city' => $location['city']]);
     }
 
     private function shouldSkip(Request $request): bool
