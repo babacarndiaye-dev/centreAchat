@@ -117,8 +117,8 @@ Route::get('/manifest.webmanifest', function () {
         'scope' => '/',
         'display' => 'standalone',
         'orientation' => 'portrait-primary',
-        'background_color' => '#F7F8F5',
-        'theme_color' => '#1D8A4E',
+        'background_color' => '#F6F1E4',
+        'theme_color' => '#123D2E',
         'icons' => [
             ['src' => '/icons/icon-192.png', 'sizes' => '192x192', 'type' => 'image/png', 'purpose' => 'any'],
             ['src' => '/icons/icon-512.png', 'sizes' => '512x512', 'type' => 'image/png', 'purpose' => 'any'],

@@ -24,17 +24,17 @@ export default {
                     terracotta: 'rgb(var(--terroir-terracotta) / <alpha-value>)',
                     gold: 'rgb(var(--terroir-gold) / <alpha-value>)',
                     // Structural/neutral tones, not exposed as admin settings.
-                    'green-light': '#4FAE75',
-                    cream: '#F7F8F5',
+                    'green-light': '#3FAF8C',
+                    cream: '#F6F1E4',
                     brown: '#6B7280',
-                    dark: '#1F2328',
+                    dark: '#1C1C1C',
                 },
             },
             boxShadow: {
                 soft: '0 10px 40px -12px rgba(22, 32, 27, 0.25)',
             },
             borderRadius: {
-                xl2: '1.25rem',
+                xl2: '0.125rem',
             },
         },
     },

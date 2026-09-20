@@ -7,9 +7,9 @@ use App\Models\Setting;
 class Theme
 {
     protected const DEFAULTS = [
-        'color_primary' => '#1D8A4E',
-        'color_secondary' => '#E8604F',
-        'color_accent' => '#F0A93B',
+        'color_primary' => '#123D2E',
+        'color_secondary' => '#7A1F2B',
+        'color_accent' => '#C9A227',
     ];
 
     protected const CSS_VARS = [

@@ -6,7 +6,7 @@ const TIMEZONES = ['Africa/Dakar', 'Africa/Abidjan', 'Europe/Paris', 'UTC'];
 
 const COLOR_FIELDS = [
     { key: 'color_primary', label: 'Couleur primaire (vert)' },
-    { key: 'color_secondary', label: 'Couleur secondaire (terracotta)' },
+    { key: 'color_secondary', label: 'Couleur alerte (erreurs, ruptures)' },
     { key: 'color_accent', label: 'Couleur accent (or)' },
 ];
 
@@ -32,9 +32,9 @@ export default function Edit({ settings, logoUrl, heroImageUrl }) {
         address: settings.address ?? '',
         facebook_url: settings.facebook_url ?? '',
         instagram_url: settings.instagram_url ?? '',
-        color_primary: settings.color_primary ?? '#1E4A3D',
-        color_secondary: settings.color_secondary ?? '',
-        color_accent: settings.color_accent ?? '',
+        color_primary: settings.color_primary ?? '#123D2E',
+        color_secondary: settings.color_secondary ?? '#7A1F2B',
+        color_accent: settings.color_accent ?? '#C9A227',
         hero_title: settings.hero_title ?? '',
         hero_subtitle: settings.hero_subtitle ?? '',
         hero_image: null,

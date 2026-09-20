@@ -8,7 +8,7 @@
 
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('icons/favicon-32.png') }}">
     <link rel="icon" type="image/png" sizes="64x64" href="{{ asset('icons/favicon-64.png') }}">
-    <meta name="theme-color" content="#1D8A4E">
+    <meta name="theme-color" content="#123D2E">
     <link rel="apple-touch-icon" href="{{ asset('icons/apple-touch-icon.png') }}">
     <meta name="vapid-public-key" content="{{ config('services.vapid.public_key') }}">
 

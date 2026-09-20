@@ -9,7 +9,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('icons/favicon-32.png') }}">
     <link rel="icon" type="image/png" sizes="64x64" href="{{ asset('icons/favicon-64.png') }}">
     <link rel="manifest" href="{{ route('pwa.manifest') }}">
-    <meta name="theme-color" content="#1D8A4E">
+    <meta name="theme-color" content="#123D2E">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="vapid-public-key" content="{{ config('services.vapid.public_key') }}">

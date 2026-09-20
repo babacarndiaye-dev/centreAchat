@@ -40,44 +40,44 @@
    green/terracotta/gold palette instead of recompiling UIkit from SASS. */
 @layer components {
     .uk-button-primary {
-        background-color: #1D8A4E;
-        border-color: #1D8A4E;
+        background-color: #123D2E;
+        border-color: #123D2E;
     }
     .uk-button-primary:hover {
-        background-color: #156b3c;
-        border-color: #156b3c;
+        background-color: #0C2A1F;
+        border-color: #0C2A1F;
     }
     .uk-button-danger,
     .uk-badge-danger {
-        background-color: #E8604F;
+        background-color: #7A1F2B;
     }
     .uk-label,
     .uk-badge {
-        background-color: #F0A93B;
-        color: #1F2328;
+        background-color: #C9A227;
+        color: #1C1C1C;
     }
     a,
     .uk-link {
-        color: #1D8A4E;
+        color: #123D2E;
     }
     a:hover,
     .uk-link:hover {
-        color: #156b3c;
+        color: #0C2A1F;
     }
     .uk-navbar-nav > li > a:hover,
     .uk-navbar-nav > li.uk-active > a,
     .uk-active > a {
-        color: #1D8A4E;
+        color: #123D2E;
     }
     .uk-tab > .uk-active > a {
-        border-color: #1D8A4E;
-        color: #1D8A4E;
+        border-color: #123D2E;
+        color: #123D2E;
     }
     .uk-pagination > .uk-active > * {
-        color: #1D8A4E;
+        color: #123D2E;
     }
     .uk-text-primary {
-        color: #1D8A4E !important;
+        color: #123D2E !important;
     }
 }
 
@@ -86,35 +86,35 @@
    restrained hover motion so converted pages feel considered, not templated. */
 @layer components {
     .uk-card {
-        border-radius: 18px;
-        border: 1px solid rgba(31, 35, 40, .06);
-        box-shadow: 0 1px 2px rgba(31, 35, 40, .04);
+        border-radius: 2px;
+        border: 1px solid rgba(28, 28, 28, .06);
+        box-shadow: 0 1px 2px rgba(28, 28, 28, .04);
         transition: transform .35s cubic-bezier(.22, 1, .36, 1), box-shadow .35s ease;
     }
     .uk-card-hover:hover {
         transform: translateY(-5px);
-        box-shadow: 0 24px 48px -20px rgba(31, 35, 40, .18);
+        box-shadow: 0 24px 48px -20px rgba(28, 28, 28, .18);
     }
     .uk-card-default {
         background-color: #fff;
     }
 
     .uk-button {
-        border-radius: 999px;
+        border-radius: 2px;
         font-weight: 600;
         letter-spacing: .01em;
         transition: transform .25s cubic-bezier(.22, 1, .36, 1), box-shadow .25s ease, background-color .25s ease;
     }
     .uk-button-primary,
     .uk-button-default {
-        box-shadow: 0 1px 2px rgba(31, 35, 40, .06);
+        box-shadow: 0 1px 2px rgba(28, 28, 28, .06);
     }
     .uk-button:not(.uk-button-link):hover {
         transform: translateY(-2px);
-        box-shadow: 0 12px 24px -10px rgba(29, 138, 78, .35);
+        box-shadow: 0 12px 24px -10px rgba(18, 61, 46, .35);
     }
     .uk-button-default:hover {
-        box-shadow: 0 12px 24px -10px rgba(31, 35, 40, .18);
+        box-shadow: 0 12px 24px -10px rgba(28, 28, 28, .18);
     }
 
     .uk-icon-button {
@@ -122,18 +122,18 @@
     }
     .uk-icon-button:hover {
         transform: translateY(-2px) scale(1.04);
-        box-shadow: 0 10px 20px -8px rgba(29, 138, 78, .4);
+        box-shadow: 0 10px 20px -8px rgba(18, 61, 46, .4);
     }
 
     .uk-input,
     .uk-search-input {
-        border-radius: 999px;
+        border-radius: 2px;
         transition: border-color .2s ease, box-shadow .2s ease;
     }
     .uk-input:focus,
     .uk-search-input:focus {
-        border-color: #1D8A4E;
-        box-shadow: 0 0 0 3px rgba(29, 138, 78, .12);
+        border-color: #123D2E;
+        box-shadow: 0 0 0 3px rgba(18, 61, 46, .12);
     }
 
     .uk-navbar-nav > li > a {
@@ -142,11 +142,11 @@
     }
 
     .uk-badge {
-        border-radius: 999px;
+        border-radius: 2px;
         font-weight: 600;
         letter-spacing: .02em;
         padding: 3px 10px;
-        box-shadow: 0 2px 6px rgba(31, 35, 40, .12);
+        box-shadow: 0 2px 6px rgba(28, 28, 28, .12);
     }
 
 }
@@ -167,7 +167,7 @@
 
 @layer components {
     .btn {
-        @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold tracking-wide transition duration-300 ease-out;
+        @apply inline-flex items-center justify-center gap-2 rounded-[2px] px-6 py-3 text-sm font-semibold tracking-wide transition duration-300 ease-out;
     }
 
     .btn-primary {
@@ -179,7 +179,7 @@
     }
 
     .btn-gold {
-        @apply btn bg-terroir-gold text-terroir-dark shadow-soft hover:bg-terroir-terracotta hover:text-terroir-cream hover:-translate-y-0.5;
+        @apply btn bg-terroir-gold text-terroir-dark shadow-soft hover:bg-terroir-dark hover:text-terroir-cream hover:-translate-y-0.5;
     }
 
     .section-title {
@@ -187,7 +187,7 @@
     }
 
     .section-eyebrow {
-        @apply inline-block text-xs font-semibold uppercase tracking-[0.25em] text-terroir-terracotta;
+        @apply inline-block text-xs font-semibold uppercase tracking-[0.25em] text-terroir-gold;
     }
 
     .card {
@@ -199,7 +199,7 @@
     }
 
     .input {
-        @apply w-full rounded-lg border border-terroir-green/20 bg-white px-4 py-2.5 text-sm text-terroir-dark placeholder:text-terroir-dark/40 focus:border-terroir-green focus:outline-none focus:ring-2 focus:ring-terroir-green/20;
+        @apply w-full rounded-[2px] border border-terroir-green/20 bg-white px-4 py-2.5 text-sm text-terroir-dark placeholder:text-terroir-dark/40 focus:border-terroir-green focus:outline-none focus:ring-2 focus:ring-terroir-green/20;
     }
 
     .label {
@@ -231,7 +231,7 @@
     }
 
     .admin-badge {
-        @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium;
+        @apply inline-flex items-center rounded-[2px] px-2.5 py-1 text-xs font-medium;
     }
 
     .admin-badge-success {
@@ -266,7 +266,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #F7F8F5;
+    background: #F6F1E4;
     transition: opacity .5s ease, visibility .5s ease;
 }
 #page-loader img {
