@@ -475,16 +475,14 @@ export default function Home({
                 </section>
             )}
 
-            {/* NEWSLETTER */}
-            {showNewsletter && (
-                <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-                    <Reveal className="rounded-xl2 bg-terroir-green p-11 text-white shadow-soft">
-                        <div className="grid items-center gap-6 md:grid-cols-3">
-                            <div className="md:col-span-2">
-                                <h3 className="font-display text-2xl font-semibold">Restez informé de nos nouveautés</h3>
-                                <p className="mt-2 text-white/85">Recevez nos nouveaux produits et offres par e-mail.</p>
-                            </div>
-                            <form action={route('newsletter.store')} method="POST" className="flex gap-2.5">
+            {/* NEWSLETTER + LOCALISATION */}
+            <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+                <div className={showNewsletter ? 'grid gap-6 lg:grid-cols-2' : ''}>
+                    {showNewsletter && (
+                        <Reveal className="flex h-full flex-col justify-center rounded-xl2 bg-terroir-green p-8 text-white shadow-soft sm:p-11">
+                            <h3 className="font-display text-2xl font-semibold">Restez informé de nos nouveautés</h3>
+                            <p className="mt-2 text-white/85">Recevez nos nouveaux produits et offres par e-mail.</p>
+                            <form action={route('newsletter.store')} method="POST" className="mt-6 flex flex-col gap-2.5 sm:flex-row">
                                 <input type="hidden" name="_token" value={document.querySelector('meta[name=csrf-token]')?.content} />
                                 <input
                                     type="email"
@@ -495,25 +493,25 @@ export default function Home({
                                 />
                                 <button type="submit" className="btn-gold shrink-0">S'inscrire</button>
                             </form>
-                        </div>
-                    </Reveal>
-                </section>
-            )}
+                        </Reveal>
+                    )}
 
-            {/* LOCALISATION */}
-            <section className="mx-auto max-w-7xl px-4 pb-16 pt-8 sm:px-6 md:pb-24 md:pt-10 lg:px-8">
-                <Reveal className="flex flex-col items-center justify-between gap-5 rounded-xl2 bg-terroir-dark p-11 text-white md:flex-row">
-                    <div className="text-center md:text-left">
-                        <h3 className="flex items-center justify-center gap-2 font-display text-xl font-semibold md:justify-start">
+                    <Reveal delay={showNewsletter ? 0.1 : 0} className="flex h-full flex-col justify-center rounded-xl2 bg-terroir-dark p-8 text-white sm:p-11">
+                        <h3 className="flex items-center gap-2 font-display text-xl font-semibold">
                             <span className="material-symbols-outlined text-xl text-terroir-gold">location_on</span>
                             Rond-Point Malicounda, Mbour – Sénégal
                         </h3>
                         <p className="mt-2 text-white/70">Visitez notre boutique ou passez commande en ligne, livraison partout au Sénégal.</p>
-                    </div>
-                    <MotionLink whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} href={route('pages.show', 'contact')} className="btn-gold shrink-0 whitespace-nowrap">
-                        Nous contacter
-                    </MotionLink>
-                </Reveal>
+                        <MotionLink
+                            whileHover={{ y: -2 }}
+                            whileTap={{ scale: 0.97 }}
+                            href={route('pages.show', 'contact')}
+                            className="btn-gold mt-6 self-start whitespace-nowrap"
+                        >
+                            Nous contacter
+                        </MotionLink>
+                    </Reveal>
+                </div>
             </section>
         </SiteLayout>
     );
