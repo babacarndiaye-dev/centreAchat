@@ -34,19 +34,19 @@ export default function ProductCard({ product, showProPrice }) {
 
                     <div className="absolute left-3 top-3 flex flex-col gap-1.5">
                         {product.is_on_promo && (
-                            <span className="rounded-full bg-terroir-terracotta px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white shadow-soft">Promo</span>
+                            <span className="rounded-[2px] bg-terroir-gold px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-terroir-dark shadow-soft">Promo</span>
                         )}
                         {product.is_new && (
-                            <span className="rounded-full bg-terroir-gold px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-terroir-dark shadow-soft">Nouveau</span>
+                            <span className="rounded-[2px] bg-terroir-gold px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-terroir-dark shadow-soft">Nouveau</span>
                         )}
                         {product.is_best_seller && (
-                            <span className="rounded-full bg-terroir-green px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white shadow-soft">Meilleure vente</span>
+                            <span className="rounded-[2px] bg-terroir-green px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white shadow-soft">Meilleure vente</span>
                         )}
                     </div>
 
                     {!product.in_stock && (
                         <div className="absolute inset-0 flex items-center justify-center bg-terroir-dark/60 backdrop-blur-[1px]">
-                            <span className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-terroir-dark">Rupture de stock</span>
+                            <span className="rounded-[2px] bg-white px-3 py-1.5 text-xs font-semibold text-terroir-dark">Rupture de stock</span>
                         </div>
                     )}
                 </Link>
@@ -57,8 +57,8 @@ export default function ProductCard({ product, showProPrice }) {
                     whileTap={{ scale: 0.8 }}
                     aria-label={product.is_wishlisted ? 'Retirer des favoris' : 'Ajouter aux favoris'}
                     className={
-                        'absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/95 text-base shadow-soft backdrop-blur transition hover:scale-110 ' +
-                        (product.is_wishlisted ? 'text-terroir-terracotta' : 'text-terroir-dark/40')
+                        'absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-[2px] bg-white/95 text-base shadow-soft backdrop-blur transition hover:scale-110 ' +
+                        (product.is_wishlisted ? 'text-terroir-gold' : 'text-terroir-dark/40')
                     }
                 >
                     <motion.span
@@ -76,7 +76,7 @@ export default function ProductCard({ product, showProPrice }) {
 
             <div className="flex flex-1 flex-col p-5">
                 {product.category_name && (
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-terroir-terracotta/90">{product.category_name}</p>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-terroir-gold">{product.category_name}</p>
                 )}
 
                 <Link href={route('produits.show', product.slug)} className="text-terroir-dark">
@@ -105,7 +105,7 @@ export default function ProductCard({ product, showProPrice }) {
                         {product.is_on_promo ? (
                             <>
                                 <span className="block text-xs text-terroir-dark/35 line-through">{formatFcfa(product.price)}</span>
-                                <span className="block font-display text-lg font-bold leading-tight text-terroir-terracotta">{formatFcfa(product.promo_price)}</span>
+                                <span className="block font-display text-lg font-bold leading-tight text-terroir-gold">{formatFcfa(product.promo_price)}</span>
                             </>
                         ) : (
                             <span className="block font-display text-lg font-bold leading-tight text-terroir-dark">{formatFcfa(product.price)}</span>
@@ -122,7 +122,7 @@ export default function ProductCard({ product, showProPrice }) {
                         disabled={!product.in_stock}
                         whileTap={product.in_stock ? { scale: 0.85 } : undefined}
                         whileHover={product.in_stock ? { y: -2 } : undefined}
-                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-terroir-green text-lg text-white shadow-soft transition-colors duration-300 hover:bg-terroir-dark hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-40"
+                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[2px] bg-terroir-green text-lg text-white shadow-soft transition-colors duration-300 hover:bg-terroir-dark hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-40"
                         aria-label="Ajouter au panier"
                     >
                         <span className="material-symbols-outlined">add_shopping_cart</span>

@@ -5,6 +5,9 @@ import SiteLayout from '../Layouts/SiteLayout';
 import Reveal from '../Components/Reveal';
 import ProductCard from '../Components/ProductCard';
 import MotionLink from '../Components/MotionLink';
+import Marquee from '../Components/Marquee';
+
+const MARQUEE_ITEMS = ['Qualité sénégalaise', 'Approvisionnement local', 'Produits authentiques', 'Livraison rapide'];
 
 const CATEGORY_ICONS = {
     'infusions-boissons-locales': 'emoji_food_beverage',
@@ -105,7 +108,7 @@ function CountdownTimer({ target }) {
     return (
         <div className="mt-2 flex gap-2">
             {units.map(([label, value]) => (
-                <div key={label} className="flex w-14 flex-col items-center rounded-lg bg-white py-2 shadow-soft">
+                <div key={label} className="flex w-14 flex-col items-center rounded-[2px] bg-white py-2 shadow-soft">
                     <AnimatePresence mode="popLayout">
                         <motion.span
                             key={value}
@@ -237,6 +240,8 @@ export default function Home({
                 </div>
             </section>
 
+            <Marquee items={MARQUEE_ITEMS} />
+
             {/* PRESENTATION */}
             <section className="bg-terroir-cream py-4 md:py-6">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -270,22 +275,22 @@ export default function Home({
                         <span className="section-eyebrow">Explorez</span>
                         <h2 className="section-title mt-1">Nos catégories</h2>
                     </Reveal>
-                    <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-4">
+                    <div className="mt-12 grid grid-cols-2 gap-5 md:grid-cols-3">
                         {categories.map((category, i) => (
                             <Reveal key={category.id} delay={i * 0.06} y={16}>
                                 <MotionLink
                                     whileHover={{ y: -4 }}
                                     href={route('produits.index', { categorie: category.slug })}
-                                    className="group flex flex-col items-center rounded-xl2 border border-terroir-dark/5 bg-white p-8 text-center shadow-soft transition-shadow duration-300 hover:shadow-xl"
+                                    className="group flex flex-col items-center rounded-xl2 border border-terroir-dark/5 bg-white p-10 text-center shadow-soft transition-shadow duration-300 hover:shadow-xl md:p-12"
                                 >
                                     <motion.span
                                         whileHover={{ scale: 1.1, backgroundColor: 'rgb(var(--terroir-green))' }}
-                                        className="flex h-14 w-14 items-center justify-center rounded-full bg-terroir-green/10 text-2xl text-terroir-green transition-colors duration-300 group-hover:text-white"
+                                        className="flex h-20 w-20 items-center justify-center rounded-full bg-terroir-green/10 text-4xl text-terroir-green transition-colors duration-300 group-hover:text-white"
                                     >
-                                        <span className="material-symbols-outlined">{CATEGORY_ICONS[category.slug] ?? 'eco'}</span>
+                                        <span className="material-symbols-outlined text-4xl">{CATEGORY_ICONS[category.slug] ?? 'eco'}</span>
                                     </motion.span>
-                                    <span className="mt-3.5 text-sm font-semibold text-terroir-dark">{category.name}</span>
-                                    <span className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-terroir-green">
+                                    <span className="mt-5 font-display text-lg font-semibold text-terroir-dark">{category.name}</span>
+                                    <span className="mt-1.5 inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-terroir-green">
                                         Voir
                                         <span className="material-symbols-outlined text-sm transition group-hover:translate-x-0.5">arrow_forward</span>
                                     </span>
@@ -352,7 +357,7 @@ export default function Home({
                         </div>
                         <div className="flex items-center justify-center bg-white/50 p-11">
                             {promoProduct.image ? (
-                                <img src={`/fichiers/${promoProduct.image}`} alt={promoProduct.name} className="max-h-64 rounded-2xl object-cover shadow-soft" />
+                                <img src={`/fichiers/${promoProduct.image}`} alt={promoProduct.name} className="max-h-64 rounded-[2px] object-cover shadow-soft" />
                             ) : (
                                 <span className="material-symbols-outlined text-7xl">eco</span>
                             )}
