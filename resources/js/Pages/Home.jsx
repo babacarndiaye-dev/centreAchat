@@ -255,9 +255,9 @@ export default function Home({
                     <div className="grid items-center gap-4 md:grid-cols-2 md:gap-8">
                         <Reveal className="order-1">
                             <img
-                                src="/images/mbour-terroir.jpg"
+                                src="/images/mbour-terroir-nobg.png"
                                 alt="Centre d'achat de Mbour — produits du terroir sénégalais"
-                                className="mx-auto w-full max-w-[5.5rem] rounded-xl2 shadow-soft"
+                                className="mx-auto w-full max-w-sm sm:max-w-md"
                             />
                         </Reveal>
                         <Reveal delay={0.1} className="order-2">
