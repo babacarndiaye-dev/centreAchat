@@ -19,6 +19,26 @@
     @inertiaHead
 </head>
 <body class="bg-terroir-cream text-terroir-dark antialiased">
+    <div id="boot-splash">
+        <img src="{{ asset('icons/icon-512.png') }}" alt="Central d'Achat" width="88" height="88">
+        <span>Central d'Achat</span>
+    </div>
+
     @inertia
+
+    <script>
+        (function () {
+            var splash = document.getElementById('boot-splash');
+            if (!splash) return;
+            var shownAt = Date.now();
+            window.addEventListener('load', function () {
+                var remaining = Math.max(0, 500 - (Date.now() - shownAt));
+                setTimeout(function () {
+                    splash.classList.add('is-hidden');
+                    setTimeout(function () { splash.remove(); }, 500);
+                }, remaining);
+            });
+        })();
+    </script>
 </body>
 </html>

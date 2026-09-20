@@ -308,6 +308,52 @@
     }
 }
 
+#boot-splash {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    background: #123D2E;
+    transition: opacity .5s ease, visibility .5s ease;
+}
+#boot-splash img {
+    height: 5.5rem;
+    width: 5.5rem;
+    border-radius: 50%;
+    background: #F6F1E4;
+    padding: 0.5rem;
+    animation: boot-splash-pulse 1.6s ease-in-out infinite;
+}
+#boot-splash span {
+    font-family: 'Fraunces', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #C9A227;
+    animation: boot-splash-pulse 1.6s ease-in-out infinite;
+}
+#boot-splash.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+@keyframes boot-splash-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.06); opacity: .75; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #boot-splash img,
+    #boot-splash span {
+        animation: none;
+    }
+}
+
 .uk-notification {
     width: auto;
     max-width: 320px;
