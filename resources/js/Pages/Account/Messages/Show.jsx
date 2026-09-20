@@ -4,7 +4,7 @@ import SiteLayout from '../../../Layouts/SiteLayout';
 export default function MessagesShow({ conversation }) {
     return (
         <SiteLayout>
-            <Head title="Conversation — Central d'Achat" />
+            <Head title="Conversation — Centrale d'achat" />
 
             <section className="mx-auto max-w-2xl px-4 py-16 sm:px-6 lg:px-8">
                 <span className="section-eyebrow">Espace client</span>

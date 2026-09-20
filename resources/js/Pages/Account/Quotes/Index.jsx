@@ -8,7 +8,7 @@ function formatFcfa(amount) {
 export default function QuotesIndex({ quotes }) {
     return (
         <SiteLayout>
-            <Head title="Mes devis — Central d'Achat" />
+            <Head title="Mes devis — Centrale d'achat" />
 
             <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
                 <div className="flex flex-wrap items-center justify-between gap-4">

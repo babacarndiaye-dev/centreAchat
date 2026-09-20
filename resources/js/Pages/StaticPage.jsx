@@ -268,13 +268,13 @@ function CoffretsCadeauxSection({ coffrets }) {
 export default function StaticPage({ page, contactInfo, souvenirProducts, coffrets }) {
     return (
         <SiteLayout>
-            <Head title={`${page.meta_title || page.title} — Central d'Achat`}>
+            <Head title={`${page.meta_title || page.title} — Centrale d'achat`}>
                 {page.meta_description && <meta name="description" content={page.meta_description} />}
             </Head>
 
             <section className="mx-auto max-w-4xl overflow-x-hidden px-4 py-16 sm:px-6 lg:px-8">
                 <Reveal className="text-center">
-                    <span className="section-eyebrow">Central d'Achat</span>
+                    <span className="section-eyebrow">Centrale d'achat</span>
                     <h1 className="section-title mt-2">{page.title}</h1>
                 </Reveal>
 

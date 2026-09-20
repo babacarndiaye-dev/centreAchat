@@ -15,13 +15,13 @@ export default function Login() {
 
     return (
         <GuestLayout>
-            <Head title="Connexion — Central d'Achat" />
+            <Head title="Connexion — Centrale d'achat" />
 
             <section className="mx-auto flex w-full max-w-5xl flex-1 flex-col lg:my-auto lg:flex-row">
                 <div className="relative hidden overflow-hidden rounded-xl2 bg-terroir-green lg:block lg:w-2/5">
                     <img
                         src="/images/mbour-terroir-nobg.png"
-                        alt="Central d'Achat — produits du terroir sénégalais"
+                        alt="Centrale d'achat — produits du terroir sénégalais"
                         className="absolute inset-0 h-full w-full object-cover object-top"
                     />
                 </div>

@@ -6,7 +6,7 @@ import Reveal from '../../Components/Reveal';
 export default function ProducersIndex({ producers }) {
     return (
         <SiteLayout>
-            <Head title="Nos producteurs — Central d'Achat" />
+            <Head title="Nos producteurs — Centrale d'achat" />
 
             <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
                 <Reveal className="text-center">

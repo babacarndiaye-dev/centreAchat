@@ -108,7 +108,7 @@ Route::get('/hors-ligne', fn () => view('offline'))->name('pwa.offline');
 
 // PWA manifest — dynamic so it follows the site's branding settings
 Route::get('/manifest.webmanifest', function () {
-    $siteName = \App\Models\Setting::get('site_name') ?: "Central d'Achat";
+    $siteName = \App\Models\Setting::get('site_name') ?: "Centrale d'achat";
 
     return response()->json([
         'name' => $siteName,

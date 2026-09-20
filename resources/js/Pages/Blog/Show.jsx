@@ -5,7 +5,7 @@ import Reveal from '../../Components/Reveal';
 export default function BlogShow({ post, related }) {
     return (
         <SiteLayout>
-            <Head title={`${post.title} — Central d'Achat`} />
+            <Head title={`${post.title} — Centrale d'achat`} />
 
             <article className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
                 <nav className="text-xs text-terroir-dark/50">

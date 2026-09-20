@@ -28,7 +28,7 @@ export default function RecurringOrdersCreate({ products, canPayOnCredit }) {
 
     return (
         <SiteLayout>
-            <Head title="Programmer une commande récurrente — Central d'Achat" />
+            <Head title="Programmer une commande récurrente — Centrale d'achat" />
 
             <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
                 <span className="section-eyebrow">Espace professionnel</span>

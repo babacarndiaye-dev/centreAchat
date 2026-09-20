@@ -60,7 +60,7 @@ class DatabaseSeeder extends Seeder
     protected function seedSettings(): void
     {
         $settings = [
-            'site_name' => "Central d'Achat",
+            'site_name' => "Centrale d'achat",
             'tagline' => 'Du terroir local à votre table',
             'phone' => '+221 77 000 00 00',
             'whatsapp' => '+221 77 000 00 00',
@@ -191,7 +191,7 @@ class DatabaseSeeder extends Seeder
                     'name' => $data['name'],
                     'slug' => \Illuminate\Support\Str::slug($data['name']),
                     'short_description' => 'Produit local authentique, sélectionné avec soin par Central d\'Achat.',
-                    'description' => "Ce produit est issu de la sélection rigoureuse de Central d'Achat auprès de producteurs locaux. Fraîcheur, qualité et authenticité garanties.",
+                    'description' => "Ce produit est issu de la sélection rigoureuse de Centrale d'achat auprès de producteurs locaux. Fraîcheur, qualité et authenticité garanties.",
                     'origin' => $data['origin'],
                     'unit' => $data['unit'],
                     'price' => $data['price'],
@@ -210,20 +210,20 @@ class DatabaseSeeder extends Seeder
     protected function seedPages(): void
     {
         $pages = [
-            ['slug' => 'a-propos', 'title' => 'À propos de Central d\'Achat', 'content' => "Central d'Achat est une structure spécialisée dans l'achat, l'approvisionnement, la valorisation, le stockage et la commercialisation de produits locaux.\n\nBasés au Rond-Point Malicounda à Mbour, nous travaillons chaque jour avec des producteurs et fournisseurs locaux pour proposer des produits authentiques, frais et de qualité aux particuliers, hôtels, restaurants et professionnels du Sénégal."],
-            ['slug' => 'notre-histoire', 'title' => 'Notre histoire', 'content' => "Central d'Achat est né de la volonté de valoriser le terroir sénégalais et de faciliter l'accès à des produits locaux de qualité, en soutenant l'économie locale."],
+            ['slug' => 'a-propos', 'title' => 'À propos de Central d\'Achat', 'content' => "Centrale d'achat est une structure spécialisée dans l'achat, l'approvisionnement, la valorisation, le stockage et la commercialisation de produits locaux.\n\nBasés au Rond-Point Malicounda à Mbour, nous travaillons chaque jour avec des producteurs et fournisseurs locaux pour proposer des produits authentiques, frais et de qualité aux particuliers, hôtels, restaurants et professionnels du Sénégal."],
+            ['slug' => 'notre-histoire', 'title' => 'Notre histoire', 'content' => "Centrale d'achat est né de la volonté de valoriser le terroir sénégalais et de faciliter l'accès à des produits locaux de qualité, en soutenant l'économie locale."],
             ['slug' => 'notre-mission', 'title' => 'Notre mission', 'content' => "Faciliter l'approvisionnement en produits frais et de qualité issus du terroir sénégalais, pour tous : particuliers, professionnels, hôtels et institutions."],
             ['slug' => 'nos-engagements', 'title' => 'Nos engagements', 'content' => "Qualité, traçabilité, soutien aux producteurs locaux et développement durable sont au cœur de nos engagements."],
-            ['slug' => 'hotels-professionnels', 'title' => 'Hôtels & Professionnels', 'content' => "Central d'Achat accompagne les hôtels, restaurants et professionnels avec des tarifs dégressifs, des commandes en gros, des devis personnalisés et une facturation adaptée.\n\nCréez votre compte professionnel en ligne ci-dessous : après validation par notre équipe, vous accédez immédiatement aux tarifs professionnels et de gros."],
+            ['slug' => 'hotels-professionnels', 'title' => 'Hôtels & Professionnels', 'content' => "Centrale d'achat accompagne les hôtels, restaurants et professionnels avec des tarifs dégressifs, des commandes en gros, des devis personnalisés et une facturation adaptée.\n\nCréez votre compte professionnel en ligne ci-dessous : après validation par notre équipe, vous accédez immédiatement aux tarifs professionnels et de gros."],
             ['slug' => 'espace-touristes', 'title' => 'Espace Touristes', 'content' => "Découvrez l'authenticité du terroir sénégalais à travers nos produits et nos coffrets souvenirs. Livraison possible directement à votre hôtel."],
             ['slug' => 'coffrets-cadeaux', 'title' => 'Coffrets & Cadeaux', 'content' => "Nos coffrets rassemblent une sélection de produits Anfa Agro, prêts à offrir. Ajoutez un message personnalisé lors de votre commande."],
             ['slug' => 'faq', 'title' => 'Questions fréquentes', 'content' => "Comment passer commande ?\nVous pouvez commander directement en ligne ou nous contacter par téléphone.\n\nQuels sont les délais de livraison ?\nEn général sous 24 à 48h dans la région de Mbour.\n\nProposez-vous des tarifs professionnels ?\nOui, contactez-nous pour ouvrir un compte professionnel."],
             ['slug' => 'livraison', 'title' => 'Livraison', 'content' => "Nous livrons à domicile, en entreprise ou à l'hôtel dans la région de Mbour et au-delà. Retrait en boutique également possible au Rond-Point Malicounda."],
             ['slug' => 'devenir-fournisseur', 'title' => 'Devenir fournisseur', 'content' => "Vous êtes producteur ou fournisseur de produits locaux ? Rejoignez notre réseau de partenaires et bénéficiez d'un accès à nos canaux de distribution."],
             ['slug' => 'contact', 'title' => 'Contactez-nous', 'content' => "Une question, une demande de devis ou simplement envie d'en savoir plus ? Notre équipe vous répond rapidement."],
-            ['slug' => 'mentions-legales', 'title' => 'Mentions légales', 'content' => "Central d'Achat — Rond-Point Malicounda, Mbour, Sénégal. Ce site est édité et exploité par Central d'Achat."],
-            ['slug' => 'politique-de-confidentialite', 'title' => 'Politique de confidentialité', 'content' => "Central d'Achat s'engage à protéger la confidentialité des données personnelles de ses utilisateurs conformément à la réglementation en vigueur."],
-            ['slug' => 'conditions-generales', 'title' => 'Conditions générales de vente', 'content' => "Les présentes conditions générales de vente régissent les relations contractuelles entre Central d'Achat et ses clients."],
+            ['slug' => 'mentions-legales', 'title' => 'Mentions légales', 'content' => "Centrale d'achat — Rond-Point Malicounda, Mbour, Sénégal. Ce site est édité et exploité par Centrale d'achat."],
+            ['slug' => 'politique-de-confidentialite', 'title' => 'Politique de confidentialité', 'content' => "Centrale d'achat s'engage à protéger la confidentialité des données personnelles de ses utilisateurs conformément à la réglementation en vigueur."],
+            ['slug' => 'conditions-generales', 'title' => 'Conditions générales de vente', 'content' => "Les présentes conditions générales de vente régissent les relations contractuelles entre Centrale d'achat et ses clients."],
         ];
 
         foreach ($pages as $page) {
@@ -236,7 +236,7 @@ class DatabaseSeeder extends Seeder
         $posts = [
             ['title' => 'La mangue Kent, star de la saison', 'type' => 'actualite', 'excerpt' => 'Découvrez pourquoi la mangue Kent du Sénégal est très appréciée cette saison.'],
             ['title' => 'Recette : Thiéboudienne traditionnel', 'type' => 'recette', 'excerpt' => 'Notre recette pas à pas du plat national sénégalais avec nos produits du terroir.'],
-            ['title' => "Central d'Achat ouvre son portail B2B", 'type' => 'actualite', 'excerpt' => 'Hôtels et restaurants peuvent désormais commander en ligne avec des tarifs dédiés.'],
+            ['title' => "Centrale d'achat ouvre son portail B2B", 'type' => 'actualite', 'excerpt' => 'Hôtels et restaurants peuvent désormais commander en ligne avec des tarifs dédiés.'],
         ];
 
         foreach ($posts as $post) {
@@ -254,7 +254,7 @@ class DatabaseSeeder extends Seeder
     protected function seedTestimonials(): void
     {
         $testimonials = [
-            ['author_name' => 'Aïssatou Diop', 'author_role' => 'Hôtel Teranga Mbour', 'content' => "Des produits d'une fraîcheur remarquable et un service très professionnel. Central d'Achat est devenu notre partenaire de confiance.", 'rating' => 5],
+            ['author_name' => 'Aïssatou Diop', 'author_role' => 'Hôtel Teranga Mbour', 'content' => "Des produits d'une fraîcheur remarquable et un service très professionnel. Centrale d'achat est devenu notre partenaire de confiance.", 'rating' => 5],
             ['author_name' => 'Moussa Fall', 'author_role' => 'Restaurant Le Baobab', 'content' => "Livraison rapide et produits de qualité constante. Je recommande vivement pour les professionnels.", 'rating' => 5],
             ['author_name' => 'Fatou Sarr', 'author_role' => 'Particulière', 'content' => "J'adore pouvoir commander des produits locaux authentiques directement en ligne, ça soutient nos producteurs !", 'rating' => 4],
         ];

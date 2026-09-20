@@ -155,7 +155,7 @@ export default function Home({
 
     return (
         <SiteLayout>
-            <Head title="Central d'Achat — Le meilleur du terroir local, sélectionné pour vous" />
+            <Head title="Centrale d'achat — Le meilleur du terroir local, sélectionné pour vous" />
 
             {/* HERO */}
             <section ref={heroRef} className="relative overflow-hidden bg-gradient-to-br from-terroir-green via-terroir-dark to-terroir-dark">
@@ -190,7 +190,7 @@ export default function Home({
                                 {heroTitle || 'Le meilleur du terroir local, sélectionné pour vous.'}
                             </h1>
                             <p className="mt-4 max-w-md text-lg leading-relaxed text-white/70">
-                                {heroSubtitle || "Des producteurs locaux aux hôtels, professionnels et consommateurs, Central d'Achat facilite l'accès à des produits authentiques, frais et de qualité."}
+                                {heroSubtitle || "Des producteurs locaux aux hôtels, professionnels et consommateurs, Centrale d'achat facilite l'accès à des produits authentiques, frais et de qualité."}
                             </p>
                             <div className="mt-8 flex flex-wrap gap-3.5">
                                 <MotionLink whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} href={route('produits.index')} className="btn-gold">

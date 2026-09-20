@@ -48,7 +48,7 @@ class HandleInertiaRequests extends Middleware
                 'error' => fn () => $request->session()->get('error'),
             ],
             'site' => [
-                'name' => \App\Models\Setting::get('site_name') ?: "Central d'Achat",
+                'name' => \App\Models\Setting::get('site_name') ?: "Centrale d'achat",
                 'logoUrl' => ($logoPath = \App\Models\Setting::get('logo_path')) ? asset('fichiers/'.$logoPath) : null,
                 'announcementActive' => \App\Models\Setting::getBool('announcement_active', false),
                 'announcementText' => \App\Models\Setting::get('announcement_text'),

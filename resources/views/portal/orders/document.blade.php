@@ -17,7 +17,7 @@
 
     <div class="flex items-start justify-between border-b border-terroir-dark/10 pb-6">
         <div>
-            <p class="font-display text-2xl font-semibold text-terroir-green">Central d'Achat</p>
+            <p class="font-display text-2xl font-semibold text-terroir-green">Centrale d'achat</p>
             <p class="mt-1 text-sm text-terroir-dark/60">{{ \App\Models\Setting::get('address', 'Rond-Point Malicounda, Mbour – Sénégal') }}</p>
             <p class="text-sm text-terroir-dark/60">{{ \App\Models\Setting::get('phone') }} — {{ \App\Models\Setting::get('email') }}</p>
         </div>
@@ -72,6 +72,6 @@
         </div>
     @endif
 
-    <p class="mt-12 text-xs text-terroir-dark/40">Document généré automatiquement par la plateforme Central d'Achat.</p>
+    <p class="mt-12 text-xs text-terroir-dark/40">Document généré automatiquement par la plateforme Centrale d'achat.</p>
 </body>
 </html>

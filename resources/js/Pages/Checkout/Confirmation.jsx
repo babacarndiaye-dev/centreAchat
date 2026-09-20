@@ -9,7 +9,7 @@ function formatFcfa(amount) {
 export default function CheckoutConfirmation({ order }) {
     return (
         <SiteLayout>
-            <Head title="Commande confirmée — Central d'Achat" />
+            <Head title="Commande confirmée — Centrale d'achat" />
 
             <section className="mx-auto max-w-2xl px-4 py-24 text-center sm:px-6 lg:px-8">
                 <motion.div

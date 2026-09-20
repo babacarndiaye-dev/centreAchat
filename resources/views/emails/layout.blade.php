@@ -1,6 +1,6 @@
 @php
     $logoPath = \App\Models\Setting::get('logo_path');
-    $siteName = \App\Models\Setting::get('site_name') ?: "Central d'Achat";
+    $siteName = \App\Models\Setting::get('site_name') ?: "Centrale d'achat";
     $address = \App\Models\Setting::get('address', 'Rond-Point Malicounda, Mbour – Sénégal');
 @endphp
 <!DOCTYPE html>
