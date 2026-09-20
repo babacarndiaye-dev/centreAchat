@@ -20,8 +20,8 @@
 </head>
 <body class="bg-terroir-cream text-terroir-dark antialiased">
     <div id="boot-splash">
-        <img src="{{ asset('icons/icon-512.png') }}" alt="Central d'Achat" width="88" height="88">
-        <span>Central d'Achat</span>
+        <img src="{{ asset('icons/icon-512.png') }}" alt="Centrale d'achat" width="88" height="88">
+        <span>Centrale d'achat</span>
     </div>
 
     @inertia
