@@ -32,10 +32,10 @@
             if (!splash) return;
             var shownAt = Date.now();
             window.addEventListener('load', function () {
-                var remaining = Math.max(0, 500 - (Date.now() - shownAt));
+                var remaining = Math.max(0, 1400 - (Date.now() - shownAt));
                 setTimeout(function () {
                     splash.classList.add('is-hidden');
-                    setTimeout(function () { splash.remove(); }, 500);
+                    setTimeout(function () { splash.remove(); }, 600);
                 }, remaining);
             });
         })();
