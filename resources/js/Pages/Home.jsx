@@ -480,7 +480,7 @@ export default function Home({
                 <div className={showNewsletter ? 'grid gap-6 lg:grid-cols-2' : ''}>
                     {showNewsletter && (
                         <Reveal className="flex h-full flex-col justify-center rounded-xl2 bg-terroir-green p-8 text-white shadow-soft sm:p-11">
-                            <h3 className="font-display text-2xl font-semibold">Restez informé de nos nouveautés</h3>
+                            <h3 className="font-display text-2xl font-semibold text-white">Restez informé de nos nouveautés</h3>
                             <p className="mt-2 text-white">Recevez nos nouveaux produits et offres par e-mail.</p>
                             <form action={route('newsletter.store')} method="POST" className="mt-6 flex flex-col gap-2.5 sm:flex-row">
                                 <input type="hidden" name="_token" value={document.querySelector('meta[name=csrf-token]')?.content} />
@@ -497,7 +497,7 @@ export default function Home({
                     )}
 
                     <Reveal delay={showNewsletter ? 0.1 : 0} className="flex h-full flex-col justify-center rounded-xl2 bg-terroir-dark p-8 text-white sm:p-11">
-                        <h3 className="flex items-center gap-2 font-display text-xl font-semibold">
+                        <h3 className="flex items-center gap-2 font-display text-xl font-semibold text-white">
                             <span className="material-symbols-outlined text-xl text-terroir-gold">location_on</span>
                             Rond-Point Malicounda, Mbour – Sénégal
                         </h3>
