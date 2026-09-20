@@ -65,7 +65,7 @@ function FlashBanner() {
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.2 }}
                     className={
-                        'mx-6 mt-4 flex items-center justify-between gap-3 rounded-lg px-4 py-3 text-sm font-medium ' +
+                        'mx-6 mt-4 flex items-center justify-between gap-3 rounded-[2px] px-4 py-3 text-sm font-medium ' +
                         (banner.type === 'success' ? 'bg-terroir-green/10 text-terroir-green' : 'bg-terroir-terracotta/10 text-terroir-terracotta')
                     }
                 >
@@ -134,7 +134,7 @@ export default function AdminLayout({ title, children }) {
                         <a href={bellHref} className="relative text-xl text-terroir-dark/50 hover:text-terroir-dark" aria-label="Notifications">
                             <span className="material-symbols-outlined">notifications</span>
                             {unreadTotal > 0 && (
-                                <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-terroir-terracotta px-1 text-[10px] font-bold text-white">
+                                <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-terroir-gold px-1 text-[10px] font-bold text-terroir-dark">
                                     {unreadTotal > 9 ? '9+' : unreadTotal}
                                 </span>
                             )}
@@ -146,7 +146,7 @@ export default function AdminLayout({ title, children }) {
                 <FlashBanner />
 
                 {errorList.length > 0 && (
-                    <div className="mx-6 mt-4 rounded-lg bg-terroir-terracotta/10 px-4 py-3 text-sm text-terroir-terracotta">
+                    <div className="mx-6 mt-4 rounded-[2px] bg-terroir-terracotta/10 px-4 py-3 text-sm text-terroir-terracotta">
                         <ul className="list-inside list-disc space-y-0.5">
                             {errorList.map((error, i) => <li key={i}>{error}</li>)}
                         </ul>

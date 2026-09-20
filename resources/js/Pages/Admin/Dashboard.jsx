@@ -68,7 +68,7 @@ export default function Dashboard({ stats, recentOrders, lowStockProducts, order
                                         </td>
                                         <td className="py-2.5 pr-2 text-terroir-dark/70">{order.customer_name}</td>
                                         <td className="py-2.5 pr-2">
-                                            <span className="rounded-full bg-terroir-cream px-2.5 py-1 text-xs font-medium text-terroir-dark/70">
+                                            <span className="rounded-[2px] bg-terroir-cream px-2.5 py-1 text-xs font-medium text-terroir-dark/70">
                                                 {orderStatuses[order.status] ?? order.status}
                                             </span>
                                         </td>

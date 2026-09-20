@@ -19,7 +19,7 @@ function NavGroup({ group, unreadChat, currentRoute }) {
             <button
                 type="button"
                 onClick={() => setOpen((v) => !v)}
-                className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-[11px] font-bold uppercase tracking-wider text-white/40 transition hover:text-white/70"
+                className="flex w-full items-center justify-between rounded-[2px] px-3 py-2 text-left text-[11px] font-bold uppercase tracking-wider text-white/40 transition hover:text-white/70"
             >
                 <span>{group.label}</span>
                 <motion.span
@@ -42,14 +42,14 @@ function NavGroup({ group, unreadChat, currentRoute }) {
                         {group.items.map((link) => {
                             const active = isLinkActive(link);
                             const className =
-                                'flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition ' +
+                                'flex items-center gap-2.5 rounded-[2px] px-3 py-2 text-sm transition ' +
                                 (active ? 'bg-terroir-green text-white' : 'text-white/65 hover:bg-white/5 hover:text-white');
                             const content = (
                                 <>
                                     <span className="material-symbols-outlined text-lg">{link.icon}</span>
                                     <span>{link.label}</span>
                                     {link.route === 'admin.messagerie.index' && unreadChat > 0 && (
-                                        <span className="ml-auto rounded-full bg-terroir-terracotta px-1.5 py-0.5 text-[10px] font-bold text-white">
+                                        <span className="ml-auto rounded-full bg-terroir-gold px-1.5 py-0.5 text-[10px] font-bold text-terroir-dark">
                                             {unreadChat}
                                         </span>
                                     )}
@@ -102,13 +102,13 @@ export default function SidebarNav() {
             </nav>
 
             <div className="shrink-0 space-y-0.5 border-t border-white/10 p-3">
-                <a href={route('accueil')} className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-white/65 hover:bg-white/5 hover:text-white">
+                <a href={route('accueil')} className="flex items-center gap-2.5 rounded-[2px] px-3 py-2 text-sm text-white/65 hover:bg-white/5 hover:text-white">
                     <span className="material-symbols-outlined text-lg">arrow_back</span>
                     Retour au site
                 </a>
                 <form action={route('logout')} method="POST">
                     <input type="hidden" name="_token" value={document.querySelector('meta[name=csrf-token]')?.content} />
-                    <button type="submit" className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-sm text-white/65 hover:bg-white/5 hover:text-white">
+                    <button type="submit" className="flex w-full items-center gap-2.5 rounded-[2px] px-3 py-2 text-left text-sm text-white/65 hover:bg-white/5 hover:text-white">
                         <span className="material-symbols-outlined text-lg">logout</span>
                         Se déconnecter
                     </button>
