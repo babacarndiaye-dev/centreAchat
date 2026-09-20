@@ -9,6 +9,7 @@ use App\Models\Supplier;
 use App\Services\AccountingService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class FixedAssetController extends Controller
 {
@@ -27,20 +28,43 @@ class FixedAssetController extends Controller
         $assets = $query->orderBy('acquisition_date', 'desc')->get();
 
         $totals = [
-            'acquisition' => $assets->sum('acquisition_value'),
-            'accumulated' => $assets->sum(fn ($a) => $a->accumulatedDepreciation()),
-            'net' => $assets->sum(fn ($a) => $a->netBookValue()),
+            'acquisition' => (float) $assets->sum('acquisition_value'),
+            'accumulated' => (float) $assets->sum(fn ($a) => $a->accumulatedDepreciation()),
+            'net' => (float) $assets->sum(fn ($a) => $a->netBookValue()),
         ];
 
-        return view('admin.assets.index', compact('assets', 'totals'));
+        return Inertia::render('Admin/Finance/Assets/Index', [
+            'assets' => $assets->map(fn (FixedAsset $asset) => [
+                'id' => $asset->id,
+                'name' => $asset->name,
+                'category_label' => FixedAsset::CATEGORIES[$asset->category],
+                'acquisition_date' => $asset->acquisition_date->format('d/m/Y'),
+                'acquisition_value' => (float) $asset->acquisition_value,
+                'accumulated_depreciation' => (float) $asset->accumulatedDepreciation(),
+                'net_book_value' => (float) $asset->netBookValue(),
+                'status_label' => FixedAsset::STATUSES[$asset->status],
+                'status_badge_class' => $asset->statusBadgeClass(),
+            ]),
+            'totals' => $totals,
+            'categories' => FixedAsset::CATEGORIES,
+            'statuses' => FixedAsset::STATUSES,
+            'filters' => $request->only('category', 'status'),
+        ]);
+    }
+
+    protected function formOptions(): array
+    {
+        return [
+            'paymentAccounts' => PaymentAccount::where('is_active', true)->orderBy('name')->get(['id', 'name']),
+            'suppliers' => Supplier::orderBy('name')->get(['id', 'name']),
+            'categories' => FixedAsset::CATEGORIES,
+            'methods' => FixedAsset::METHODS,
+        ];
     }
 
     public function create()
     {
-        $paymentAccounts = PaymentAccount::where('is_active', true)->orderBy('name')->get();
-        $suppliers = Supplier::orderBy('name')->get();
-
-        return view('admin.assets.create', compact('paymentAccounts', 'suppliers'));
+        return Inertia::render('Admin/Finance/Assets/Form', $this->formOptions());
     }
 
     public function store(Request $request, AccountingService $accounting): RedirectResponse
@@ -58,10 +82,21 @@ class FixedAssetController extends Controller
 
     public function edit(FixedAsset $immobilisation)
     {
-        $paymentAccounts = PaymentAccount::where('is_active', true)->orderBy('name')->get();
-        $suppliers = Supplier::orderBy('name')->get();
-
-        return view('admin.assets.edit', ['asset' => $immobilisation, 'paymentAccounts' => $paymentAccounts, 'suppliers' => $suppliers]);
+        return Inertia::render('Admin/Finance/Assets/Form', [
+            ...$this->formOptions(),
+            'asset' => [
+                'id' => $immobilisation->id,
+                'name' => $immobilisation->name,
+                'category' => $immobilisation->category,
+                'acquisition_date' => $immobilisation->acquisition_date->format('Y-m-d'),
+                'acquisition_value' => (float) $immobilisation->acquisition_value,
+                'useful_life_years' => $immobilisation->useful_life_years,
+                'depreciation_method' => $immobilisation->depreciation_method,
+                'payment_account_id' => $immobilisation->payment_account_id,
+                'supplier_id' => $immobilisation->supplier_id,
+                'notes' => $immobilisation->notes,
+            ],
+        ]);
     }
 
     public function update(Request $request, FixedAsset $immobilisation): RedirectResponse
@@ -74,8 +109,32 @@ class FixedAssetController extends Controller
     public function show(FixedAsset $immobilisation)
     {
         $schedule = $immobilisation->depreciationSchedule();
+        $currentYear = (int) floor($immobilisation->yearsElapsed()) + 1;
 
-        return view('admin.assets.show', ['asset' => $immobilisation, 'schedule' => $schedule]);
+        return Inertia::render('Admin/Finance/Assets/Show', [
+            'asset' => [
+                'id' => $immobilisation->id,
+                'name' => $immobilisation->name,
+                'category_label' => FixedAsset::CATEGORIES[$immobilisation->category],
+                'status' => $immobilisation->status,
+                'status_label' => FixedAsset::STATUSES[$immobilisation->status],
+                'status_badge_class' => $immobilisation->statusBadgeClass(),
+                'acquisition_date' => $immobilisation->acquisition_date->format('d/m/Y'),
+                'acquisition_value' => (float) $immobilisation->acquisition_value,
+                'annual_depreciation' => (float) $immobilisation->annualDepreciation(),
+                'accumulated_depreciation' => (float) $immobilisation->accumulatedDepreciation(),
+                'net_book_value' => (float) $immobilisation->netBookValue(),
+                'depreciation_method_label' => FixedAsset::METHODS[$immobilisation->depreciation_method],
+                'useful_life_years' => $immobilisation->useful_life_years,
+                'payment_account_name' => $immobilisation->paymentAccount?->name,
+                'supplier_name' => $immobilisation->supplier?->name,
+                'notes' => $immobilisation->notes,
+                'disposal_date' => $immobilisation->disposal_date?->format('d/m/Y'),
+                'disposal_value' => $immobilisation->disposal_value !== null ? (float) $immobilisation->disposal_value : null,
+            ],
+            'schedule' => $schedule,
+            'currentYear' => $currentYear,
+        ]);
     }
 
     public function dispose(Request $request, FixedAsset $immobilisation): RedirectResponse

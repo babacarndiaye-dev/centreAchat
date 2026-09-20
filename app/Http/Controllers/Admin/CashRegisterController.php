@@ -10,14 +10,24 @@ use App\Models\PaymentAccountTransaction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class CashRegisterController extends Controller
 {
     public function index()
     {
-        $registers = CashRegister::with(['openedBy', 'closedBy'])->latest()->paginate(15);
+        $registers = CashRegister::with(['openedBy', 'closedBy'])->latest()->paginate(15)->withQueryString()->through(fn (CashRegister $r) => [
+            'id' => $r->id,
+            'opened_by_name' => $r->openedBy->name,
+            'created_at' => $r->created_at->format('d/m/Y H:i'),
+            'opening_float' => (float) $r->opening_float,
+            'status' => $r->status,
+            'variance' => $r->variance() !== null ? (float) $r->variance() : null,
+        ]);
 
-        return view('admin.pos.registers.index', compact('registers'));
+        return Inertia::render('Admin/Pos/Registers/Index', [
+            'registers' => $registers,
+        ]);
     }
 
     public function create()
@@ -26,7 +36,7 @@ class CashRegisterController extends Controller
             return redirect()->route('admin.pos.caisse.show', $open);
         }
 
-        return view('admin.pos.registers.create');
+        return Inertia::render('Admin/Pos/Registers/Create');
     }
 
     public function store(Request $request): RedirectResponse
@@ -51,10 +61,37 @@ class CashRegisterController extends Controller
 
     public function show(CashRegister $caisse)
     {
-        $caisse->load(['movements.creator', 'salePayments.order', 'returns.order']);
-        $sales = $caisse->salePayments->pluck('order')->unique('id');
+        $caisse->load(['movements.creator', 'salePayments.order', 'returns.order', 'openedBy', 'closedBy']);
+        $sales = $caisse->salePayments->pluck('order')->unique('id')->values();
 
-        return view('admin.pos.registers.show', ['register' => $caisse, 'sales' => $sales]);
+        return Inertia::render('Admin/Pos/Registers/Show', [
+            'register' => [
+                'id' => $caisse->id,
+                'status' => $caisse->status,
+                'opened_by_name' => $caisse->openedBy->name,
+                'created_at' => $caisse->created_at->format('d/m/Y H:i'),
+                'opening_float' => (float) $caisse->opening_float,
+                'cash_sales_total' => (float) $caisse->cashSalesTotal(),
+                'movements_net' => (float) ($caisse->encaissementsTotal() - $caisse->decaissementsTotal()),
+                'theoretical_cash' => (float) $caisse->theoreticalCash(),
+                'actual_closing_amount' => $caisse->actual_closing_amount !== null ? (float) $caisse->actual_closing_amount : null,
+                'variance' => $caisse->variance() !== null ? (float) $caisse->variance() : null,
+                'closed_by_name' => $caisse->closedBy?->name,
+                'closed_at' => $caisse->closed_at?->format('d/m/Y H:i'),
+                'movements' => $caisse->movements->map(fn ($m) => [
+                    'id' => $m->id,
+                    'reason' => $m->reason,
+                    'type' => $m->type,
+                    'amount' => (float) $m->amount,
+                ]),
+            ],
+            'sales' => $sales->map(fn ($order) => [
+                'id' => $order->id,
+                'order_number' => $order->order_number,
+                'customer_name' => $order->customer_name,
+                'total' => (float) $order->total,
+            ]),
+        ]);
     }
 
     public function addMovement(Request $request, CashRegister $caisse): RedirectResponse

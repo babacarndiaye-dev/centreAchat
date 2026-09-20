@@ -6,14 +6,24 @@ use App\Http\Controllers\Controller;
 use App\Models\ChartAccount;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ChartAccountController extends Controller
 {
     public function index()
     {
-        $accounts = ChartAccount::orderBy('code')->get()->groupBy('class');
+        $accounts = ChartAccount::orderBy('code')->get()->groupBy('class')->map(fn ($group) => $group->map(fn (ChartAccount $account) => [
+            'id' => $account->id,
+            'code' => $account->code,
+            'name' => $account->name,
+            'class' => $account->class,
+            'is_active' => $account->is_active,
+        ])->values());
 
-        return view('admin.accounting.chart-accounts.index', compact('accounts'));
+        return Inertia::render('Admin/Comptabilite/ChartAccounts', [
+            'accounts' => $accounts,
+            'classes' => ChartAccount::CLASSES,
+        ]);
     }
 
     public function store(Request $request): RedirectResponse

@@ -3,26 +3,48 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ChartAccount;
 use App\Models\PaymentAccount;
 use App\Models\PaymentAccountTransaction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class PaymentAccountController extends Controller
 {
     public function index()
     {
-        $accounts = PaymentAccount::orderBy('type')->orderBy('name')->get();
+        $accounts = PaymentAccount::orderBy('type')->orderBy('name')->get()->map(fn (PaymentAccount $account) => [
+            'id' => $account->id,
+            'name' => $account->name,
+            'type' => $account->type,
+            'type_label' => PaymentAccount::TYPES[$account->type],
+            'provider' => $account->provider,
+            'account_number' => $account->account_number,
+            'balance' => (float) $account->balance(),
+            'is_active' => $account->is_active,
+        ]);
 
-        return view('admin.finance.accounts.index', compact('accounts'));
+        return Inertia::render('Admin/Finance/Accounts/Index', [
+            'accounts' => $accounts,
+        ]);
+    }
+
+    protected function chartAccountOptions()
+    {
+        return ChartAccount::where('class', 5)->orderBy('code')->get()->map(fn (ChartAccount $a) => [
+            'id' => $a->id,
+            'label' => $a->code.' — '.$a->name,
+        ]);
     }
 
     public function create()
     {
-        $chartAccounts = \App\Models\ChartAccount::where('class', 5)->orderBy('code')->get();
-
-        return view('admin.finance.accounts.create', compact('chartAccounts'));
+        return Inertia::render('Admin/Finance/Accounts/Form', [
+            'types' => PaymentAccount::TYPES,
+            'chartAccounts' => $this->chartAccountOptions(),
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -34,9 +56,21 @@ class PaymentAccountController extends Controller
 
     public function edit(PaymentAccount $compte)
     {
-        $chartAccounts = \App\Models\ChartAccount::where('class', 5)->orderBy('code')->get();
-
-        return view('admin.finance.accounts.edit', ['account' => $compte, 'chartAccounts' => $chartAccounts]);
+        return Inertia::render('Admin/Finance/Accounts/Form', [
+            'types' => PaymentAccount::TYPES,
+            'chartAccounts' => $this->chartAccountOptions(),
+            'account' => [
+                'id' => $compte->id,
+                'name' => $compte->name,
+                'type' => $compte->type,
+                'provider' => $compte->provider,
+                'account_number' => $compte->account_number,
+                'chart_account_id' => $compte->chart_account_id,
+                'initial_balance' => (float) $compte->initial_balance,
+                'notes' => $compte->notes,
+                'is_active' => $compte->is_active,
+            ],
+        ]);
     }
 
     public function update(Request $request, PaymentAccount $compte): RedirectResponse
@@ -57,7 +91,24 @@ class PaymentAccountController extends Controller
     {
         $compte->load(['transactions' => fn ($q) => $q->latest('transaction_date')->latest()]);
 
-        return view('admin.finance.accounts.show', ['account' => $compte]);
+        return Inertia::render('Admin/Finance/Accounts/Show', [
+            'account' => [
+                'id' => $compte->id,
+                'name' => $compte->name,
+                'type' => $compte->type,
+                'type_label' => PaymentAccount::TYPES[$compte->type],
+                'balance' => (float) $compte->balance(),
+                'transactions' => $compte->transactions->map(fn (PaymentAccountTransaction $t) => [
+                    'id' => $t->id,
+                    'transaction_date' => $t->transaction_date->format('d/m/Y'),
+                    'description' => $t->description,
+                    'reference' => $t->reference,
+                    'category' => $t->category,
+                    'type' => $t->type,
+                    'amount' => (float) $t->amount,
+                ]),
+            ],
+        ]);
     }
 
     public function addTransaction(Request $request, PaymentAccount $compte): RedirectResponse

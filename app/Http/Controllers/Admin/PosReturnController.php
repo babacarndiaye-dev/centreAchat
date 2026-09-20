@@ -14,6 +14,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class PosReturnController extends Controller
 {
@@ -22,14 +23,28 @@ class PosReturnController extends Controller
         $order = null;
 
         if ($request->filled('order_number')) {
-            $order = Order::with('items')->where('order_number', $request->string('order_number'))->first();
+            $order = Order::with('items.product')->where('order_number', $request->string('order_number'))->first();
 
             if (! $order) {
-                return back()->withErrors(['order_number' => 'Commande introuvable.']);
+                return redirect()->route('admin.pos.retours.create')->with('error', 'Commande introuvable.');
             }
         }
 
-        return view('admin.pos.returns.create', compact('order'));
+        return Inertia::render('Admin/Pos/Returns/Create', [
+            'orderNumber' => $request->string('order_number')->toString(),
+            'order' => $order ? [
+                'id' => $order->id,
+                'order_number' => $order->order_number,
+                'customer_name' => $order->customer_name,
+                'created_at' => $order->created_at->format('d/m/Y'),
+                'items' => $order->items->filter(fn ($item) => $item->returnableQuantity() > 0)->values()->map(fn ($item) => [
+                    'id' => $item->id,
+                    'product_name' => $item->product_name,
+                    'quantity' => $item->quantity,
+                    'returnable_quantity' => $item->returnableQuantity(),
+                ]),
+            ] : null,
+        ]);
     }
 
     public function store(Request $request, AccountingService $accounting): RedirectResponse
@@ -119,8 +134,16 @@ class PosReturnController extends Controller
 
     public function index()
     {
-        $returns = PosReturn::with(['order', 'processedBy'])->latest()->paginate(20);
+        $returns = PosReturn::with(['order', 'processedBy'])->latest()->paginate(20)->withQueryString()->through(fn (PosReturn $r) => [
+            'id' => $r->id,
+            'order_number' => $r->order->order_number,
+            'processed_by_name' => $r->processedBy?->name,
+            'created_at' => $r->created_at->format('d/m/Y H:i'),
+            'total_refund' => (float) $r->total_refund,
+        ]);
 
-        return view('admin.pos.returns.index', compact('returns'));
+        return Inertia::render('Admin/Pos/Returns/Index', [
+            'returns' => $returns,
+        ]);
     }
 }

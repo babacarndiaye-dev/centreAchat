@@ -11,12 +11,13 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class BankReconciliationController extends Controller
 {
     public function index(Request $request)
     {
-        $accounts = PaymentAccount::whereIn('type', ['banque', 'mobile_money'])->orderBy('name')->get();
+        $accounts = PaymentAccount::whereIn('type', ['banque', 'mobile_money'])->orderBy('name')->get(['id', 'name']);
         $account = null;
         $unmatchedLines = collect();
         $unreconciledTransactions = collect();
@@ -24,33 +25,55 @@ class BankReconciliationController extends Controller
         $stats = null;
 
         if ($request->filled('compte')) {
-            $account = PaymentAccount::find($request->integer('compte'));
+            $accountModel = PaymentAccount::find($request->integer('compte'));
 
-            if ($account) {
-                $unmatchedLines = $account->statementLines()
+            if ($accountModel) {
+                $account = ['id' => $accountModel->id, 'name' => $accountModel->name];
+
+                $unmatchedLines = $accountModel->statementLines()
                     ->whereIn('status', ['non_rapproche', 'ecart'])
                     ->orderBy('statement_date')
-                    ->get();
+                    ->get()
+                    ->map(fn ($line) => [
+                        'id' => $line->id,
+                        'statement_date' => $line->statement_date->format('d/m/Y'),
+                        'description' => $line->description,
+                        'amount' => (float) $line->amount,
+                        'status' => $line->status,
+                    ]);
 
-                $unreconciledTransactions = $account->transactions()
+                $unreconciledTransactions = $accountModel->transactions()
                     ->where('is_reconciled', false)
                     ->orderBy('transaction_date')
-                    ->get();
+                    ->get()
+                    ->map(fn ($t) => [
+                        'id' => $t->id,
+                        'transaction_date' => $t->transaction_date->format('d/m/Y'),
+                        'description' => $t->description,
+                        'type' => $t->type,
+                        'signed_amount' => (float) $t->signedAmount(),
+                    ]);
 
-                $reconciledCount = $account->statementLines()->where('status', 'rapproche')->count();
+                $reconciledCount = $accountModel->statementLines()->where('status', 'rapproche')->count();
 
                 $stats = [
-                    'solde_comptable' => $account->balance(),
-                    'total_releve' => (float) $account->statementLines()->sum('amount'),
-                    'lignes_importees' => $account->statementLines()->count(),
+                    'solde_comptable' => $accountModel->balance(),
+                    'total_releve' => (float) $accountModel->statementLines()->sum('amount'),
+                    'lignes_importees' => $accountModel->statementLines()->count(),
                     'lignes_en_attente' => $unmatchedLines->count(),
                 ];
             }
         }
 
-        return view('admin.accounting.reconciliation.index', compact(
-            'accounts', 'account', 'unmatchedLines', 'unreconciledTransactions', 'reconciledCount', 'stats'
-        ));
+        return Inertia::render('Admin/Comptabilite/Reconciliation', [
+            'accounts' => $accounts,
+            'account' => $account,
+            'unmatchedLines' => $unmatchedLines->values(),
+            'unreconciledTransactions' => $unreconciledTransactions->values(),
+            'reconciledCount' => $reconciledCount,
+            'stats' => $stats,
+            'selectedAccount' => $request->integer('compte') ?: null,
+        ]);
     }
 
     public function import(Request $request, PaymentAccount $compte): RedirectResponse

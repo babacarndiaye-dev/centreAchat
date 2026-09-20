@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
 
 class ExpenseController extends Controller
 {
@@ -27,18 +28,40 @@ class ExpenseController extends Controller
             $query->where('expense_category_id', $request->integer('category'));
         }
 
-        $expenses = $query->latest('expense_date')->paginate(20)->withQueryString();
-        $categories = ExpenseCategory::orderBy('name')->get();
+        $expenses = $query->latest('expense_date')->paginate(20)->withQueryString()->through(fn (Expense $expense) => [
+            'id' => $expense->id,
+            'expense_date' => $expense->expense_date->format('d/m/Y'),
+            'category_name' => $expense->category->name,
+            'beneficiary' => $expense->beneficiary,
+            'amount' => (float) $expense->amount,
+            'status' => $expense->status,
+            'status_label' => Expense::STATUSES[$expense->status],
+            'status_badge_class' => $expense->statusBadgeClass(),
+            'receipt_url' => $expense->receipt_path ? asset('fichiers/'.$expense->receipt_path) : null,
+        ]);
+        $categories = ExpenseCategory::orderBy('name')->get(['id', 'name']);
 
-        return view('admin.finance.expenses.index', compact('expenses', 'categories'));
+        return Inertia::render('Admin/Finance/Expenses/Index', [
+            'expenses' => $expenses,
+            'categories' => $categories,
+            'statuses' => Expense::STATUSES,
+            'filters' => $request->only('status', 'category'),
+        ]);
     }
 
     public function create()
     {
-        $categories = ExpenseCategory::where('is_active', true)->orderBy('name')->get();
-        $accounts = PaymentAccount::where('is_active', true)->orderBy('name')->get();
+        $categories = ExpenseCategory::where('is_active', true)->orderBy('name')->get(['id', 'name']);
+        $accounts = PaymentAccount::where('is_active', true)->orderBy('name')->get()->map(fn (PaymentAccount $a) => [
+            'id' => $a->id,
+            'name' => $a->name,
+            'type_label' => PaymentAccount::TYPES[$a->type],
+        ]);
 
-        return view('admin.finance.expenses.create', compact('categories', 'accounts'));
+        return Inertia::render('Admin/Finance/Expenses/Create', [
+            'categories' => $categories,
+            'accounts' => $accounts,
+        ]);
     }
 
     public function store(Request $request): RedirectResponse

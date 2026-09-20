@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class JournalEntryController extends Controller
 {
@@ -30,18 +31,35 @@ class JournalEntryController extends Controller
             $query->whereDate('entry_date', '<=', $request->date('to'));
         }
 
-        $entries = $query->withSum('lines as total_debit', 'debit')->latest('entry_date')->latest('id')->paginate(25)->withQueryString();
-        $journals = Journal::orderBy('code')->get();
+        $entries = $query->withSum('lines as total_debit', 'debit')->latest('entry_date')->latest('id')->paginate(25)->withQueryString()->through(fn (JournalEntry $entry) => [
+            'id' => $entry->id,
+            'entry_date' => $entry->entry_date->format('d/m/Y'),
+            'journal_code' => $entry->journal->code,
+            'description' => $entry->description,
+            'reference' => $entry->reference,
+            'total_debit' => (float) $entry->total_debit,
+        ]);
+        $journals = Journal::orderBy('code')->get(['id', 'code', 'name']);
 
-        return view('admin.accounting.entries.index', compact('entries', 'journals'));
+        return Inertia::render('Admin/Comptabilite/Entries/Index', [
+            'entries' => $entries,
+            'journals' => $journals,
+            'filters' => $request->only('journal', 'from', 'to'),
+        ]);
     }
 
     public function create()
     {
-        $journals = Journal::orderBy('code')->get();
-        $accounts = ChartAccount::where('is_active', true)->orderBy('code')->get();
+        $journals = Journal::orderBy('code')->get(['id', 'code', 'name']);
+        $accounts = ChartAccount::where('is_active', true)->orderBy('code')->get()->map(fn (ChartAccount $a) => [
+            'id' => $a->id,
+            'label' => $a->code.' — '.$a->name,
+        ]);
 
-        return view('admin.accounting.entries.create', compact('journals', 'accounts'));
+        return Inertia::render('Admin/Comptabilite/Entries/Create', [
+            'journals' => $journals,
+            'accounts' => $accounts,
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -105,7 +123,26 @@ class JournalEntryController extends Controller
     {
         $ecriture->load(['lines.account', 'journal', 'creator']);
 
-        return view('admin.accounting.entries.show', ['entry' => $ecriture]);
+        return Inertia::render('Admin/Comptabilite/Entries/Show', [
+            'entry' => [
+                'id' => $ecriture->id,
+                'description' => $ecriture->description,
+                'entry_date' => $ecriture->entry_date->format('d/m/Y'),
+                'reference' => $ecriture->reference,
+                'source_type' => $ecriture->source_type,
+                'journal' => ['code' => $ecriture->journal->code, 'name' => $ecriture->journal->name],
+                'lines' => $ecriture->lines->map(fn ($line) => [
+                    'id' => $line->id,
+                    'account_code' => $line->account->code,
+                    'account_name' => $line->account->name,
+                    'label' => $line->label,
+                    'debit' => (float) $line->debit,
+                    'credit' => (float) $line->credit,
+                ]),
+                'total_debit' => (float) $ecriture->totalDebit(),
+                'total_credit' => (float) $ecriture->totalCredit(),
+            ],
+        ]);
     }
 
     public function destroy(JournalEntry $ecriture): RedirectResponse

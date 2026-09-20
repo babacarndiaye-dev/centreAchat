@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\PaymentAccount;
 use App\Models\PurchaseOrder;
 use App\Models\Supplier;
+use Inertia\Inertia;
 
 class FinanceDashboardController extends Controller
 {
@@ -49,10 +50,23 @@ class FinanceDashboardController extends Controller
 
         $recentExpenses = Expense::with('category')->where('status', 'validee')->latest('expense_date')->take(6)->get();
 
-        return view('admin.finance.dashboard', compact(
-            'accounts', 'balancesByType', 'treasuryAvailable', 'receivables', 'payables',
-            'monthRevenue', 'monthPurchases', 'monthExpenses', 'provisionalResult',
-            'pendingExpenses', 'recentExpenses'
-        ));
+        return Inertia::render('Admin/Finance/Dashboard', [
+            'balancesByType' => $balancesByType,
+            'types' => PaymentAccount::TYPES,
+            'treasuryAvailable' => (float) $treasuryAvailable,
+            'receivables' => (float) $receivables,
+            'payables' => (float) $payables,
+            'monthRevenue' => (float) $monthRevenue,
+            'monthPurchases' => (float) $monthPurchases,
+            'monthExpenses' => (float) $monthExpenses,
+            'provisionalResult' => (float) $provisionalResult,
+            'pendingExpenses' => $pendingExpenses,
+            'recentExpenses' => $recentExpenses->map(fn (Expense $expense) => [
+                'id' => $expense->id,
+                'category_name' => $expense->category->name,
+                'expense_date' => $expense->expense_date->format('d/m/Y'),
+                'amount' => (float) $expense->amount,
+            ]),
+        ]);
     }
 }

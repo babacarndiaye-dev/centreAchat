@@ -7,15 +7,27 @@ use App\Models\ChartAccount;
 use App\Models\ExpenseCategory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ExpenseCategoryController extends Controller
 {
     public function index()
     {
-        $categories = ExpenseCategory::orderBy('name')->get();
-        $chartAccounts = ChartAccount::where('class', 6)->orderBy('code')->get();
+        $categories = ExpenseCategory::orderBy('name')->get()->map(fn (ExpenseCategory $c) => [
+            'id' => $c->id,
+            'name' => $c->name,
+            'chart_account_id' => $c->chart_account_id,
+            'is_active' => $c->is_active,
+        ]);
+        $chartAccounts = ChartAccount::where('class', 6)->orderBy('code')->get()->map(fn (ChartAccount $a) => [
+            'id' => $a->id,
+            'label' => $a->code.' — '.$a->name,
+        ]);
 
-        return view('admin.finance.expense-categories.index', compact('categories', 'chartAccounts'));
+        return Inertia::render('Admin/Finance/ExpenseCategories', [
+            'categories' => $categories,
+            'chartAccounts' => $chartAccounts,
+        ]);
     }
 
     public function store(Request $request): RedirectResponse

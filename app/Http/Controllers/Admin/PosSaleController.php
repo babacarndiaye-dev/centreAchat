@@ -17,6 +17,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class PosSaleController extends Controller
 {
@@ -39,11 +40,33 @@ class PosSaleController extends Controller
 
         $products = $query->orderBy('name')->take(40)->get();
         $items = PosCart::items();
-        $subtotal = PosCart::subtotal();
         $customer = PosCart::customer();
-        $paymentMethods = PaymentMethod::where('is_active', true)->where('available_pos', true)->orderBy('position')->get();
 
-        return view('admin.pos.sale.create', compact('register', 'products', 'items', 'subtotal', 'customer', 'paymentMethods'));
+        return Inertia::render('Admin/Pos/Sale/Create', [
+            'products' => $products->map(fn (Product $p) => [
+                'id' => $p->id,
+                'name' => $p->name,
+                'reference' => $p->reference,
+                'stock_quantity' => $p->stock_quantity,
+                'in_stock' => $p->inStock(),
+                'price' => (float) $p->priceFor($customer),
+            ]),
+            'items' => $items->map(fn ($item) => [
+                'product_id' => $item->product->id,
+                'product_name' => $item->product->name,
+                'quantity' => $item->quantity,
+                'total' => (float) $item->total,
+            ]),
+            'subtotal' => (float) PosCart::subtotal(),
+            'customer' => $customer ? ['id' => $customer->id, 'name' => $customer->name] : null,
+            'customers' => User::whereIn('user_type', User::B2B_TYPES)->where('b2b_status', 'valide')->get()->map(fn (User $u) => [
+                'id' => $u->id,
+                'name' => $u->name,
+                'company_name' => $u->company_name,
+            ]),
+            'paymentMethods' => PaymentMethod::where('is_active', true)->where('available_pos', true)->orderBy('position')->get(['code', 'name']),
+            'filters' => $request->only('q'),
+        ]);
     }
 
     public function addToCart(Request $request, Product $product): RedirectResponse
@@ -182,6 +205,27 @@ class PosSaleController extends Controller
     {
         $vente->load(['items', 'posPayments']);
 
-        return view('admin.pos.sale.receipt', ['order' => $vente]);
+        return Inertia::render('Admin/Pos/Sale/Receipt', [
+            'order' => [
+                'order_number' => $vente->order_number,
+                'created_at' => $vente->created_at->format('d/m/Y H:i'),
+                'customer_name' => $vente->customer_name,
+                'total' => (float) $vente->total,
+                'items' => $vente->items->map(fn (OrderItem $item) => [
+                    'id' => $item->id,
+                    'product_name' => $item->product_name,
+                    'quantity' => $item->quantity,
+                    'unit_price' => (float) $item->unit_price,
+                    'total' => (float) $item->total,
+                ]),
+                'payments' => $vente->posPayments->map(fn ($p) => [
+                    'id' => $p->id,
+                    'method' => $p->method,
+                    'amount' => (float) $p->amount,
+                ]),
+            ],
+            'siteAddress' => \App\Models\Setting::get('address'),
+            'sitePhone' => \App\Models\Setting::get('phone'),
+        ]);
     }
 }

@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\PurchaseOrder;
 use App\Models\Supplier;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class AnalyticsController extends Controller
 {
@@ -73,11 +74,24 @@ class AnalyticsController extends Controller
 
         $payables = Supplier::all()->sum(fn ($supplier) => $supplier->balance());
 
-        return view('admin.analytics.index', compact(
-            'revenueByMonth', 'revenueThisMonth', 'ordersThisMonth', 'averageBasket',
-            'topProducts', 'salesByChannel', 'topSuppliers',
-            'stockValue', 'lowStock', 'outOfStock', 'dormantProducts',
-            'receivables', 'payables'
-        ));
+        return Inertia::render('Admin/Analytics/Index', [
+            'revenueByMonth' => $revenueByMonth->values(),
+            'revenueThisMonth' => $revenueThisMonth,
+            'ordersThisMonth' => $ordersThisMonth,
+            'averageBasket' => $averageBasket,
+            'topProducts' => $topProducts->map(fn ($p) => [
+                'product_name' => $p->product_name,
+                'revenue' => (float) $p->revenue,
+                'qty' => (int) $p->qty,
+            ]),
+            'salesByChannel' => $salesByChannel,
+            'topSuppliers' => $topSuppliers->map(fn ($s) => ['label' => $s->supplier->name ?? '—', 'value' => (float) $s->spend]),
+            'stockValue' => (float) $stockValue,
+            'lowStock' => $lowStock,
+            'outOfStock' => $outOfStock,
+            'dormantProducts' => $dormantProducts->map(fn ($p) => ['id' => $p->id, 'name' => $p->name, 'stock_quantity' => $p->stock_quantity]),
+            'receivables' => (float) $receivables,
+            'payables' => (float) $payables,
+        ]);
     }
 }
