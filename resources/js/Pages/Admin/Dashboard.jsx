@@ -1,6 +1,7 @@
 import { Head } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import AdminLayout from '../../Layouts/AdminLayout';
+import Counter from '../../Components/Counter';
 
 const CARD_DEFS = [
     { key: 'revenue_month', label: "Chiffre d'affaires (mois)", icon: 'payments', format: (v) => `${v.toLocaleString('fr-FR')} FCFA` },
@@ -31,7 +32,11 @@ export default function Dashboard({ stats, recentOrders, lowStockProducts, order
                         <div>
                             <p className="text-sm text-terroir-dark/50">{card.label}</p>
                             <p className="mt-0.5 font-display text-2xl font-bold text-terroir-dark">
-                                {card.format ? card.format(stats[card.key]) : stats[card.key]}
+                                <Counter
+                                    value={stats[card.key]}
+                                    delay={i * 0.05}
+                                    format={(v) => (card.format ? card.format(v) : Math.round(v).toLocaleString('fr-FR'))}
+                                />
                             </p>
                         </div>
                     </motion.div>

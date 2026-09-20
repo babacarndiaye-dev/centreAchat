@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Head, Link } from '@inertiajs/react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import SiteLayout from '../Layouts/SiteLayout';
 import Reveal from '../Components/Reveal';
 import ProductCard from '../Components/ProductCard';
@@ -148,12 +148,17 @@ export default function Home({
         ? Math.round((1 - promoProduct.promo_price / promoProduct.price) * 100)
         : null;
 
+    const heroRef = useRef(null);
+    const reduceMotion = useReducedMotion();
+    const { scrollYProgress: heroScrollProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
+    const heroParallaxY = useTransform(heroScrollProgress, [0, 1], reduceMotion ? [0, 0] : [0, 40]);
+
     return (
         <SiteLayout>
             <Head title="Central d'Achat — Le meilleur du terroir local, sélectionné pour vous" />
 
             {/* HERO */}
-            <section className="relative overflow-hidden bg-gradient-to-br from-terroir-green via-terroir-dark to-terroir-dark">
+            <section ref={heroRef} className="relative overflow-hidden bg-gradient-to-br from-terroir-green via-terroir-dark to-terroir-dark">
                 <motion.div
                     animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.3, 0.2] }}
                     transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
@@ -220,14 +225,16 @@ export default function Home({
                                     <span className="font-display text-2xl font-bold leading-tight sm:text-3xl">-{heroDiscount}%</span>
                                 </motion.div>
                             )}
-                            <HeroCarousel slides={slideProducts} />
+                            <motion.div style={{ y: heroParallaxY }}>
+                                <HeroCarousel slides={slideProducts} />
+                            </motion.div>
                         </motion.div>
                     </div>
                 </div>
 
                 {/* TRUST BADGES */}
                 <div className="relative bg-white">
-                    <div className="mx-auto grid max-w-7xl grid-cols-2 gap-y-5 px-4 py-6 sm:px-6 md:grid-cols-4 lg:px-8">
+                    <Reveal className="mx-auto grid max-w-7xl grid-cols-2 gap-y-5 px-4 py-6 sm:px-6 md:grid-cols-4 lg:px-8">
                         {TRUST_BADGES.map((badge) => (
                             <div key={badge.text} className="flex items-center justify-center gap-2.5 text-sm font-medium text-terroir-dark/70">
                                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-terroir-green/10 text-lg text-terroir-green">
@@ -236,7 +243,7 @@ export default function Home({
                                 <span>{badge.text}</span>
                             </div>
                         ))}
-                    </div>
+                    </Reveal>
                 </div>
             </section>
 
