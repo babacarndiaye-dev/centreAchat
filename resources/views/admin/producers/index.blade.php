@@ -3,49 +3,52 @@
 @section('title', 'Producteurs')
 
 @section('content')
-<div class="uk-flex uk-flex-between uk-flex-middle">
-    <p class="uk-text-small uk-text-muted">{{ $producers->total() }} producteur(s)</p>
-    <a href="{{ route('admin.producteurs.create') }}" class="uk-button uk-button-primary">+ Nouveau producteur</a>
+<div class="flex items-center justify-between">
+    <p class="text-sm text-terroir-dark/50">{{ $producers->total() }} producteur(s)</p>
+    <a href="{{ route('admin.producteurs.create') }}" class="btn-primary">
+        <span class="material-symbols-outlined text-lg">add</span>
+        Nouveau producteur
+    </a>
 </div>
 
-<div class="uk-card uk-card-default uk-margin-top" style="overflow-x:auto; padding:0;">
-    <table class="uk-table uk-table-divider uk-table-middle" style="margin:0;">
+<div class="admin-card mt-6 overflow-x-auto p-0">
+    <table class="admin-table">
         <thead>
             <tr>
-                <th>Nom</th>
+                <th class="pl-6">Nom</th>
                 <th>Région</th>
                 <th>Vedette</th>
                 <th>Statut</th>
-                <th class="uk-text-right">Actions</th>
+                <th class="pr-6 text-right">Actions</th>
             </tr>
         </thead>
         <tbody>
             @forelse($producers as $producer)
                 <tr>
-                    <td style="font-weight:600;">{{ $producer->name }}</td>
-                    <td class="uk-text-muted">{{ $producer->region ?? '—' }}</td>
+                    <td class="pl-6 font-semibold text-terroir-dark">{{ $producer->name }}</td>
+                    <td class="text-terroir-dark/60">{{ $producer->region ?? '—' }}</td>
                     <td>{{ $producer->is_featured ? 'Oui' : 'Non' }}</td>
                     <td>
                         @if($producer->is_active)
-                            <span class="uk-label" style="background:rgba(29,138,78,.12); color:#1D8A4E;">Actif</span>
+                            <span class="admin-badge-success">Actif</span>
                         @else
-                            <span class="uk-label" style="background:rgba(31,35,40,.08); color:rgba(31,35,40,.6);">Inactif</span>
+                            <span class="admin-badge-neutral">Inactif</span>
                         @endif
                     </td>
-                    <td class="uk-text-right">
-                        <a href="{{ route('admin.producteurs.edit', $producer) }}" style="font-weight:600; color:#1D8A4E;">Modifier</a>
-                        <form action="{{ route('admin.producteurs.destroy', $producer) }}" method="POST" style="display:inline;" onsubmit="return confirm('Supprimer ce producteur ?')">
+                    <td class="pr-6 text-right">
+                        <a href="{{ route('admin.producteurs.edit', $producer) }}" class="admin-link">Modifier</a>
+                        <form action="{{ route('admin.producteurs.destroy', $producer) }}" method="POST" class="inline" onsubmit="return confirm('Supprimer ce producteur ?')">
                             @csrf @method('DELETE')
-                            <button type="submit" style="margin-left:12px; font-weight:600; color:#E8604F; background:none; border:none; cursor:pointer;">Supprimer</button>
+                            <button type="submit" class="admin-link-danger ml-3 bg-transparent">Supprimer</button>
                         </form>
                     </td>
                 </tr>
             @empty
-                <tr><td colspan="5" class="uk-text-center uk-text-muted" style="padding:32px 0;">Aucun producteur.</td></tr>
+                <tr><td colspan="5" class="py-8 text-center text-terroir-dark/40">Aucun producteur.</td></tr>
             @endforelse
         </tbody>
     </table>
 </div>
 
-<div class="uk-margin-top">{{ $producers->links() }}</div>
+<div class="mt-6">{{ $producers->links() }}</div>
 @endsection

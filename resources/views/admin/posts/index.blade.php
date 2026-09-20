@@ -3,47 +3,50 @@
 @section('title', 'Actualités')
 
 @section('content')
-<div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap" style="gap:12px;">
-    <p class="uk-text-small uk-text-muted">{{ $posts->total() }} article(s)</p>
-    <a href="{{ route('admin.articles.create') }}" class="uk-button uk-button-primary">+ Nouvel article</a>
+<div class="flex flex-wrap items-center justify-between gap-3">
+    <p class="text-sm text-terroir-dark/50">{{ $posts->total() }} article(s)</p>
+    <a href="{{ route('admin.articles.create') }}" class="btn-primary">
+        <span class="material-symbols-outlined text-lg">add</span>
+        Nouvel article
+    </a>
 </div>
 
-<div class="uk-card uk-card-default uk-margin-top" style="overflow-x:auto; padding:0;">
-    <table class="uk-table uk-table-divider uk-table-middle" style="margin:0;">
+<div class="admin-card mt-6 overflow-x-auto p-0">
+    <table class="admin-table">
         <thead>
             <tr>
-                <th>Titre</th>
+                <th class="pl-6">Titre</th>
                 <th>Type</th>
                 <th>Statut</th>
-                <th class="uk-text-right">Actions</th>
+                <th class="pr-6 text-right">Actions</th>
             </tr>
         </thead>
         <tbody>
             @forelse($posts as $post)
                 <tr>
-                    <td style="font-weight:600;">{{ $post->title }}</td>
-                    <td class="uk-text-muted">{{ ucfirst($post->type) }}</td>
+                    <td class="pl-6 font-semibold text-terroir-dark">{{ $post->title }}</td>
+                    <td class="text-terroir-dark/60">{{ ucfirst($post->type) }}</td>
                     <td>
                         @if($post->is_published)
-                            <span class="uk-label" style="background:rgba(29,138,78,.12); color:#1D8A4E;">Publié</span>
+                            <span class="admin-badge-success">Publié</span>
                         @else
-                            <span class="uk-label" style="background:rgba(31,35,40,.08); color:rgba(31,35,40,.6);">Brouillon</span>
+                            <span class="admin-badge-neutral">Brouillon</span>
                         @endif
                     </td>
-                    <td class="uk-text-right">
-                        <a href="{{ route('admin.articles.edit', $post) }}" style="font-weight:600; color:#1D8A4E;">Modifier</a>
-                        <form action="{{ route('admin.articles.destroy', $post) }}" method="POST" style="display:inline;" onsubmit="return confirm('Supprimer cet article ?')">
+                    <td class="pr-6 text-right">
+                        <a href="{{ route('admin.articles.edit', $post) }}" class="admin-link">Modifier</a>
+                        <form action="{{ route('admin.articles.destroy', $post) }}" method="POST" class="inline" onsubmit="return confirm('Supprimer cet article ?')">
                             @csrf @method('DELETE')
-                            <button type="submit" style="margin-left:12px; font-weight:600; color:#E8604F; background:none; border:none; cursor:pointer;">Supprimer</button>
+                            <button type="submit" class="admin-link-danger ml-3 bg-transparent">Supprimer</button>
                         </form>
                     </td>
                 </tr>
             @empty
-                <tr><td colspan="4" class="uk-text-center uk-text-muted" style="padding:32px 0;">Aucun article.</td></tr>
+                <tr><td colspan="4" class="py-8 text-center text-terroir-dark/40">Aucun article.</td></tr>
             @endforelse
         </tbody>
     </table>
 </div>
 
-<div class="uk-margin-top">{{ $posts->links() }}</div>
+<div class="mt-6">{{ $posts->links() }}</div>
 @endsection

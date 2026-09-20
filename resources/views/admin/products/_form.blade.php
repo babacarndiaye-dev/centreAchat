@@ -8,9 +8,9 @@
     <div>
         <label class="label">Référence</label>
         @if(isset($product) && $product->reference)
-            <input type="text" value="{{ $product->reference }}" disabled class="input" style="background:#F7F8F5; color:rgba(31,35,40,.6);">
+            <input type="text" value="{{ $product->reference }}" disabled class="input bg-terroir-cream text-terroir-dark/60">
         @else
-            <input type="text" value="Générée automatiquement à la création" disabled class="input" style="background:#F7F8F5; color:rgba(31,35,40,.4); font-style:italic;">
+            <input type="text" value="Générée automatiquement à la création" disabled class="input bg-terroir-cream italic text-terroir-dark/40">
         @endif
     </div>
 </div>
@@ -77,8 +77,8 @@
 </div>
 
 @if($attributes->isNotEmpty())
-    <div class="mt-6" style="border-top:1px solid rgba(31,35,40,.08); padding-top:24px;">
-        <h3 style="font-family:'Fraunces',serif; font-weight:600; font-size:1rem;">Attributs personnalisés</h3>
+    <div class="mt-6 border-t border-terroir-dark/10 pt-6">
+        <h3 class="font-display text-base font-semibold">Attributs personnalisés</h3>
         <div class="mt-3 grid gap-4 sm:grid-cols-2">
             @foreach($attributes as $attribute)
                 <div>
@@ -91,8 +91,8 @@
     </div>
 @endif
 
-<div class="mt-6" style="border-top:1px solid rgba(31,35,40,.08); padding-top:24px;">
-    <h3 style="font-family:'Fraunces',serif; font-weight:600; font-size:1rem;">Tarification</h3>
+<div class="mt-6 border-t border-terroir-dark/10 pt-6">
+    <h3 class="font-display text-base font-semibold">Tarification</h3>
     <div class="mt-3 grid gap-4 sm:grid-cols-2 md:grid-cols-4">
         <div>
             <label class="label" for="price">Prix public (FCFA)</label>
@@ -121,8 +121,8 @@
     </div>
 </div>
 
-<div class="mt-6" style="border-top:1px solid rgba(31,35,40,.08); padding-top:24px;">
-    <h3 style="font-family:'Fraunces',serif; font-weight:600; font-size:1rem;">Stock</h3>
+<div class="mt-6 border-t border-terroir-dark/10 pt-6">
+    <h3 class="font-display text-base font-semibold">Stock</h3>
     <div class="mt-3 grid gap-4 sm:grid-cols-3">
         <div>
             <label class="label" for="stock_quantity">Quantité en stock</label>
@@ -139,20 +139,20 @@
     </div>
 </div>
 
-<div class="mt-6" style="border-top:1px solid rgba(31,35,40,.08); padding-top:24px;">
-    <h3 style="font-family:'Fraunces',serif; font-weight:600; font-size:1rem;">Images</h3>
+<div class="mt-6 border-t border-terroir-dark/10 pt-6">
+    <h3 class="font-display text-base font-semibold">Images</h3>
     <div uk-form-custom="target: true" class="mt-3">
         <input type="file" name="images[]" multiple accept="image/*">
-        <span class="input" style="display:inline-flex; align-items:center; color:rgba(31,35,40,.5);">Choisir des fichiers...</span>
+        <span class="input inline-flex items-center text-terroir-dark/50">Choisir des fichiers...</span>
     </div>
 
     @isset($product)
         @if($product->images->isNotEmpty())
             <div class="mt-3 flex flex-wrap gap-3">
                 @foreach($product->images as $image)
-                    <div style="position:relative;">
-                        <img src="{{ asset('fichiers/'.$image->path) }}" alt="" style="height:80px; width:80px; border-radius:10px; object-fit:cover;">
-                        <button type="submit" form="delete-image-{{ $image->id }}" style="position:absolute; right:-8px; top:-8px; display:flex; height:22px; width:22px; align-items:center; justify-content:center; border-radius:50%; background:#E8604F; font-size:11px; color:#fff; border:none; cursor:pointer;" onclick="return confirm('Supprimer cette image ?')">✕</button>
+                    <div class="relative">
+                        <img src="{{ asset('fichiers/'.$image->path) }}" alt="" class="h-20 w-20 rounded-lg object-cover">
+                        <button type="submit" form="delete-image-{{ $image->id }}" class="absolute -right-2 -top-2 flex h-[22px] w-[22px] items-center justify-center rounded-full bg-terroir-terracotta text-[11px] text-white" onclick="return confirm('Supprimer cette image ?')">✕</button>
                     </div>
                 @endforeach
             </div>

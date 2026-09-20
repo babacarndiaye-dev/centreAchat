@@ -29,7 +29,7 @@
     <label class="label" for="cover_image">Image de couverture</label>
     <div uk-form-custom="target: true">
         <input type="file" id="cover_image" name="cover_image" accept="image/*">
-        <span class="input" style="display:inline-flex; align-items:center; color:rgba(31,35,40,.5);">Choisir un fichier...</span>
+        <span class="input inline-flex items-center text-terroir-dark/50">Choisir un fichier...</span>
     </div>
     @isset($post)
         @if($post->cover_image)

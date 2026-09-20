@@ -11,7 +11,7 @@
 
     {{-- Kept outside the main form: a <form> can't be nested inside another <form> in HTML. --}}
     @foreach($product->images as $image)
-        <form id="delete-image-{{ $image->id }}" action="{{ route('admin.produits.images.destroy', $image) }}" method="POST" class="uk-hidden">
+        <form id="delete-image-{{ $image->id }}" action="{{ route('admin.produits.images.destroy', $image) }}" method="POST" class="hidden">
             @csrf @method('DELETE')
         </form>
     @endforeach

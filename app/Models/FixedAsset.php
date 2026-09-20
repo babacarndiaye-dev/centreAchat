@@ -148,4 +148,13 @@ class FixedAsset extends Model
     {
         return $this->netBookValue() <= 0.5;
     }
+
+    public function statusBadgeClass(): string
+    {
+        return match ($this->status) {
+            'en_service' => 'admin-badge-success',
+            'reforme' => 'admin-badge-danger',
+            default => 'admin-badge-neutral',
+        };
+    }
 }

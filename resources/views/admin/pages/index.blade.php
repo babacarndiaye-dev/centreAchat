@@ -3,47 +3,50 @@
 @section('title', 'Pages')
 
 @section('content')
-<div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap" style="gap:12px;">
-    <p class="uk-text-small uk-text-muted">{{ $pages->total() }} page(s)</p>
-    <a href="{{ route('admin.pages.create') }}" class="uk-button uk-button-primary">+ Nouvelle page</a>
+<div class="flex flex-wrap items-center justify-between gap-3">
+    <p class="text-sm text-terroir-dark/50">{{ $pages->total() }} page(s)</p>
+    <a href="{{ route('admin.pages.create') }}" class="btn-primary">
+        <span class="material-symbols-outlined text-lg">add</span>
+        Nouvelle page
+    </a>
 </div>
 
-<div class="uk-card uk-card-default uk-margin-top" style="overflow-x:auto; padding:0;">
-    <table class="uk-table uk-table-divider uk-table-middle" style="margin:0;">
+<div class="admin-card mt-6 overflow-x-auto p-0">
+    <table class="admin-table">
         <thead>
             <tr>
-                <th>Titre</th>
+                <th class="pl-6">Titre</th>
                 <th>Slug</th>
                 <th>Statut</th>
-                <th class="uk-text-right">Actions</th>
+                <th class="pr-6 text-right">Actions</th>
             </tr>
         </thead>
         <tbody>
             @forelse($pages as $page)
                 <tr>
-                    <td style="font-weight:600;">{{ $page->title }}</td>
-                    <td class="uk-text-muted">/{{ $page->slug }}</td>
+                    <td class="pl-6 font-semibold text-terroir-dark">{{ $page->title }}</td>
+                    <td class="text-terroir-dark/60">/{{ $page->slug }}</td>
                     <td>
                         @if($page->is_published)
-                            <span class="uk-label" style="background:rgba(29,138,78,.12); color:#1D8A4E;">Publiée</span>
+                            <span class="admin-badge-success">Publiée</span>
                         @else
-                            <span class="uk-label" style="background:rgba(31,35,40,.08); color:rgba(31,35,40,.6);">Brouillon</span>
+                            <span class="admin-badge-neutral">Brouillon</span>
                         @endif
                     </td>
-                    <td class="uk-text-right">
-                        <a href="{{ route('admin.pages.edit', $page) }}" style="font-weight:600; color:#1D8A4E;">Modifier</a>
-                        <form action="{{ route('admin.pages.destroy', $page) }}" method="POST" style="display:inline;" onsubmit="return confirm('Supprimer cette page ?')">
+                    <td class="pr-6 text-right">
+                        <a href="{{ route('admin.pages.edit', $page) }}" class="admin-link">Modifier</a>
+                        <form action="{{ route('admin.pages.destroy', $page) }}" method="POST" class="inline" onsubmit="return confirm('Supprimer cette page ?')">
                             @csrf @method('DELETE')
-                            <button type="submit" style="margin-left:12px; font-weight:600; color:#E8604F; background:none; border:none; cursor:pointer;">Supprimer</button>
+                            <button type="submit" class="admin-link-danger ml-3 bg-transparent">Supprimer</button>
                         </form>
                     </td>
                 </tr>
             @empty
-                <tr><td colspan="4" class="uk-text-center uk-text-muted" style="padding:32px 0;">Aucune page.</td></tr>
+                <tr><td colspan="4" class="py-8 text-center text-terroir-dark/40">Aucune page.</td></tr>
             @endforelse
         </tbody>
     </table>
 </div>
 
-<div class="uk-margin-top">{{ $pages->links() }}</div>
+<div class="mt-6">{{ $pages->links() }}</div>
 @endsection
