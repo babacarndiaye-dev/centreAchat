@@ -6,7 +6,6 @@ import PageTransition from '../Components/PageTransition';
 
 const NAV_LINKS = [
     { href: () => route('produits.index'), label: 'Nos produits' },
-    { href: () => route('produits.index', { promo: 1 }), label: 'Promotions' },
     { href: () => route('pages.show', 'hotels-professionnels'), label: 'Hôtels & Pro' },
     { href: () => route('pages.show', 'espace-touristes'), label: 'Touristes' },
     { href: () => route('blog.index'), label: 'Actualités' },
