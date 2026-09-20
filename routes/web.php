@@ -70,12 +70,8 @@ use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\RecurringOrderController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', [HomeController::class, 'index'])->name('accueil');
-
-// Temporary Inertia pipeline smoke test — remove once Phase 1 (Auth) has shipped and been verified live.
-Route::get('/inertia-ping', fn () => Inertia::render('Ping', ['generatedAt' => now()->toDateTimeString()]));
 
 // Catalogue
 Route::get('/produits', [ProductController::class, 'index'])->name('produits.index');

@@ -50,6 +50,10 @@ class HandleInertiaRequests extends Middleware
             'site' => [
                 'name' => \App\Models\Setting::get('site_name') ?: "Central d'Achat",
                 'logoUrl' => ($logoPath = \App\Models\Setting::get('logo_path')) ? asset('fichiers/'.$logoPath) : null,
+                'announcementActive' => \App\Models\Setting::getBool('announcement_active', false),
+                'announcementText' => \App\Models\Setting::get('announcement_text'),
+                'address' => \App\Models\Setting::get('address', 'Rond-Point Malicounda, Mbour – Sénégal'),
+                'showNewsletter' => \App\Models\Setting::getBool('show_newsletter', true),
             ],
         ];
     }

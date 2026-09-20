@@ -6,15 +6,16 @@ use App\Models\Product;
 use App\Support\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Inertia\Inertia;
 
 class CartController extends Controller
 {
     public function index()
     {
-        $items = Cart::items();
-        $subtotal = Cart::subtotal();
-
-        return view('cart.index', compact('items', 'subtotal'));
+        return Inertia::render('Cart/Index', [
+            'items' => Cart::items(),
+            'subtotal' => Cart::subtotal(),
+        ]);
     }
 
     public function add(Request $request, Product $product): RedirectResponse
