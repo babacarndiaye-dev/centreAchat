@@ -134,13 +134,13 @@ export default function SiteLayout({ children }) {
                         </a>
 
                         {user && (
-                            <a
+                            <Link
                                 href={route('compte.favoris.index')}
                                 className="hidden h-10 w-10 items-center justify-center rounded-full text-xl text-terroir-dark/70 transition hover:bg-terroir-cream sm:inline-flex"
                                 aria-label="Mes favoris"
                             >
                                 <span className="material-symbols-outlined">favorite</span>
-                            </a>
+                            </Link>
                         )}
 
                         <Link
