@@ -27,6 +27,7 @@ class Permissions
         'messagerie' => 'Messagerie & support client',
         'commercial' => 'Paramétrage commercial (taxes, paiements, livraison)',
         'analytics' => 'Statistiques & tableaux de bord avancés',
+        'trafic' => 'Trafic & statistiques de visite',
         'systeme' => 'Système (utilisateurs, rôles, paramètres)',
     ];
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Services\Analytics\AnalyticsRecorder;
 use App\Support\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -25,6 +26,8 @@ class CartController extends Controller
         ]);
 
         Cart::add($product->id, $data['quantity'] ?? 1);
+
+        AnalyticsRecorder::record('add_to_cart', ['product_id' => $product->id]);
 
         return back()->with('success', "« {$product->name} » a été ajouté au panier.");
     }

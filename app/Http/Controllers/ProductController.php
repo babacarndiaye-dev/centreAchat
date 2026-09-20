@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Services\Analytics\AnalyticsRecorder;
 use App\Support\Currency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +23,7 @@ class ProductController extends Controller
                 $q->where('name', 'like', "%{$search}%")
                     ->orWhere('short_description', 'like', "%{$search}%");
             });
+            AnalyticsRecorder::record('search', ['meta' => ['query' => (string) $search]]);
         }
 
         if ($request->filled('categorie')) {
@@ -64,6 +66,8 @@ class ProductController extends Controller
     {
         $user = Auth::user();
         $product = Product::with(['images', 'category', 'producer'])->where('slug', $slug)->where('is_active', true)->firstOrFail();
+
+        AnalyticsRecorder::record('product_view', ['product_id' => $product->id]);
 
         $related = Product::with(['images', 'producer', 'category'])
             ->where('category_id', $product->category_id)

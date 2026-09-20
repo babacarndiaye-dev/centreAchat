@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Services\Analytics\AnalyticsRecorder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +35,10 @@ class LoginController extends Controller
         }
 
         $request->session()->regenerate();
+
+        if (! Auth::user()->isStaff()) {
+            AnalyticsRecorder::record('login');
+        }
 
         // admin.dashboard/portail.dashboard are still Blade pages at this stage of the
         // migration — Inertia::location() forces a full browser navigation there instead

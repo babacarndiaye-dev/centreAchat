@@ -18,6 +18,7 @@ class AdminNav
             'Vue d\'ensemble' => [
                 ['route' => 'admin.dashboard', 'label' => 'Tableau de bord', 'icon' => 'dashboard'],
                 ['route' => 'admin.analytics.index', 'label' => 'Statistiques (BI)', 'icon' => 'monitoring', 'permission' => 'analytics.voir'],
+                ['route' => 'admin.trafic.index', 'label' => 'Trafic', 'icon' => 'travel_explore', 'permission' => 'trafic.voir'],
             ],
             'Catalogue' => [
                 ['route' => 'admin.categories.index', 'label' => 'Catégories', 'icon' => 'category', 'permission' => ['produits.voir', 'stock.voir']],

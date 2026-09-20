@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ProductAttributeController as AdminProductAttribu
 use App\Http\Controllers\Admin\UnitController as AdminUnitController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\DeliveryZoneController as AdminDeliveryZoneController;
+use App\Http\Controllers\Admin\TrafficController as AdminTrafficController;
 use App\Http\Controllers\Admin\ExpenseCategoryController as AdminExpenseCategoryController;
 use App\Http\Controllers\Admin\ExpenseController as AdminExpenseController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
@@ -205,6 +206,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('statistiques', [AdminAnalyticsController::class, 'index'])
         ->middleware('permission:analytics.voir')->name('analytics.index');
+
+    Route::middleware('permission:trafic.voir')->prefix('trafic')->name('trafic.')->group(function () {
+        Route::get('/', [AdminTrafficController::class, 'index'])->name('index');
+        Route::get('/en-direct', [AdminTrafficController::class, 'live'])->name('live');
+    });
 
     Route::middleware('permission:produits.voir,stock.voir')->group(function () {
         Route::resource('categories', AdminCategoryController::class)->except('show');

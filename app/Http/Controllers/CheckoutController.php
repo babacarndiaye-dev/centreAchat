@@ -8,6 +8,7 @@ use App\Models\OrderItem;
 use App\Models\PaymentMethod;
 use App\Models\TaxRate;
 use App\Services\AccountingService;
+use App\Services\Analytics\AnalyticsRecorder;
 use App\Support\Cart;
 use App\Support\Notifications\NotificationService;
 use Illuminate\Http\RedirectResponse;
@@ -25,6 +26,8 @@ class CheckoutController extends Controller
         if ($items->isEmpty()) {
             return redirect()->route('panier.index')->with('error', 'Votre panier est vide.');
         }
+
+        AnalyticsRecorder::record('checkout_start');
 
         $subtotal = Cart::subtotal();
         $deliveryZones = DeliveryZone::where('is_active', true)->orderBy('position')->orderBy('name')->get();
@@ -136,6 +139,8 @@ class CheckoutController extends Controller
         });
 
         Cart::clear();
+
+        AnalyticsRecorder::record('purchase', ['order_id' => $order->id]);
 
         $accounting->postSaleInvoice($order);
 
