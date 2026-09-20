@@ -207,4 +207,28 @@ class Product extends Model
     {
         return in_array($this->id, self::bestSellerIds(), true);
     }
+
+    public function toCard(?User $user = null): array
+    {
+        return [
+            'id' => $this->id,
+            'slug' => $this->slug,
+            'name' => $this->name,
+            'unit' => $this->unit,
+            'price' => (float) $this->price,
+            'promo_price' => $this->promo_price ? (float) $this->promo_price : null,
+            'professional_price' => $this->professional_price ? (float) $this->professional_price : null,
+            'is_new' => (bool) $this->is_new,
+            'is_on_promo' => $this->isOnPromo(),
+            'is_best_seller' => $this->isBestSeller(),
+            'in_stock' => $this->inStock(),
+            'stock_quantity' => $this->stock_quantity,
+            'stock_alert_threshold' => $this->stock_alert_threshold,
+            'rating' => $this->averageRating(),
+            'category_name' => $this->category?->name,
+            'producer_name' => $this->producer?->name,
+            'image' => $this->images->first()?->path,
+            'is_wishlisted' => $this->wishlistedBy($user),
+        ];
+    }
 }

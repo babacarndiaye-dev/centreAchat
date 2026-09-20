@@ -17,26 +17,7 @@ class WishlistController extends Controller
         $products = Product::with(['images', 'category', 'producer'])
             ->whereHas('wishlists', fn ($q) => $q->where('user_id', $user->id))
             ->get()
-            ->map(fn (Product $product) => [
-                'id' => $product->id,
-                'slug' => $product->slug,
-                'name' => $product->name,
-                'unit' => $product->unit,
-                'price' => (float) $product->price,
-                'promo_price' => $product->promo_price ? (float) $product->promo_price : null,
-                'professional_price' => $product->professional_price ? (float) $product->professional_price : null,
-                'is_new' => (bool) $product->is_new,
-                'is_on_promo' => $product->isOnPromo(),
-                'is_best_seller' => $product->isBestSeller(),
-                'in_stock' => $product->inStock(),
-                'stock_quantity' => $product->stock_quantity,
-                'stock_alert_threshold' => $product->stock_alert_threshold,
-                'rating' => $product->averageRating(),
-                'category_name' => $product->category?->name,
-                'producer_name' => $product->producer?->name,
-                'image' => $product->images->first()?->path,
-                'is_wishlisted' => true,
-            ])
+            ->map(fn (Product $product) => $product->toCard($user))
             ->values();
 
         return Inertia::render('Account/Wishlist', [
