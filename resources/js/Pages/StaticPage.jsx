@@ -52,10 +52,10 @@ function ContactSection({ contactInfo }) {
             <Reveal>
                 <h2 className="font-display text-xl font-semibold">Nos coordonnées</h2>
                 <ul className="mt-6 space-y-4 text-sm text-terroir-dark/80">
-                    <li className="flex items-start gap-3"><span className="text-xl">📍</span> {contactInfo.address}</li>
-                    <li className="flex items-start gap-3"><span className="text-xl">📞</span> {contactInfo.phone}</li>
-                    <li className="flex items-start gap-3"><span className="text-xl">✉️</span> {contactInfo.email}</li>
-                    <li className="flex items-start gap-3"><span className="text-xl">🕒</span> {contactInfo.opening_hours}</li>
+                    <li className="flex items-start gap-3"><span className="material-symbols-outlined text-xl text-terroir-green">location_on</span> {contactInfo.address}</li>
+                    <li className="flex items-start gap-3"><span className="material-symbols-outlined text-xl text-terroir-green">call</span> {contactInfo.phone}</li>
+                    <li className="flex items-start gap-3"><span className="material-symbols-outlined text-xl text-terroir-green">mail</span> {contactInfo.email}</li>
+                    <li className="flex items-start gap-3"><span className="material-symbols-outlined text-xl text-terroir-green">schedule</span> {contactInfo.opening_hours}</li>
                 </ul>
             </Reveal>
             <Reveal delay={0.1}>
@@ -76,10 +76,10 @@ function DevenirFournisseurSection() {
 
 function HotelsProfessionnelsSection() {
     const cards = [
-        ['🏷️', 'Tarifs professionnels & de gros', 'Prix dégressifs automatiquement appliqués sur nos produits éligibles dès validation de votre compte, et tarif de gros à partir de 10 unités.'],
-        ['📄', 'Devis personnalisés', 'Demandez un devis pour vos commandes importantes ou récurrentes, directement depuis votre espace client.'],
-        ['🔁', 'Commandes récurrentes', 'Programmez vos réapprovisionnements réguliers (hebdomadaires, mensuels...) et laissez-nous nous en occuper.'],
-        ['💳', 'Paiement à crédit', 'Un plafond de crédit adapté à votre activité peut vous être accordé, avec facturation à échéance de 30 jours.'],
+        ['sell', 'Tarifs professionnels & de gros', 'Prix dégressifs automatiquement appliqués sur nos produits éligibles dès validation de votre compte, et tarif de gros à partir de 10 unités.'],
+        ['description', 'Devis personnalisés', 'Demandez un devis pour vos commandes importantes ou récurrentes, directement depuis votre espace client.'],
+        ['autorenew', 'Commandes récurrentes', 'Programmez vos réapprovisionnements réguliers (hebdomadaires, mensuels...) et laissez-nous nous en occuper.'],
+        ['credit_card', 'Paiement à crédit', 'Un plafond de crédit adapté à votre activité peut vous être accordé, avec facturation à échéance de 30 jours.'],
     ];
 
     return (
@@ -87,7 +87,7 @@ function HotelsProfessionnelsSection() {
             <div className="grid gap-6 sm:grid-cols-2">
                 {cards.map(([icon, title, text], i) => (
                     <Reveal key={title} delay={i * 0.06} className="card p-6">
-                        <span className="text-2xl">{icon}</span>
+                        <span className="material-symbols-outlined text-2xl text-terroir-green">{icon}</span>
                         <h3 className="mt-3 font-display text-lg font-semibold">{title}</h3>
                         <p className="mt-2 text-sm text-terroir-dark/70">{text}</p>
                     </Reveal>
@@ -100,9 +100,15 @@ function HotelsProfessionnelsSection() {
                     Choisissez votre profil : votre compte est créé immédiatement et passe en revue par notre équipe. Les tarifs professionnels s'activent dès validation.
                 </p>
                 <div className="mt-6 flex flex-wrap justify-center gap-3">
-                    <Link href={`${route('register')}?type=hotel`} className="btn-primary">🏨 Je suis un hôtel</Link>
-                    <Link href={`${route('register')}?type=restaurant`} className="btn-primary">🍽️ Je suis un restaurant</Link>
-                    <Link href={`${route('register')}?type=entreprise`} className="btn-primary">🏢 Je suis une entreprise</Link>
+                    <Link href={`${route('register')}?type=hotel`} className="btn-primary">
+                        <span className="material-symbols-outlined text-lg">hotel</span> Je suis un hôtel
+                    </Link>
+                    <Link href={`${route('register')}?type=restaurant`} className="btn-primary">
+                        <span className="material-symbols-outlined text-lg">restaurant</span> Je suis un restaurant
+                    </Link>
+                    <Link href={`${route('register')}?type=entreprise`} className="btn-primary">
+                        <span className="material-symbols-outlined text-lg">business</span> Je suis une entreprise
+                    </Link>
                     <Link href={`${route('register')}?type=professionnel`} className="btn-outline">Autre profil professionnel</Link>
                 </div>
                 <p className="mt-6 text-xs text-terroir-dark/50">
@@ -116,9 +122,9 @@ function HotelsProfessionnelsSection() {
 
 function EspaceTouristesSection({ souvenirProducts }) {
     const cards = [
-        ['🎁', 'Coffrets souvenirs', 'Des sélections prêtes à emporter ou à offrir, représentatives du terroir sénégalais.'],
-        ['🏨', "Livraison à l'hôtel", 'Indiquez le nom de votre hôtel et votre numéro de chambre au moment de la commande, nous vous livrons directement.'],
-        ['💶', 'Prix en euro (indicatif)', 'Les prix sont affichés en FCFA avec une conversion en euro à titre indicatif sur chaque produit.'],
+        ['card_giftcard', 'Coffrets souvenirs', 'Des sélections prêtes à emporter ou à offrir, représentatives du terroir sénégalais.'],
+        ['hotel', "Livraison à l'hôtel", 'Indiquez le nom de votre hôtel et votre numéro de chambre au moment de la commande, nous vous livrons directement.'],
+        ['euro_symbol', 'Prix en euro (indicatif)', 'Les prix sont affichés en FCFA avec une conversion en euro à titre indicatif sur chaque produit.'],
     ];
 
     return (
@@ -126,7 +132,7 @@ function EspaceTouristesSection({ souvenirProducts }) {
             <div className="grid gap-6 sm:grid-cols-3">
                 {cards.map(([icon, title, text], i) => (
                     <Reveal key={title} delay={i * 0.06} className="card p-6">
-                        <span className="text-2xl">{icon}</span>
+                        <span className="material-symbols-outlined text-2xl text-terroir-green">{icon}</span>
                         <h3 className="mt-3 font-display text-lg font-semibold">{title}</h3>
                         <p className="mt-2 text-sm text-terroir-dark/70">{text}</p>
                     </Reveal>
@@ -168,7 +174,7 @@ function CoffretsCadeauxSection({ coffrets }) {
             )}
 
             <Reveal delay={0.15} className="card mt-10 p-8 text-center">
-                <span className="text-2xl">🎁</span>
+                <span className="material-symbols-outlined text-2xl text-terroir-green">card_giftcard</span>
                 <h2 className="mt-2 font-display text-xl font-semibold">Un cadeau à offrir ?</h2>
                 <p className="mx-auto mt-2 max-w-xl text-sm text-terroir-dark/70">
                     Chaque coffret est déjà prêt à offrir. Lors de votre commande, vous pouvez ajouter un message personnalisé qui sera joint à la préparation.

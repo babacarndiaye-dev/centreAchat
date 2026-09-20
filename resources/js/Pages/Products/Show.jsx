@@ -43,7 +43,7 @@ function ImageGallery({ images, name }) {
                         />
                     </AnimatePresence>
                 ) : (
-                    <div className="flex h-full w-full items-center justify-center text-8xl">🌿</div>
+                    <div className="flex h-full w-full items-center justify-center text-8xl"><span className="material-symbols-outlined text-8xl">eco</span></div>
                 )}
             </div>
             {images.length > 1 && (

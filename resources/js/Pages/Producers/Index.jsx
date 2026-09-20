@@ -31,12 +31,16 @@ export default function ProducersIndex({ producers }) {
                                             className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                                         />
                                     ) : (
-                                        '🧑‍🌾'
+                                        <span className="material-symbols-outlined text-6xl text-terroir-green">agriculture</span>
                                     )}
                                 </div>
                                 <div className="p-6">
                                     <h3 className="font-display text-lg font-semibold">{producer.name}</h3>
-                                    {producer.region && <p className="mt-1 text-sm text-terroir-dark/60">📍 {producer.region}</p>}
+                                    {producer.region && (
+                                        <p className="mt-1 flex items-center gap-1 text-sm text-terroir-dark/60">
+                                            <span className="material-symbols-outlined text-base">location_on</span> {producer.region}
+                                        </p>
+                                    )}
                                     {producer.description && <p className="mt-3 line-clamp-2 text-sm text-terroir-dark/70">{producer.description}</p>}
                                     <p className="mt-3 text-xs text-terroir-dark/50">
                                         {producer.products_count} produit{producer.products_count > 1 ? 's' : ''}

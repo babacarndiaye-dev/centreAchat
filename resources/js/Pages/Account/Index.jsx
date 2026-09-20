@@ -32,7 +32,10 @@ function PushNotificationButton({ vapidPublicKey }) {
 
     return (
         <button onClick={toggle} type="button" className="btn-outline">
-            {status === 'subscribed' ? '🔔 Notifications activées' : '🔕 Activer les notifications'}
+            <span className={'material-symbols-outlined text-lg' + (status === 'subscribed' ? ' is-filled' : '')}>
+                {status === 'subscribed' ? 'notifications_active' : 'notifications_off'}
+            </span>
+            {status === 'subscribed' ? 'Notifications activées' : 'Activer les notifications'}
         </button>
     );
 }
@@ -53,7 +56,9 @@ export default function AccountIndex({ orders, isProfessional, isApprovedB2b, cr
                     </div>
                     <div className="flex flex-wrap gap-3">
                         {vapidPublicKey && <PushNotificationButton vapidPublicKey={vapidPublicKey} />}
-                        <Link href={route('compte.messages.index')} className="btn-outline">💬 Mes conversations</Link>
+                        <Link href={route('compte.messages.index')} className="btn-outline">
+                            <span className="material-symbols-outlined text-lg">forum</span> Mes conversations
+                        </Link>
                         <form action={route('logout')} method="POST">
                             <input type="hidden" name="_token" value={document.querySelector('meta[name=csrf-token]')?.content} />
                             <button type="submit" className="btn-outline">Se déconnecter</button>

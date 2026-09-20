@@ -29,7 +29,7 @@ export default function CartIndex({ items, subtotal }) {
                         transition={{ duration: 0.3 }}
                         className="mt-16 text-center text-terroir-dark/60"
                     >
-                        <p className="text-6xl">🛒</p>
+                        <span className="material-symbols-outlined text-6xl text-terroir-green">shopping_cart</span>
                         <p className="mt-4">Votre panier est vide pour le moment.</p>
                         <Link href={route('produits.index')} className="btn-primary mt-6">Découvrir nos produits</Link>
                     </motion.div>
@@ -53,7 +53,7 @@ export default function CartIndex({ items, subtotal }) {
                                                 {image ? (
                                                     <img src={`/fichiers/${image.path}`} alt="" className="h-full w-full object-cover" />
                                                 ) : (
-                                                    <div className="flex h-full w-full items-center justify-center text-2xl">🌿</div>
+                                                    <div className="flex h-full w-full items-center justify-center text-2xl"><span className="material-symbols-outlined text-2xl">eco</span></div>
                                                 )}
                                             </div>
 
@@ -125,8 +125,8 @@ export default function CartIndex({ items, subtotal }) {
                             <Link href={route('commande.index')} className="btn-primary w-full max-w-xs justify-center">
                                 Passer la commande
                             </Link>
-                            <Link href={route('produits.index')} className="text-sm text-terroir-dark/60 hover:text-terroir-terracotta">
-                                ← Continuer mes achats
+                            <Link href={route('produits.index')} className="inline-flex items-center gap-1 text-sm text-terroir-dark/60 hover:text-terroir-terracotta">
+                                <span className="material-symbols-outlined text-base">arrow_back</span> Continuer mes achats
                             </Link>
                         </motion.div>
                     </>

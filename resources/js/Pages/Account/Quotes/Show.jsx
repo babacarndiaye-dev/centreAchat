@@ -19,7 +19,7 @@ export default function QuotesShow({ quote }) {
             <Head title={`${quote.quote_number} — Central d'Achat`} />
 
             <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
-                <Link href={route('compte.devis.index')} className="text-sm text-terroir-dark/60 hover:text-terroir-terracotta">← Mes devis</Link>
+                <Link href={route('compte.devis.index')} className="inline-flex items-center gap-1 text-sm text-terroir-dark/60 hover:text-terroir-terracotta"><span className="material-symbols-outlined text-base">arrow_back</span> Mes devis</Link>
 
                 <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
                     <h1 className="section-title">{quote.quote_number}</h1>

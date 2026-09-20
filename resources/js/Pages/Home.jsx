@@ -36,7 +36,7 @@ function HeroCarousel({ slides }) {
 
     if (slides.length === 0) {
         return (
-            <div className="flex aspect-square items-center justify-center rounded-xl2 bg-gradient-to-br from-white/10 to-white/5 text-7xl">🌿</div>
+            <div className="flex aspect-square items-center justify-center rounded-xl2 bg-gradient-to-br from-white/10 to-white/5 text-7xl"><span className="material-symbols-outlined text-7xl">eco</span></div>
         );
     }
 
@@ -354,7 +354,7 @@ export default function Home({
                             {promoProduct.image ? (
                                 <img src={`/fichiers/${promoProduct.image}`} alt={promoProduct.name} className="max-h-64 rounded-2xl object-cover shadow-soft" />
                             ) : (
-                                <span className="text-7xl">🌿</span>
+                                <span className="material-symbols-outlined text-7xl">eco</span>
                             )}
                         </div>
                     </Reveal>

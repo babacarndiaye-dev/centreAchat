@@ -10,8 +10,8 @@ export default function MessagesShow({ conversation }) {
                 <span className="section-eyebrow">Espace client</span>
                 <h1 className="section-title mt-2">Conversation du {conversation.created_at}</h1>
 
-                <Link href={route('compte.messages.index')} className="mt-4 inline-block text-sm text-terroir-dark/60 hover:text-terroir-terracotta">
-                    ← Retour à mes conversations
+                <Link href={route('compte.messages.index')} className="mt-4 inline-flex items-center gap-1 text-sm text-terroir-dark/60 hover:text-terroir-terracotta">
+                    <span className="material-symbols-outlined text-base">arrow_back</span> Retour à mes conversations
                 </Link>
 
                 <div className="card mt-8 space-y-3 p-6">
@@ -28,7 +28,9 @@ export default function MessagesShow({ conversation }) {
                                 }
                             >
                                 {message.sender_type === 'bot' && (
-                                    <p className="mb-0.5 text-[10px] font-semibold uppercase tracking-wide opacity-60">🤖 Assistant</p>
+                                    <p className="mb-0.5 flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide opacity-60">
+                                        <span className="material-symbols-outlined text-xs">smart_toy</span> Assistant
+                                    </p>
                                 )}
                                 <p className="whitespace-pre-line">{message.body}</p>
                                 {(message.links ?? []).map((link) => (

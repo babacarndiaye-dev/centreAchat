@@ -30,7 +30,13 @@
                 <td class="pl-6">Total</td>
                 <td class="text-right">{{ number_format($totalDebit, 0, ',', ' ') }}</td>
                 <td class="text-right">{{ number_format($totalCredit, 0, ',', ' ') }}</td>
-                <td class="pr-6 text-right">{{ round($totalDebit, 2) === round($totalCredit, 2) ? 'Équilibrée ✓' : 'Écart' }}</td>
+                <td class="pr-6 text-right">
+                    @if(round($totalDebit, 2) === round($totalCredit, 2))
+                        <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined is-filled text-base">check_circle</span> Équilibrée</span>
+                    @else
+                        Écart
+                    @endif
+                </td>
             </tr>
         </tfoot>
     </table>

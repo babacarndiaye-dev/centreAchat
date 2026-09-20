@@ -13,7 +13,7 @@ export default function GuestLayout({ children }) {
                         {logoUrl ? (
                             <img src={logoUrl} alt={siteName} className="h-9 w-9 rounded-full object-cover" />
                         ) : (
-                            <span className="text-2xl">🌿</span>
+                            <span className="material-symbols-outlined text-2xl">eco</span>
                         )}
                         <span className="font-display text-xl font-semibold text-terroir-green">{siteName}</span>
                     </Link>

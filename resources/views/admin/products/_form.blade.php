@@ -152,7 +152,7 @@
                 @foreach($product->images as $image)
                     <div class="relative">
                         <img src="{{ asset('fichiers/'.$image->path) }}" alt="" class="h-20 w-20 rounded-lg object-cover">
-                        <button type="submit" form="delete-image-{{ $image->id }}" class="absolute -right-2 -top-2 flex h-[22px] w-[22px] items-center justify-center rounded-full bg-terroir-terracotta text-[11px] text-white" onclick="return confirm('Supprimer cette image ?')">✕</button>
+                        <button type="submit" form="delete-image-{{ $image->id }}" class="absolute -right-2 -top-2 flex h-[22px] w-[22px] items-center justify-center rounded-full bg-terroir-terracotta text-white" onclick="return confirm('Supprimer cette image ?')"><span class="material-symbols-outlined" style="font-size:14px;">close</span></button>
                     </div>
                 @endforeach
             </div>

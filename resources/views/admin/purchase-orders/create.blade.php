@@ -61,7 +61,7 @@
                         </select>
                         <input type="number" :name="'quantity[' + i + ']'" x-model.number="row.quantity" min="1" placeholder="Qté" required class="input w-24">
                         <input type="number" step="0.01" :name="'unit_price[' + i + ']'" x-model.number="row.unit_price" min="0" placeholder="Prix unitaire" required class="input w-32">
-                        <button type="button" @click="removeRow(i)" class="font-semibold text-terroir-terracotta" aria-label="Retirer">✕</button>
+                        <button type="button" @click="removeRow(i)" class="font-semibold text-terroir-terracotta" aria-label="Retirer"><span class="material-symbols-outlined text-lg">close</span></button>
                     </div>
                 </template>
             </div>

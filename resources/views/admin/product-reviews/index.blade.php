@@ -22,7 +22,13 @@
                 <tr>
                     <td class="pl-6 font-semibold text-terroir-dark">{{ $review->product->name }}</td>
                     <td class="text-terroir-dark/70">{{ $review->user->name }}</td>
-                    <td class="text-terroir-gold">{{ str_repeat('★', $review->rating) }}</td>
+                    <td class="text-terroir-gold">
+                        <span class="inline-flex gap-0.5">
+                            @for($s = 1; $s <= 5; $s++)
+                                <span class="material-symbols-outlined text-base{{ $s <= $review->rating ? ' is-filled' : '' }}">star</span>
+                            @endfor
+                        </span>
+                    </td>
                     <td class="text-terroir-dark/60">{{ \Illuminate\Support\Str::limit($review->comment, 80) ?: '—' }}</td>
                     <td>
                         @if($review->is_approved)

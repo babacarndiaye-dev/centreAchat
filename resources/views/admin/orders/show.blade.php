@@ -30,7 +30,7 @@
     }"
 >
     <div class="flex items-center justify-between">
-        <h2 class="font-display text-lg font-semibold">🧠 Assistant commande</h2>
+        <h2 class="flex items-center gap-1.5 font-display text-lg font-semibold"><span class="material-symbols-outlined">psychology</span> Assistant commande</h2>
         <button type="button" @click="fetchSuggestion()" :disabled="loading" class="text-sm font-semibold text-terroir-green disabled:opacity-50">
             <span x-show="!loading" x-text="checked ? 'Réanalyser' : 'Analyser avec l\'IA'"></span>
             <span x-show="loading">Analyse en cours…</span>
@@ -42,7 +42,7 @@
         <ul class="mt-4 flex flex-col gap-2">
             @foreach($flags as $flag)
                 <li class="flex items-start gap-2 rounded-lg px-3 py-2 text-sm {{ $flag['severity'] === 'critical' ? 'bg-terroir-terracotta/10 text-terroir-terracotta' : 'bg-terroir-gold/15 text-terroir-brown' }}">
-                    <span>{{ $flag['severity'] === 'critical' ? '⚠️' : '👁' }}</span>
+                    <span class="material-symbols-outlined text-base">{{ $flag['severity'] === 'critical' ? 'warning' : 'visibility' }}</span>
                     <span>{{ $flag['label'] }}</span>
                 </li>
             @endforeach
@@ -60,7 +60,7 @@
         </template>
         <template x-if="sent && customerMessage">
             <div class="rounded-lg bg-terroir-green/10 px-3 py-2.5">
-                <p class="text-[11px] font-semibold uppercase tracking-wide text-terroir-green">✅ Message envoyé au client</p>
+                <p class="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wide text-terroir-green"><span class="material-symbols-outlined text-sm is-filled">check_circle</span> Message envoyé au client</p>
                 <p class="mt-1.5 whitespace-pre-line text-sm" x-text="customerMessage"></p>
             </div>
         </template>
@@ -132,10 +132,10 @@
                 @endif
                 <div><dt class="text-terroir-dark/50">Adresse</dt><dd class="font-semibold">{{ $order->delivery_address }}, {{ $order->city }}</dd></div>
                 @if($order->hotel_name)
-                    <div><dt class="text-terroir-dark/50">🧳 Livraison hôtel</dt><dd class="font-semibold">{{ $order->hotel_name }}{{ $order->room_number ? ' — Chambre '.$order->room_number : '' }}</dd></div>
+                    <div><dt class="flex items-center gap-1 text-terroir-dark/50"><span class="material-symbols-outlined text-base">luggage</span> Livraison hôtel</dt><dd class="font-semibold">{{ $order->hotel_name }}{{ $order->room_number ? ' — Chambre '.$order->room_number : '' }}</dd></div>
                 @endif
                 @if($order->gift_message)
-                    <div><dt class="text-terroir-dark/50">🎁 Message cadeau</dt><dd class="rounded-lg bg-terroir-gold/10 p-2 font-semibold italic">« {{ $order->gift_message }} »</dd></div>
+                    <div><dt class="flex items-center gap-1 text-terroir-dark/50"><span class="material-symbols-outlined text-base">card_giftcard</span> Message cadeau</dt><dd class="rounded-lg bg-terroir-gold/10 p-2 font-semibold italic">« {{ $order->gift_message }} »</dd></div>
                 @endif
                 <div><dt class="text-terroir-dark/50">Paiement</dt><dd class="font-semibold">{{ ucfirst(str_replace('_', ' ', $order->payment_method)) }} — {{ \App\Models\Order::PAYMENT_STATUSES[$order->payment_status] ?? $order->payment_status }}</dd></div>
             </dl>

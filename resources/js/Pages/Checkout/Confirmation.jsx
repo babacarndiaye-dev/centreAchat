@@ -18,7 +18,7 @@ export default function CheckoutConfirmation({ order }) {
                     transition={{ type: 'spring', stiffness: 260, damping: 20 }}
                     className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-terroir-green text-4xl text-white"
                 >
-                    ✓
+                    <span className="material-symbols-outlined is-filled text-5xl">check_circle</span>
                 </motion.div>
                 <motion.h1
                     initial={{ opacity: 0, y: 8 }}

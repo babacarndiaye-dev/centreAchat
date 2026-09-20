@@ -10,7 +10,7 @@
         <p class="text-sm text-terroir-dark/50">
             {{ $conversation->user?->email ?? $conversation->guest_email ?? 'Visiteur anonyme' }}
             @if($conversation->assignee) — assignée à {{ $conversation->assignee->name }} @endif
-            @if($conversation->bot_enabled) — <span class="text-terroir-green">🤖 assistant actif</span> @endif
+            @if($conversation->bot_enabled) — <span class="inline-flex items-center gap-1 text-terroir-green"><span class="material-symbols-outlined text-base">smart_toy</span> assistant actif</span> @endif
         </p>
     </div>
     <div class="flex gap-2">
@@ -67,9 +67,9 @@
                 }"
                 class="max-w-[75%] rounded-2xl px-4 py-2.5 text-sm"
             >
-                <p x-show="msg.sender_type === 'bot' && !['ai', 'order_assistant'].includes(msg.source)" class="mb-0.5 text-[10px] font-semibold uppercase tracking-wide opacity-60">🤖 Assistant automatique</p>
-                <p x-show="msg.sender_type === 'bot' && msg.source === 'ai'" class="mb-0.5 text-[10px] font-semibold uppercase tracking-wide opacity-60">🧠 Réponse générée par IA</p>
-                <p x-show="msg.sender_type === 'bot' && msg.source === 'order_assistant'" class="mb-0.5 text-[10px] font-semibold uppercase tracking-wide opacity-60">🧠 Envoyé par l'assistant commande</p>
+                <p x-show="msg.sender_type === 'bot' && !['ai', 'order_assistant'].includes(msg.source)" class="mb-0.5 flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide opacity-60"><span class="material-symbols-outlined text-xs">smart_toy</span> Assistant automatique</p>
+                <p x-show="msg.sender_type === 'bot' && msg.source === 'ai'" class="mb-0.5 flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide opacity-60"><span class="material-symbols-outlined text-xs">psychology</span> Réponse générée par IA</p>
+                <p x-show="msg.sender_type === 'bot' && msg.source === 'order_assistant'" class="mb-0.5 flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide opacity-60"><span class="material-symbols-outlined text-xs">psychology</span> Envoyé par l'assistant commande</p>
                 <p x-text="msg.body" class="whitespace-pre-line"></p>
                 <div x-show="msg.links && msg.links.length" class="mt-2 flex flex-col gap-1">
                     <template x-for="link in msg.links" :key="link.url">

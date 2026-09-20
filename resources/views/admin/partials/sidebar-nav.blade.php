@@ -100,7 +100,7 @@
     @if($sidebarLogoPath)
         <img src="{{ asset('fichiers/'.$sidebarLogoPath) }}" alt="{{ $sidebarSiteName }}" width="28" height="28" class="rounded-full object-cover">
     @else
-        <span class="text-xl">🌿</span>
+        <span class="material-symbols-outlined text-xl">eco</span>
     @endif
     <span class="font-display text-base font-semibold text-white">{{ $sidebarSiteName }}</span>
 </div>

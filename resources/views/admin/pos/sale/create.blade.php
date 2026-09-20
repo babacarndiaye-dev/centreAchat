@@ -54,7 +54,7 @@
                         <span class="w-24 text-right font-semibold">{{ number_format($item->total, 0, ',', ' ') }}</span>
                         <form action="{{ route('admin.pos.ventes.remove', $item->product) }}" method="POST">
                             @csrf @method('DELETE')
-                            <button type="submit" class="text-terroir-terracotta">✕</button>
+                            <button type="submit" class="text-terroir-terracotta"><span class="material-symbols-outlined text-lg">close</span></button>
                         </form>
                     </div>
                 @empty
@@ -85,7 +85,7 @@
                                     @endforeach
                                 </select>
                                 <input type="number" step="0.01" :name="'payments[' + i + '][amount]'" x-model.number="p.amount" class="input w-32">
-                                <button type="button" @click="removePayment(i)" class="text-terroir-terracotta">✕</button>
+                                <button type="button" @click="removePayment(i)" class="text-terroir-terracotta"><span class="material-symbols-outlined text-lg">close</span></button>
                             </div>
                         </template>
                     </div>

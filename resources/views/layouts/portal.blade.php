@@ -12,7 +12,7 @@
     <header class="border-b border-terroir-green/10 bg-white">
         <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
             <a href="{{ route('portail.dashboard') }}" class="flex items-center gap-2">
-                <span class="text-2xl">🤝</span>
+                <span class="material-symbols-outlined text-2xl">handshake</span>
                 <div>
                     <span class="block font-display text-lg font-semibold text-terroir-green">Portail Fournisseur</span>
                     <span class="block text-xs text-terroir-dark/50">Central d'Achat</span>

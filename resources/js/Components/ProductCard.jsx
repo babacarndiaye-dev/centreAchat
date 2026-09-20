@@ -28,7 +28,7 @@ export default function ProductCard({ product, showProPrice }) {
                                 className="h-full w-full object-contain transition duration-700 ease-out group-hover:scale-[1.04]"
                             />
                         ) : (
-                            <div className="flex h-full items-center justify-center text-5xl">🌿</div>
+                            <div className="flex h-full items-center justify-center text-5xl"><span className="material-symbols-outlined text-5xl">eco</span></div>
                         )}
                     </div>
 

@@ -97,7 +97,7 @@ export default function SiteLayout({ children }) {
                         {logoUrl ? (
                             <img src={logoUrl} alt={siteName} className="h-9 w-9 rounded-full object-cover" />
                         ) : (
-                            <span className="text-2xl">🌿</span>
+                            <span className="material-symbols-outlined text-2xl">eco</span>
                         )}
                         <span className="font-display text-xl font-semibold text-terroir-green">{siteName}</span>
                     </Link>
@@ -249,14 +249,16 @@ function SiteFooter({ siteName, logoUrl, address, showNewsletter }) {
                             {logoUrl ? (
                                 <img src={logoUrl} alt={siteName} width="32" height="32" className="mr-2 rounded-full object-cover" />
                             ) : (
-                                <span className="mr-1.5 text-2xl">🌿</span>
+                                <span className="material-symbols-outlined mr-1.5 text-2xl">eco</span>
                             )}
                             <span className="font-display text-lg font-semibold text-white">{siteName}</span>
                         </div>
                         <p className="mt-4 text-sm text-white/70">
                             Du terroir local à votre table. Nous soutenons l'économie locale en facilitant l'accès à des produits frais et authentiques du Sénégal.
                         </p>
-                        <p className="mt-3 text-sm text-white/70">📍 {address}</p>
+                        <p className="mt-3 flex items-center gap-1 text-sm text-white/70">
+                            <span className="material-symbols-outlined text-base">location_on</span> {address}
+                        </p>
                     </div>
 
                     <div className="hidden sm:block">

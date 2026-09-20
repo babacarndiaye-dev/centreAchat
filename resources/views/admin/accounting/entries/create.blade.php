@@ -54,7 +54,7 @@
                         <input type="text" :name="'label[' + i + ']'" x-model="line.label" placeholder="Libellé ligne" class="input w-40">
                         <input type="number" step="0.01" :name="'debit[' + i + ']'" x-model.number="line.debit" placeholder="Débit" class="input w-28">
                         <input type="number" step="0.01" :name="'credit[' + i + ']'" x-model.number="line.credit" placeholder="Crédit" class="input w-28">
-                        <button type="button" @click="removeLine(i)" class="font-semibold text-terroir-terracotta" aria-label="Retirer">✕</button>
+                        <button type="button" @click="removeLine(i)" class="font-semibold text-terroir-terracotta" aria-label="Retirer"><span class="material-symbols-outlined text-lg">close</span></button>
                     </div>
                 </template>
             </div>
@@ -64,7 +64,10 @@
             <div class="mt-4 flex justify-end gap-8 text-sm">
                 <span>Débit : <strong x-text="totalDebit().toLocaleString('fr-FR')"></strong></span>
                 <span>Crédit : <strong x-text="totalCredit().toLocaleString('fr-FR')"></strong></span>
-                <span :class="balanced() ? 'text-terroir-green font-semibold' : 'text-terroir-terracotta font-semibold'" x-text="balanced() ? 'Équilibrée ✓' : 'Non équilibrée'"></span>
+                <span :class="balanced() ? 'flex items-center gap-1 text-terroir-green font-semibold' : 'flex items-center gap-1 text-terroir-terracotta font-semibold'">
+                    <span class="material-symbols-outlined is-filled text-base" x-show="balanced()">check_circle</span>
+                    <span x-text="balanced() ? 'Équilibrée' : 'Non équilibrée'"></span>
+                </span>
             </div>
         </div>
 

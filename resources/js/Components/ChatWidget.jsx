@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 
 const QUICK_REPLIES = [
-    { emoji: '🛒', label: 'Voir les produits', text: 'Comment voir vos produits ?' },
-    { emoji: '📦', label: 'Suivre ma commande', text: 'Suivre ma commande' },
-    { emoji: '🚚', label: 'Livraison', text: 'Quels sont vos délais et zones de livraison ?' },
-    { emoji: '💳', label: 'Moyens de paiement', text: 'Quels moyens de paiement acceptez-vous ?' },
-    { emoji: '🏨', label: 'Je suis un professionnel', text: 'Comment devenir client professionnel ?' },
-    { emoji: '🤝', label: 'Devenir fournisseur', text: 'Comment devenir fournisseur ?' },
-    { emoji: '🧳', label: 'Je suis touriste', text: 'Je suis touriste, comment puis-je commander ?' },
+    { icon: 'shopping_cart', label: 'Voir les produits', text: 'Comment voir vos produits ?' },
+    { icon: 'local_shipping', label: 'Suivre ma commande', text: 'Suivre ma commande' },
+    { icon: 'local_shipping', label: 'Livraison', text: 'Quels sont vos délais et zones de livraison ?' },
+    { icon: 'credit_card', label: 'Moyens de paiement', text: 'Quels moyens de paiement acceptez-vous ?' },
+    { icon: 'hotel', label: 'Je suis un professionnel', text: 'Comment devenir client professionnel ?' },
+    { icon: 'handshake', label: 'Devenir fournisseur', text: 'Comment devenir fournisseur ?' },
+    { icon: 'luggage', label: 'Je suis touriste', text: 'Je suis touriste, comment puis-je commander ?' },
 ];
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -184,7 +184,10 @@ export default function ChatWidget() {
                     <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-3">
                         {messages.length === 0 && (
                             <div>
-                                <p className="text-sm text-terroir-dark">👋 Bonjour et bienvenue chez Central d'Achat !</p>
+                                <p className="flex items-center gap-1.5 text-sm text-terroir-dark">
+                                    <span className="material-symbols-outlined text-base">waving_hand</span>
+                                    Bonjour et bienvenue chez Central d'Achat !
+                                </p>
                                 <p className="mt-1 text-sm text-terroir-dark/60">Comment puis-je vous aider aujourd'hui ?</p>
                                 <div className="mt-3 flex flex-wrap gap-1.5">
                                     {QUICK_REPLIES.map((q) => (
@@ -192,17 +195,19 @@ export default function ChatWidget() {
                                             key={q.label}
                                             type="button"
                                             onClick={() => send(q.text)}
-                                            className="rounded-full border border-terroir-green/20 px-2.5 py-1 text-xs text-terroir-green hover:bg-terroir-green/5"
+                                            className="inline-flex items-center gap-1 rounded-full border border-terroir-green/20 px-2.5 py-1 text-xs text-terroir-green hover:bg-terroir-green/5"
                                         >
-                                            {q.emoji} {q.label}
+                                            <span className="material-symbols-outlined text-sm">{q.icon}</span>
+                                            {q.label}
                                         </button>
                                     ))}
                                     <button
                                         type="button"
                                         onClick={askAgent}
-                                        className="rounded-full border border-terroir-green/20 px-2.5 py-1 text-xs text-terroir-green hover:bg-terroir-green/5"
+                                        className="inline-flex items-center gap-1 rounded-full border border-terroir-green/20 px-2.5 py-1 text-xs text-terroir-green hover:bg-terroir-green/5"
                                     >
-                                        💬 Parler à un conseiller
+                                        <span className="material-symbols-outlined text-sm">forum</span>
+                                        Parler à un conseiller
                                     </button>
                                 </div>
                                 {suggestions.length > 0 && (
@@ -238,7 +243,10 @@ export default function ChatWidget() {
                                 }
                             >
                                 {msg.sender_type === 'bot' && (
-                                    <p className="mb-0.5 text-[10px] font-semibold uppercase tracking-wide opacity-60">🤖 Assistant</p>
+                                    <p className="mb-0.5 flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide opacity-60">
+                                        <span className="material-symbols-outlined text-xs">smart_toy</span>
+                                        Assistant
+                                    </p>
                                 )}
                                 <p className="whitespace-pre-line">{renderedText[msg.id] ?? ''}</p>
                                 {(renderedText[msg.id] ?? '') === msg.body && msg.links?.length > 0 && (

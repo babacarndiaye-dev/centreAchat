@@ -24,8 +24,8 @@ export default function RecurringOrdersIndex({ recurringOrders }) {
                     <Link href={route('compte.commandes-recurrentes.create')} className="btn-primary">+ Programmer une commande</Link>
                 </div>
 
-                <Link href={route('compte.index')} className="mt-4 inline-block text-sm text-terroir-dark/60 hover:text-terroir-terracotta">
-                    ← Retour à mon compte
+                <Link href={route('compte.index')} className="mt-4 inline-flex items-center gap-1 text-sm text-terroir-dark/60 hover:text-terroir-terracotta">
+                    <span className="material-symbols-outlined text-base">arrow_back</span> Retour à mon compte
                 </Link>
 
                 {recurringOrders.length === 0 ? (

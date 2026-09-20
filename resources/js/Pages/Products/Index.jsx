@@ -66,7 +66,7 @@ export default function ProductsIndex({ products, categories, filters }) {
 
                 {products.data.length === 0 ? (
                     <div className="mt-16 text-center text-terroir-dark/60">
-                        <p className="text-5xl">🌱</p>
+                        <span className="material-symbols-outlined text-5xl text-terroir-green">eco</span>
                         <p className="mt-4">Aucun produit ne correspond à votre recherche pour le moment.</p>
                     </div>
                 ) : (

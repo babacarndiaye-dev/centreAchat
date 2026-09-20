@@ -28,7 +28,13 @@
                         <p class="font-semibold text-terroir-dark">{{ $testimonial->author_name }}</p>
                         <p class="text-xs text-terroir-dark/50">{{ $testimonial->author_role }}</p>
                     </td>
-                    <td class="text-terroir-gold">{{ str_repeat('★', $testimonial->rating) }}</td>
+                    <td class="text-terroir-gold">
+                        <span class="inline-flex gap-0.5">
+                            @for($s = 1; $s <= 5; $s++)
+                                <span class="material-symbols-outlined text-base{{ $s <= $testimonial->rating ? ' is-filled' : '' }}">star</span>
+                            @endfor
+                        </span>
+                    </td>
                     <td>
                         @if($testimonial->is_published)
                             <span class="admin-badge-success">Publié</span>

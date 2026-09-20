@@ -19,8 +19,8 @@ export default function QuotesIndex({ quotes }) {
                     <Link href={route('compte.devis.create')} className="btn-primary">+ Demander un devis</Link>
                 </div>
 
-                <Link href={route('compte.index')} className="mt-4 inline-block text-sm text-terroir-dark/60 hover:text-terroir-terracotta">
-                    ← Retour à mon compte
+                <Link href={route('compte.index')} className="mt-4 inline-flex items-center gap-1 text-sm text-terroir-dark/60 hover:text-terroir-terracotta">
+                    <span className="material-symbols-outlined text-base">arrow_back</span> Retour à mon compte
                 </Link>
 
                 {quotes.data.length === 0 ? (

@@ -11,7 +11,7 @@
         <p class="mt-1.5 text-sm">
             IA de secours :
             @if($aiEnabled)
-                <span class="font-semibold text-terroir-green">🧠 Active ({{ config('services.openai.model') }})</span>
+                <span class="inline-flex items-center gap-1 font-semibold text-terroir-green"><span class="material-symbols-outlined text-base">psychology</span> Active ({{ config('services.openai.model') }})</span>
             @else
                 <span class="font-semibold text-terroir-dark/40">Inactive — aucune clé API configurée (variable OPENAI_API_KEY)</span>
             @endif

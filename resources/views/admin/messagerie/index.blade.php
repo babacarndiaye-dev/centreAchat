@@ -10,7 +10,9 @@
             <a href="{{ route('admin.messagerie.index', ['status' => $key]) }}" class="rounded-full px-3.5 py-1.5 {{ request('status') === $key ? 'bg-terroir-green font-semibold text-white' : 'text-terroir-dark/60' }}">{{ $label }}</a>
         @endforeach
     </div>
-    <a href="{{ route('admin.messagerie.faq.index') }}" class="admin-link">📚 Base de connaissances</a>
+    <a href="{{ route('admin.messagerie.faq.index') }}" class="admin-link inline-flex items-center gap-1">
+        <span class="material-symbols-outlined text-lg">menu_book</span> Base de connaissances
+    </a>
 </div>
 
 <div class="admin-card mt-6 p-0">

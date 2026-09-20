@@ -21,13 +21,19 @@ export default function ProducersShow({ producer, products }) {
                             {producer.photo ? (
                                 <img src={`/fichiers/${producer.photo}`} alt={producer.name} className="h-full w-full object-cover" />
                             ) : (
-                                <div className="flex h-full w-full items-center justify-center text-8xl">🧑‍🌾</div>
+                                <div className="flex h-full w-full items-center justify-center text-8xl">
+                                    <span className="material-symbols-outlined text-8xl text-terroir-green">agriculture</span>
+                                </div>
                             )}
                         </div>
                     </Reveal>
                     <Reveal delay={0.1} className="lg:col-span-2">
                         <h1 className="font-display text-3xl font-semibold text-terroir-dark">{producer.name}</h1>
-                        {producer.region && <p className="mt-2 text-sm text-terroir-dark/60">📍 {producer.region}</p>}
+                        {producer.region && (
+                            <p className="mt-2 flex items-center gap-1 text-sm text-terroir-dark/60">
+                                <span className="material-symbols-outlined text-base">location_on</span> {producer.region}
+                            </p>
+                        )}
                         {producer.description && <p className="mt-6 whitespace-pre-line leading-relaxed text-terroir-dark/80">{producer.description}</p>}
                     </Reveal>
                 </div>
