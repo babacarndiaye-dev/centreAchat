@@ -165,34 +165,38 @@ export default function TrafficIndex({ stats, visitsByDay, deviceBreakdown, topP
             <div className="mt-6 grid gap-6 lg:grid-cols-2">
                 <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.25 }} className="admin-card">
                     <h2 className="font-display text-base font-semibold">Pages les plus vues</h2>
-                    <table className="admin-table mt-3">
-                        <tbody>
-                            {topPages.length === 0 ? (
-                                <tr><td className="py-6 text-center text-terroir-dark/40">Aucune donnée.</td></tr>
-                            ) : topPages.map((row) => (
-                                <tr key={row.url}>
-                                    <td>/{row.url}</td>
-                                    <td className="text-right font-semibold">{row.total}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <div className="mt-3 overflow-x-auto">
+                        <table className="admin-table w-full">
+                            <tbody>
+                                {topPages.length === 0 ? (
+                                    <tr><td className="py-6 text-center text-terroir-dark/40">Aucune donnée.</td></tr>
+                                ) : topPages.map((row) => (
+                                    <tr key={row.url}>
+                                        <td className="max-w-[220px] break-all">/{row.url}</td>
+                                        <td className="text-right font-semibold">{row.total}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </motion.div>
 
                 <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.3 }} className="admin-card">
                     <h2 className="font-display text-base font-semibold">Produits les plus consultés</h2>
-                    <table className="admin-table mt-3">
-                        <tbody>
-                            {topProducts.length === 0 ? (
-                                <tr><td className="py-6 text-center text-terroir-dark/40">Aucune donnée.</td></tr>
-                            ) : topProducts.map((row) => (
-                                <tr key={row.name}>
-                                    <td>{row.name}</td>
-                                    <td className="text-right font-semibold">{row.views} vues</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <div className="mt-3 overflow-x-auto">
+                        <table className="admin-table w-full">
+                            <tbody>
+                                {topProducts.length === 0 ? (
+                                    <tr><td className="py-6 text-center text-terroir-dark/40">Aucune donnée.</td></tr>
+                                ) : topProducts.map((row) => (
+                                    <tr key={row.name}>
+                                        <td>{row.name}</td>
+                                        <td className="text-right font-semibold">{row.views} vues</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </motion.div>
             </div>
 
