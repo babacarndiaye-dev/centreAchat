@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, usePage } from '@inertiajs/react';
+import { AnimatePresence, motion } from 'framer-motion';
 import ChatWidget from '../Components/ChatWidget';
 import PageTransition from '../Components/PageTransition';
 
@@ -28,16 +29,25 @@ function FlashToast() {
         return () => clearTimeout(timeout);
     }, [props.flash?.success, props.flash?.error]);
 
-    if (!message) return null;
-
     return (
-        <div
-            className={
-                'fixed right-5 top-5 z-[60] max-w-xs rounded-xl px-4 py-3 text-sm font-medium text-white shadow-lg ' +
-                (message.type === 'success' ? 'bg-terroir-green' : 'bg-terroir-terracotta')
-            }
-        >
-            {message.text}
+        <div className="pointer-events-none fixed right-5 top-5 z-[60] flex max-w-xs flex-col items-end">
+            <AnimatePresence>
+                {message && (
+                    <motion.div
+                        key={message.text}
+                        initial={{ opacity: 0, x: 40, scale: 0.9 }}
+                        animate={{ opacity: 1, x: 0, scale: 1 }}
+                        exit={{ opacity: 0, x: 40, scale: 0.9 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+                        className={
+                            'pointer-events-auto rounded-xl px-4 py-3 text-sm font-medium text-white shadow-lg ' +
+                            (message.type === 'success' ? 'bg-terroir-green' : 'bg-terroir-terracotta')
+                        }
+                    >
+                        {message.text}
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }

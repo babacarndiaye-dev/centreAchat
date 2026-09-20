@@ -1,4 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
+import { AnimatePresence, motion } from 'framer-motion';
 import SiteLayout from '../../Layouts/SiteLayout';
 import ProductCard from '../../Components/ProductCard';
 
@@ -19,9 +20,20 @@ export default function AccountWishlist({ products, showProPrice }) {
                     <p className="mt-10 text-terroir-dark/60">Vous n'avez pas encore de produit favori. Cliquez sur le cœur d'un produit pour l'ajouter ici.</p>
                 ) : (
                     <div className="mt-10 grid grid-cols-2 gap-5 md:grid-cols-4">
-                        {products.map((product) => (
-                            <ProductCard key={product.id} product={product} showProPrice={showProPrice} />
-                        ))}
+                        <AnimatePresence>
+                            {products.map((product, i) => (
+                                <motion.div
+                                    key={product.id}
+                                    layout
+                                    initial={{ opacity: 0, y: 16 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
+                                    transition={{ duration: 0.3, delay: i * 0.04 }}
+                                >
+                                    <ProductCard product={product} showProPrice={showProPrice} />
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
                     </div>
                 )}
             </section>

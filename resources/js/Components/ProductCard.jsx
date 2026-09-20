@@ -1,4 +1,5 @@
 import { router } from '@inertiajs/react';
+import { motion } from 'framer-motion';
 
 function formatFcfa(amount) {
     return new Intl.NumberFormat('fr-FR').format(Math.round(amount)) + ' FCFA';
@@ -50,17 +51,27 @@ export default function ProductCard({ product, showProPrice }) {
                     )}
                 </a>
 
-                <button
+                <motion.button
                     onClick={toggleFavorite}
                     type="button"
+                    whileTap={{ scale: 0.8 }}
                     aria-label={product.is_wishlisted ? 'Retirer des favoris' : 'Ajouter aux favoris'}
                     className={
                         'absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/95 text-base shadow-soft backdrop-blur transition hover:scale-110 ' +
                         (product.is_wishlisted ? 'text-terroir-terracotta' : 'text-terroir-dark/40')
                     }
                 >
-                    <span className={'material-symbols-outlined' + (product.is_wishlisted ? ' is-filled' : '')} style={{ fontSize: '1.05rem' }}>favorite</span>
-                </button>
+                    <motion.span
+                        key={product.is_wishlisted ? 'filled' : 'outline'}
+                        initial={{ scale: 0.5 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+                        className={'material-symbols-outlined' + (product.is_wishlisted ? ' is-filled' : '')}
+                        style={{ fontSize: '1.05rem' }}
+                    >
+                        favorite
+                    </motion.span>
+                </motion.button>
             </div>
 
             <div className="flex flex-1 flex-col p-5">
@@ -105,15 +116,17 @@ export default function ProductCard({ product, showProPrice }) {
                         )}
                     </div>
 
-                    <button
+                    <motion.button
                         onClick={addToCart}
                         type="button"
                         disabled={!product.in_stock}
-                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-terroir-green text-lg text-white shadow-soft transition duration-300 hover:-translate-y-0.5 hover:bg-terroir-dark hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
+                        whileTap={product.in_stock ? { scale: 0.85 } : undefined}
+                        whileHover={product.in_stock ? { y: -2 } : undefined}
+                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-terroir-green text-lg text-white shadow-soft transition-colors duration-300 hover:bg-terroir-dark hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-40"
                         aria-label="Ajouter au panier"
                     >
                         <span className="material-symbols-outlined">add_shopping_cart</span>
-                    </button>
+                    </motion.button>
                 </div>
             </div>
         </div>
