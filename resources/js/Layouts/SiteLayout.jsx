@@ -111,12 +111,15 @@ export default function SiteLayout({ children }) {
 
                     <div className="flex items-center gap-3">
                         {user ? (
-                            <a
-                                href={user.is_admin ? route('admin.dashboard') : route('compte.index')}
-                                className="hidden text-sm font-medium text-terroir-dark/80 hover:text-terroir-terracotta sm:block"
-                            >
-                                {user.is_admin ? 'Administration' : 'Mon compte'}
-                            </a>
+                            user.is_admin ? (
+                                <a href={route('admin.dashboard')} className="hidden text-sm font-medium text-terroir-dark/80 hover:text-terroir-terracotta sm:block">
+                                    Administration
+                                </a>
+                            ) : (
+                                <Link href={route('compte.index')} className="hidden text-sm font-medium text-terroir-dark/80 hover:text-terroir-terracotta sm:block">
+                                    Mon compte
+                                </Link>
+                            )
                         ) : (
                             <Link href={route('login')} className="hidden text-sm font-medium text-terroir-dark/80 hover:text-terroir-terracotta sm:block">
                                 Connexion
@@ -177,12 +180,15 @@ export default function SiteLayout({ children }) {
                                 </a>
                             ))}
                             {user ? (
-                                <a
-                                    href={user.is_admin ? route('admin.dashboard') : route('compte.index')}
-                                    className="rounded-lg px-3 py-3 text-sm font-medium text-terroir-dark transition-colors hover:bg-terroir-cream active:bg-terroir-cream"
-                                >
-                                    {user.is_admin ? 'Administration' : 'Mon compte'}
-                                </a>
+                                user.is_admin ? (
+                                    <a href={route('admin.dashboard')} className="rounded-lg px-3 py-3 text-sm font-medium text-terroir-dark transition-colors hover:bg-terroir-cream active:bg-terroir-cream">
+                                        Administration
+                                    </a>
+                                ) : (
+                                    <Link href={route('compte.index')} className="rounded-lg px-3 py-3 text-sm font-medium text-terroir-dark transition-colors hover:bg-terroir-cream active:bg-terroir-cream">
+                                        Mon compte
+                                    </Link>
+                                )
                             ) : (
                                 <Link
                                     href={route('login')}

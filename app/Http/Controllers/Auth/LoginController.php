@@ -35,9 +35,9 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
-        // compte.index/admin.dashboard/portail.dashboard are still Blade pages at this
-        // stage of the migration — Inertia::location() forces a full browser navigation
-        // there instead of an Inertia partial visit (which would fail on a non-Inertia response).
+        // admin.dashboard/portail.dashboard are still Blade pages at this stage of the
+        // migration — Inertia::location() forces a full browser navigation there instead
+        // of an Inertia partial visit (which would fail on a non-Inertia response).
         if (Auth::user()->isStaff()) {
             return Inertia::location(redirect()->intended(route('admin.dashboard')));
         }
@@ -46,7 +46,7 @@ class LoginController extends Controller
             return Inertia::location(redirect()->intended(route('portail.dashboard')));
         }
 
-        return Inertia::location(redirect()->intended(route('compte.index')));
+        return redirect()->intended(route('compte.index'));
     }
 
     public function logout(Request $request): RedirectResponse

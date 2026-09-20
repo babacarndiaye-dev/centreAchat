@@ -45,13 +45,10 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        // compte.index is still a Blade page at this stage of the migration — see LoginController::login().
         if ($user->b2b_status === 'en_attente') {
-            return Inertia::location(
-                redirect()->route('compte.index')->with('success', 'Votre compte professionnel a été créé et est en attente de validation par notre équipe.')
-            );
+            return redirect()->route('compte.index')->with('success', 'Votre compte professionnel a été créé et est en attente de validation par notre équipe.');
         }
 
-        return Inertia::location(redirect()->route('compte.index'));
+        return redirect()->route('compte.index');
     }
 }
