@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import SidebarNav from '../Components/Admin/SidebarNav';
 import PageTransition from '../Components/PageTransition';
 import PullToRefresh from '../Components/PullToRefresh';
-import SoundNotifications from '../Components/Admin/SoundNotifications';
+import NotificationBells from '../Components/Admin/NotificationBells';
 
 function PushNotificationButton({ vapidPublicKey }) {
     const [status, setStatus] = useState('unsupported');
@@ -89,8 +89,7 @@ export default function AdminLayout({ title, children }) {
     const vapidPublicKey = props.admin?.vapidPublicKey;
     const unreadChat = props.admin?.unreadChat ?? 0;
     const unreadNotifications = props.admin?.unreadNotifications ?? 0;
-    const unreadTotal = unreadChat + unreadNotifications;
-    const bellHref = unreadChat > 0 ? route('admin.messagerie.index') : route('admin.notifications.index');
+    const ordersPending = props.admin?.ordersPending ?? 0;
     const [mobileOpen, setMobileOpen] = useState(false);
 
     useEffect(() => {
@@ -99,7 +98,6 @@ export default function AdminLayout({ title, children }) {
 
     return (
         <div className="flex min-h-screen">
-            <SoundNotifications />
             <aside className="hidden w-64 shrink-0 flex-col bg-terroir-dark lg:flex">
                 <SidebarNav />
             </aside>
@@ -134,14 +132,11 @@ export default function AdminLayout({ title, children }) {
                     <h1 className="font-display text-lg font-semibold">{title ?? 'Tableau de bord'}</h1>
                     <div className="flex items-center gap-4">
                         {vapidPublicKey && <PushNotificationButton vapidPublicKey={vapidPublicKey} />}
-                        <a href={bellHref} className="relative text-xl text-terroir-dark/50 hover:text-terroir-dark" aria-label="Notifications">
-                            <span className="material-symbols-outlined">notifications</span>
-                            {unreadTotal > 0 && (
-                                <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-terroir-gold px-1 text-[10px] font-bold text-terroir-dark">
-                                    {unreadTotal > 9 ? '9+' : unreadTotal}
-                                </span>
-                            )}
-                        </a>
+                        <NotificationBells
+                            initialUnreadChat={unreadChat}
+                            initialUnreadNotifications={unreadNotifications}
+                            initialOrdersPending={ordersPending}
+                        />
                         <span className="hidden text-sm text-terroir-dark/60 sm:inline">{user?.name}</span>
                     </div>
                 </header>

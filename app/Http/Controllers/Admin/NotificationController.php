@@ -17,11 +17,13 @@ class NotificationController extends Controller
      * Lightweight polling endpoint for the admin sound-notification widget
      * (orders, chat, contact messages) — deliberately cheap, no pagination.
      */
-    public function live(): JsonResponse
+    public function live(Request $request): JsonResponse
     {
         return response()->json([
             'latest_order_id' => (int) (Order::max('id') ?? 0),
+            'orders_pending' => Order::whereIn('status', ['nouvelle', 'confirmee', 'en_preparation'])->count(),
             'unread_chat' => Conversation::unreadForStaffCount(),
+            'unread_notifications' => $request->user()->unreadNotificationsCount(),
             'unread_contact' => ContactMessage::where('is_read', false)->count(),
         ]);
     }

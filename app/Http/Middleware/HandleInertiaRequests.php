@@ -65,6 +65,7 @@ class HandleInertiaRequests extends Middleware
                 'nav' => \App\Support\AdminNav::forUser($user),
                 'unreadChat' => $unreadChat,
                 'unreadNotifications' => $user->unreadNotificationsCount(),
+                'ordersPending' => \App\Models\Order::whereIn('status', ['nouvelle', 'confirmee', 'en_preparation'])->count(),
                 'vapidPublicKey' => config('services.vapid.public_key'),
             ];
         }
