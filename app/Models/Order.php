@@ -82,7 +82,13 @@ class Order extends Model
 
     public function amountPaid(): float
     {
-        return (float) $this->posPayments()->sum('amount');
+        $posTotal = (float) $this->posPayments()->sum('amount');
+
+        $accountTotal = (float) PaymentAccountTransaction::where('reference', $this->order_number)
+            ->where('type', 'entree')
+            ->sum('amount');
+
+        return $posTotal + $accountTotal;
     }
 
     public function amountRefunded(): float
