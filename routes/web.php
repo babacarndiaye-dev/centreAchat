@@ -334,6 +334,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     Route::prefix('notifications')->name('notifications.')->group(function () {
         Route::get('/', [AdminNotificationController::class, 'index'])->name('index');
+        Route::get('/en-direct', [AdminNotificationController::class, 'live'])->name('live');
         Route::patch('{notification}/lu', [AdminNotificationController::class, 'markAsRead'])->name('read');
         Route::patch('tout-lire', [AdminNotificationController::class, 'markAllAsRead'])->name('read-all');
 

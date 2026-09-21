@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import SidebarNav from '../Components/Admin/SidebarNav';
 import PageTransition from '../Components/PageTransition';
 import PullToRefresh from '../Components/PullToRefresh';
+import SoundNotifications from '../Components/Admin/SoundNotifications';
 
 function PushNotificationButton({ vapidPublicKey }) {
     const [status, setStatus] = useState('unsupported');
@@ -98,6 +99,7 @@ export default function AdminLayout({ title, children }) {
 
     return (
         <div className="flex min-h-screen">
+            <SoundNotifications />
             <aside className="hidden w-64 shrink-0 flex-col bg-terroir-dark lg:flex">
                 <SidebarNav />
             </aside>
