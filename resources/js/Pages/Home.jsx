@@ -247,92 +247,6 @@ export default function Home({
                 </div>
             </section>
 
-            <Marquee items={MARQUEE_ITEMS} />
-
-            {/* PRESENTATION */}
-            <section className="bg-terroir-cream py-4 md:py-6">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="grid items-center gap-4 md:grid-cols-2 md:gap-8">
-                        <Reveal className="order-1">
-                            <img
-                                src="/images/mbour-terroir-nobg.png"
-                                alt="Centre d'achat de Mbour — produits du terroir sénégalais"
-                                className="mx-auto w-full max-w-sm sm:max-w-md"
-                            />
-                        </Reveal>
-                        <Reveal delay={0.1} className="order-2">
-                            <span className="section-eyebrow">Qui sommes-nous</span>
-                            <h2 className="section-title mt-1">Centre d'achat de Mbour</h2>
-                            <p className="mt-2 text-sm leading-relaxed text-terroir-dark/70">
-                                Le Centre d'achat de Mbour est une plateforme dédiée à la commercialisation et à la valorisation des produits locaux sénégalais. Situé à Mbour – Rond-Point Malicounda, il met en relation producteurs, fournisseurs et artisans avec les hôtels, restaurants, entreprises et touristes.
-                            </p>
-                            <p className="mt-2 text-sm leading-relaxed text-terroir-dark/70">
-                                Sa mission est de faciliter l'accès aux marchés, promouvoir le savoir-faire local et renforcer les circuits de distribution des produits sénégalais.
-                            </p>
-                            <p className="mt-3 font-display text-lg italic text-terroir-green">« Le terroir sénégalais au cœur du commerce. »</p>
-                        </Reveal>
-                    </div>
-                </div>
-            </section>
-
-            {/* CATEGORIES */}
-            {categories.length > 0 && (
-                <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
-                    <Reveal className="text-center">
-                        <span className="section-eyebrow">Explorez</span>
-                        <h2 className="section-title mt-1">Nos catégories</h2>
-                    </Reveal>
-                    <div className="mt-12 grid grid-cols-2 gap-5 md:grid-cols-3">
-                        {categories.map((category, i) => (
-                            <Reveal key={category.id} delay={i * 0.06} y={16}>
-                                <MotionLink
-                                    whileHover={{ y: -4 }}
-                                    href={route('produits.index', { categorie: category.slug })}
-                                    className="group flex flex-col items-center rounded-xl2 border border-terroir-dark/5 bg-white p-10 text-center shadow-soft transition-shadow duration-300 hover:shadow-xl md:p-12"
-                                >
-                                    <motion.span
-                                        whileHover={{ scale: 1.1, backgroundColor: 'rgb(var(--terroir-green))' }}
-                                        className="flex h-20 w-20 items-center justify-center rounded-full bg-terroir-green/10 text-4xl text-terroir-green transition-colors duration-300 group-hover:text-white"
-                                    >
-                                        <span className="material-symbols-outlined text-4xl">{CATEGORY_ICONS[category.slug] ?? 'eco'}</span>
-                                    </motion.span>
-                                    <span className="mt-5 font-display text-lg font-semibold text-terroir-dark">{category.name}</span>
-                                    <span className="mt-1.5 inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-terroir-green">
-                                        Voir
-                                        <span className="material-symbols-outlined text-sm transition group-hover:translate-x-0.5">arrow_forward</span>
-                                    </span>
-                                </MotionLink>
-                            </Reveal>
-                        ))}
-                    </div>
-                </section>
-            )}
-
-            {/* PRODUITS VEDETTES */}
-            {showFeaturedProducts && featuredProducts.length > 0 && (
-                <section className="bg-white py-16 md:py-24">
-                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                        <Reveal className="flex flex-wrap items-center justify-between gap-4">
-                            <div>
-                                <span className="section-eyebrow">Sélection</span>
-                                <h2 className="section-title mt-1">Produits en vedette</h2>
-                            </div>
-                            <Link href={route('produits.index')} className="inline-flex items-center gap-1.5 text-sm font-semibold text-terroir-green hover:text-terroir-dark">
-                                Voir tous les produits
-                                <span className="material-symbols-outlined text-lg">arrow_forward</span>
-                            </Link>
-                        </Reveal>
-                        <div className="mt-12 grid grid-cols-2 gap-5 md:grid-cols-4">
-                            {featuredProducts.map((product, i) => (
-                                <Reveal key={product.id} delay={i * 0.05} y={16}>
-                                    <ProductCard product={product} showProPrice={showProPrice} />
-                                </Reveal>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-            )}
-
             {/* OFFRE DU MOMENT */}
             {promoProduct && (
                 <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
@@ -373,6 +287,71 @@ export default function Home({
                 </section>
             )}
 
+            {/* CATEGORIES */}
+            {categories.length > 0 && (
+                <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
+                    <Reveal className="text-center">
+                        <span className="section-eyebrow">Explorez</span>
+                        <h2 className="section-title mt-1">Nos catégories</h2>
+                    </Reveal>
+                    <div className="mt-12 flex flex-wrap justify-center gap-5">
+                        {categories.map((category, i) => (
+                            <Reveal
+                                key={category.id}
+                                delay={i * 0.06}
+                                y={16}
+                                className="w-[calc(50%-0.625rem)] md:w-[calc(25%-0.9375rem)]"
+                            >
+                                <MotionLink
+                                    whileHover={{ y: -4 }}
+                                    href={route('produits.index', { categorie: category.slug })}
+                                    className="group flex flex-col items-center rounded-xl2 border border-terroir-dark/5 bg-white p-10 text-center shadow-soft transition-shadow duration-300 hover:shadow-xl md:p-12"
+                                >
+                                    <motion.span
+                                        whileHover={{ scale: 1.1, backgroundColor: 'rgb(var(--terroir-green))' }}
+                                        className="flex h-20 w-20 items-center justify-center rounded-full bg-terroir-green/10 text-4xl text-terroir-green transition-colors duration-300 group-hover:text-white"
+                                    >
+                                        <span className="material-symbols-outlined text-4xl">{CATEGORY_ICONS[category.slug] ?? 'eco'}</span>
+                                    </motion.span>
+                                    <span className="mt-5 font-display text-lg font-semibold text-terroir-dark">{category.name}</span>
+                                    <span className="mt-1.5 inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-terroir-green">
+                                        Voir
+                                        <span className="material-symbols-outlined text-sm transition group-hover:translate-x-0.5">arrow_forward</span>
+                                    </span>
+                                </MotionLink>
+                            </Reveal>
+                        ))}
+                    </div>
+                </section>
+            )}
+
+            <Marquee items={MARQUEE_ITEMS} />
+
+            {/* PRODUITS VEDETTES */}
+            {showFeaturedProducts && featuredProducts.length > 0 && (
+                <section className="bg-white py-16 md:py-24">
+                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <Reveal className="flex flex-wrap items-center justify-between gap-4">
+                            <div>
+                                <span className="section-eyebrow">Sélection</span>
+                                <h2 className="section-title mt-1">Produits en vedette</h2>
+                            </div>
+                            <Link href={route('produits.index')} className="inline-flex items-center gap-1.5 text-sm font-semibold text-terroir-green hover:text-terroir-dark">
+                                Voir tous les produits
+                                <span className="material-symbols-outlined text-lg">arrow_forward</span>
+                            </Link>
+                        </Reveal>
+                        <div className="mt-12 grid grid-cols-2 gap-5 md:grid-cols-4">
+                            {featuredProducts.map((product, i) => (
+                                <Reveal key={product.id} delay={i * 0.05} y={16}>
+                                    <ProductCard product={product} showProPrice={showProPrice} />
+                                </Reveal>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
             {/* ESPACES DEDIES */}
             <section className="bg-terroir-cream py-16 md:py-24">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -403,26 +382,57 @@ export default function Home({
 
             {/* NOUVEAUTES */}
             {newProducts.length > 0 && (
-                <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
-                    <Reveal className="flex flex-wrap items-center justify-between gap-4">
-                        <div>
-                            <span className="section-eyebrow">Fraîchement arrivé</span>
-                            <h2 className="section-title mt-1">Nouveautés</h2>
-                        </div>
-                        <Link href={route('produits.index')} className="inline-flex items-center gap-1.5 text-sm font-semibold text-terroir-green hover:text-terroir-dark">
-                            Voir tout
-                            <span className="material-symbols-outlined text-lg">arrow_forward</span>
-                        </Link>
-                    </Reveal>
-                    <div className="mt-12 grid grid-cols-2 gap-5 md:grid-cols-4">
-                        {newProducts.map((product, i) => (
-                            <Reveal key={product.id} delay={i * 0.05} y={16}>
-                                <ProductCard product={product} showProPrice={showProPrice} />
-                            </Reveal>
-                        ))}
+                <section className="bg-terroir-cream py-16 md:py-24">
+                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <Reveal className="flex flex-wrap items-center justify-between gap-4">
+                            <div>
+                                <span className="section-eyebrow">Fraîchement arrivé</span>
+                                <h2 className="section-title mt-1">Nouveautés</h2>
+                            </div>
+                            <Link href={route('produits.index')} className="inline-flex items-center gap-1.5 text-sm font-semibold text-terroir-green hover:text-terroir-dark">
+                                Voir tout
+                                <span className="material-symbols-outlined text-lg">arrow_forward</span>
+                            </Link>
+                        </Reveal>
                     </div>
+                    <Reveal delay={0.08} className="mx-auto mt-12 max-w-7xl">
+                        <div className="scrollbar-none flex gap-5 overflow-x-auto px-4 pb-2 snap-x snap-mandatory sm:px-6 lg:px-8">
+                            {newProducts.map((product) => (
+                                <div key={product.id} className="w-[65vw] shrink-0 snap-start sm:w-56 lg:w-64">
+                                    <ProductCard product={product} showProPrice={showProPrice} />
+                                </div>
+                            ))}
+                            <div className="w-px shrink-0" aria-hidden="true" />
+                        </div>
+                    </Reveal>
                 </section>
             )}
+
+            {/* PRESENTATION */}
+            <section className="bg-white py-16 md:py-24">
+                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div className="grid items-center gap-4 md:grid-cols-2 md:gap-8">
+                        <Reveal className="order-1">
+                            <img
+                                src="/images/mbour-terroir-nobg.png"
+                                alt="Centre d'achat de Mbour — produits du terroir sénégalais"
+                                className="mx-auto w-full max-w-sm sm:max-w-md"
+                            />
+                        </Reveal>
+                        <Reveal delay={0.1} className="order-2">
+                            <span className="section-eyebrow">Qui sommes-nous</span>
+                            <h2 className="section-title mt-1">Centre d'achat de Mbour</h2>
+                            <p className="mt-2 text-sm leading-relaxed text-terroir-dark/70">
+                                Le Centre d'achat de Mbour est une plateforme dédiée à la commercialisation et à la valorisation des produits locaux sénégalais. Situé à Mbour – Rond-Point Malicounda, il met en relation producteurs, fournisseurs et artisans avec les hôtels, restaurants, entreprises et touristes.
+                            </p>
+                            <p className="mt-2 text-sm leading-relaxed text-terroir-dark/70">
+                                Sa mission est de faciliter l'accès aux marchés, promouvoir le savoir-faire local et renforcer les circuits de distribution des produits sénégalais.
+                            </p>
+                            <p className="mt-3 font-display text-lg italic text-terroir-green">« Le terroir sénégalais au cœur du commerce. »</p>
+                        </Reveal>
+                    </div>
+                </div>
+            </section>
 
             {/* PRODUCTEUR */}
             {showProducers && producer && (

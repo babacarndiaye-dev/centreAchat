@@ -47,6 +47,14 @@
 /* UIkit reskin — precompiled uikit.min.css ships with its default blue theme;
    these overrides restyle the actual components in use to the Central d'Achat
    green/terracotta/gold palette instead of recompiling UIkit from SASS. */
+.scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+    display: none;
+}
+
 @layer components {
     .uk-button-primary {
         background-color: #123D2E;
