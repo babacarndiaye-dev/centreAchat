@@ -6,10 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Quote;
+use App\Models\Setting;
+use App\Services\InvoicePdfService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
+use Throwable;
 
 class QuoteController extends Controller
 {
@@ -73,7 +78,7 @@ class QuoteController extends Controller
         ]);
     }
 
-    public function send(Request $request, Quote $devis): RedirectResponse
+    public function send(Request $request, Quote $devis, InvoicePdfService $invoices): RedirectResponse
     {
         $data = $request->validate([
             'unit_price' => ['required', 'array'],
@@ -95,7 +100,34 @@ class QuoteController extends Controller
             'valid_until' => $data['valid_until'] ?? now()->addDays(7),
         ]);
 
+        $this->sendQuoteEmail($devis, $invoices);
+
         return back()->with('success', 'Devis envoyé au client.');
+    }
+
+    protected function sendQuoteEmail(Quote $devis, InvoicePdfService $invoices): void
+    {
+        $devis->loadMissing('user');
+
+        if (! $devis->user?->email) {
+            return;
+        }
+
+        try {
+            $pdf = $invoices->forQuote($devis);
+            $siteName = Setting::get('site_name') ?: "Centrale d'achat";
+
+            Mail::send('emails.layout', [
+                'title' => 'Votre devis — '.$devis->quote_number,
+                'body' => "Voici votre devis, valable jusqu'au ".$devis->valid_until?->format('d/m/Y').".\n\nVous trouverez le détail en pièce jointe.",
+            ], function ($message) use ($devis, $pdf, $siteName) {
+                $message->to($devis->user->email)
+                    ->subject('Devis '.$devis->quote_number.' — '.$siteName)
+                    ->attachData($pdf->output(), 'devis-'.$devis->quote_number.'.pdf', ['mime' => 'application/pdf']);
+            });
+        } catch (Throwable $e) {
+            Log::warning('Envoi du devis par e-mail échoué', ['quote_id' => $devis->id, 'message' => $e->getMessage()]);
+        }
     }
 
     public function convert(Quote $devis): RedirectResponse

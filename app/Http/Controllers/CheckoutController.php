@@ -9,13 +9,17 @@ use App\Models\PaymentMethod;
 use App\Models\TaxRate;
 use App\Services\AccountingService;
 use App\Services\Analytics\AnalyticsRecorder;
+use App\Services\InvoicePdfService;
 use App\Support\Cart;
 use App\Support\Notifications\NotificationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
+use Throwable;
 
 class CheckoutController extends Controller
 {
@@ -53,7 +57,7 @@ class CheckoutController extends Controller
         ]);
     }
 
-    public function store(Request $request, AccountingService $accounting, NotificationService $notifications): RedirectResponse
+    public function store(Request $request, AccountingService $accounting, NotificationService $notifications, InvoicePdfService $invoices): RedirectResponse
     {
         $items = Cart::items();
 
@@ -155,7 +159,32 @@ class CheckoutController extends Controller
             'commande_lien' => route('commande.confirmation', $order->order_number),
         ]);
 
+        $this->sendInvoiceEmail($order, $invoices);
+
         return redirect()->route('commande.confirmation', $order->order_number);
+    }
+
+    protected function sendInvoiceEmail(Order $order, InvoicePdfService $invoices): void
+    {
+        if (! $order->customer_email) {
+            return;
+        }
+
+        try {
+            $pdf = $invoices->forOrder($order);
+            $siteName = \App\Models\Setting::get('site_name') ?: "Centrale d'achat";
+
+            Mail::send('emails.layout', [
+                'title' => 'Votre facture — '.$order->order_number,
+                'body' => "Merci pour votre commande ! Vous trouverez votre facture en pièce jointe.\n\nNuméro de commande : {$order->order_number}",
+            ], function ($message) use ($order, $pdf, $siteName) {
+                $message->to($order->customer_email)
+                    ->subject('Facture '.$order->order_number.' — '.$siteName)
+                    ->attachData($pdf->output(), 'facture-'.$order->order_number.'.pdf', ['mime' => 'application/pdf']);
+            });
+        } catch (Throwable $e) {
+            Log::warning('Envoi de la facture par e-mail échoué', ['order_id' => $order->id, 'message' => $e->getMessage()]);
+        }
     }
 
     public function confirmation(string $orderNumber)
