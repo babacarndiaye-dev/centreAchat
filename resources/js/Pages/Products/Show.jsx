@@ -197,7 +197,11 @@ export default function ProductsShow({ product, reviews, related }) {
                             >
                                 Ajouter au panier
                             </motion.button>
-                            <Link href={route('compte.devis.create')} className="btn-outline">Demander un devis</Link>
+                            {user?.b2b_status === 'valide' ? (
+                                <Link href={route('compte.devis.create')} className="btn-outline">Demander un devis</Link>
+                            ) : (
+                                <Link href={route('pages.show', 'hotels-professionnels')} className="btn-outline">Devenir client professionnel</Link>
+                            )}
                         </form>
 
                         {product.description && (
