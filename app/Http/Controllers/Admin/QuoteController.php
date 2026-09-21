@@ -114,19 +114,28 @@ class QuoteController extends Controller
         }
 
         try {
-            $pdf = $invoices->forQuote($devis);
+            $pdfContent = $invoices->forQuote($devis)->output();
+        } catch (Throwable $e) {
+            Log::warning('Génération du devis PDF échouée', ['quote_id' => $devis->id, 'exception' => get_class($e), 'message' => $e->getMessage()]);
+            return;
+        }
+
+        Log::info('Devis PDF généré', ['quote_id' => $devis->id, 'bytes' => strlen($pdfContent)]);
+
+        try {
             $siteName = Setting::get('site_name') ?: "Centrale d'achat";
 
             Mail::send('emails.layout', [
                 'title' => 'Votre devis — '.$devis->quote_number,
                 'body' => "Voici votre devis, valable jusqu'au ".$devis->valid_until?->format('d/m/Y').".\n\nVous trouverez le détail en pièce jointe.",
-            ], function ($message) use ($devis, $pdf, $siteName) {
+            ], function ($message) use ($devis, $pdfContent, $siteName) {
                 $message->to($devis->user->email)
                     ->subject('Devis '.$devis->quote_number.' — '.$siteName)
-                    ->attachData($pdf->output(), 'devis-'.$devis->quote_number.'.pdf', ['mime' => 'application/pdf']);
+                    ->attachData($pdfContent, 'devis-'.$devis->quote_number.'.pdf', ['mime' => 'application/pdf']);
             });
+            Log::info('E-mail de devis envoyé', ['quote_id' => $devis->id]);
         } catch (Throwable $e) {
-            Log::warning('Envoi du devis par e-mail échoué', ['quote_id' => $devis->id, 'message' => $e->getMessage()]);
+            Log::warning('Envoi du devis par e-mail échoué', ['quote_id' => $devis->id, 'exception' => get_class($e), 'message' => $e->getMessage()]);
         }
     }
 

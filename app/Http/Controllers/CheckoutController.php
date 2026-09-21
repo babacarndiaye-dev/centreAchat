@@ -171,19 +171,28 @@ class CheckoutController extends Controller
         }
 
         try {
-            $pdf = $invoices->forOrder($order);
+            $pdfContent = $invoices->forOrder($order)->output();
+        } catch (Throwable $e) {
+            Log::warning('Génération de la facture PDF échouée', ['order_id' => $order->id, 'exception' => get_class($e), 'message' => $e->getMessage()]);
+            return;
+        }
+
+        Log::info('Facture PDF générée', ['order_id' => $order->id, 'bytes' => strlen($pdfContent)]);
+
+        try {
             $siteName = \App\Models\Setting::get('site_name') ?: "Centrale d'achat";
 
             Mail::send('emails.layout', [
                 'title' => 'Votre facture — '.$order->order_number,
                 'body' => "Merci pour votre commande ! Vous trouverez votre facture en pièce jointe.\n\nNuméro de commande : {$order->order_number}",
-            ], function ($message) use ($order, $pdf, $siteName) {
+            ], function ($message) use ($order, $pdfContent, $siteName) {
                 $message->to($order->customer_email)
                     ->subject('Facture '.$order->order_number.' — '.$siteName)
-                    ->attachData($pdf->output(), 'facture-'.$order->order_number.'.pdf', ['mime' => 'application/pdf']);
+                    ->attachData($pdfContent, 'facture-'.$order->order_number.'.pdf', ['mime' => 'application/pdf']);
             });
+            Log::info('E-mail de facture envoyé', ['order_id' => $order->id]);
         } catch (Throwable $e) {
-            Log::warning('Envoi de la facture par e-mail échoué', ['order_id' => $order->id, 'message' => $e->getMessage()]);
+            Log::warning('Envoi de la facture par e-mail échoué', ['order_id' => $order->id, 'exception' => get_class($e), 'message' => $e->getMessage()]);
         }
     }
 
