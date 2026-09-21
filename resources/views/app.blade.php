@@ -23,6 +23,13 @@
         <img src="{{ asset('icons/icon-512.png') }}" alt="Centrale d'achat" width="88" height="88">
         <span>Centrale d'achat</span>
     </div>
+    <script>
+        // Déjà vu pendant cette session de navigation : on retire l'écran
+        // de démarrage immédiatement, avant même qu'il soit peint à l'écran.
+        if (sessionStorage.getItem('caBootSplashShown')) {
+            document.getElementById('boot-splash').remove();
+        }
+    </script>
 
     @inertia
 
@@ -30,6 +37,7 @@
         (function () {
             var splash = document.getElementById('boot-splash');
             if (!splash) return;
+            sessionStorage.setItem('caBootSplashShown', '1');
             var shownAt = Date.now();
             window.addEventListener('load', function () {
                 var remaining = Math.max(0, 1400 - (Date.now() - shownAt));
