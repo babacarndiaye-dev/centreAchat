@@ -287,6 +287,32 @@ export default function Home({
                 </section>
             )}
 
+            {/* PRESENTATION */}
+            <section className="bg-white py-16 md:py-24">
+                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div className="grid items-center gap-4 md:grid-cols-2 md:gap-8">
+                        <Reveal className="order-1">
+                            <img
+                                src="/images/mbour-terroir-nobg.png"
+                                alt="Centre d'achat de Mbour — produits du terroir sénégalais"
+                                className="mx-auto w-full max-w-sm sm:max-w-md"
+                            />
+                        </Reveal>
+                        <Reveal delay={0.1} className="order-2">
+                            <span className="section-eyebrow">Qui sommes-nous</span>
+                            <h2 className="section-title mt-1">Centre d'achat de Mbour</h2>
+                            <p className="mt-2 text-sm leading-relaxed text-terroir-dark/70">
+                                Le Centre d'achat de Mbour est une plateforme dédiée à la commercialisation et à la valorisation des produits locaux sénégalais. Situé à Mbour – Rond-Point Malicounda, il met en relation producteurs, fournisseurs et artisans avec les hôtels, restaurants, entreprises et touristes.
+                            </p>
+                            <p className="mt-2 text-sm leading-relaxed text-terroir-dark/70">
+                                Sa mission est de faciliter l'accès aux marchés, promouvoir le savoir-faire local et renforcer les circuits de distribution des produits sénégalais.
+                            </p>
+                            <p className="mt-3 font-display text-lg italic text-terroir-green">« Le terroir sénégalais au cœur du commerce. »</p>
+                        </Reveal>
+                    </div>
+                </div>
+            </section>
+
             {/* CATEGORIES */}
             {categories.length > 0 && (
                 <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
@@ -407,32 +433,6 @@ export default function Home({
                     </Reveal>
                 </section>
             )}
-
-            {/* PRESENTATION */}
-            <section className="bg-white py-16 md:py-24">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="grid items-center gap-4 md:grid-cols-2 md:gap-8">
-                        <Reveal className="order-1">
-                            <img
-                                src="/images/mbour-terroir-nobg.png"
-                                alt="Centre d'achat de Mbour — produits du terroir sénégalais"
-                                className="mx-auto w-full max-w-sm sm:max-w-md"
-                            />
-                        </Reveal>
-                        <Reveal delay={0.1} className="order-2">
-                            <span className="section-eyebrow">Qui sommes-nous</span>
-                            <h2 className="section-title mt-1">Centre d'achat de Mbour</h2>
-                            <p className="mt-2 text-sm leading-relaxed text-terroir-dark/70">
-                                Le Centre d'achat de Mbour est une plateforme dédiée à la commercialisation et à la valorisation des produits locaux sénégalais. Situé à Mbour – Rond-Point Malicounda, il met en relation producteurs, fournisseurs et artisans avec les hôtels, restaurants, entreprises et touristes.
-                            </p>
-                            <p className="mt-2 text-sm leading-relaxed text-terroir-dark/70">
-                                Sa mission est de faciliter l'accès aux marchés, promouvoir le savoir-faire local et renforcer les circuits de distribution des produits sénégalais.
-                            </p>
-                            <p className="mt-3 font-display text-lg italic text-terroir-green">« Le terroir sénégalais au cœur du commerce. »</p>
-                        </Reveal>
-                    </div>
-                </div>
-            </section>
 
             {/* PRODUCTEUR */}
             {showProducers && producer && (
