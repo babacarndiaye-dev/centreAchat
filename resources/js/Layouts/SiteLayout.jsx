@@ -94,11 +94,7 @@ export default function SiteLayout({ children }) {
             <header className="sticky top-0 z-50 bg-white/60 backdrop-blur transition-colors duration-300">
                 <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
                     <Link href={route('accueil')} className="flex items-center gap-2">
-                        {logoUrl ? (
-                            <img src={logoUrl} alt={siteName} className="h-9 w-9 rounded-full object-cover" />
-                        ) : (
-                            <span className="material-symbols-outlined text-2xl">eco</span>
-                        )}
+                        <img src={logoUrl || '/images/logo.svg'} alt="" className="h-11 w-auto object-contain" />
                         <span className="font-display text-3xl uppercase leading-none tracking-wider text-terroir-green">{siteName}</span>
                     </Link>
 
@@ -251,11 +247,7 @@ function SiteFooter({ siteName, logoUrl, address, showNewsletter }) {
                 <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-4">
                     <div className="hidden sm:block">
                         <div className="flex items-center">
-                            {logoUrl ? (
-                                <img src={logoUrl} alt={siteName} width="32" height="32" className="mr-2 rounded-full object-cover" />
-                            ) : (
-                                <span className="material-symbols-outlined mr-1.5 text-2xl">eco</span>
-                            )}
+                            <img src={logoUrl || '/images/logo-white.svg'} alt="" className="mr-3 h-12 w-auto object-contain" />
                             <span className="font-display text-2xl uppercase leading-none tracking-wider text-white">{siteName}</span>
                         </div>
                         <p className="mt-4 text-sm text-white/70">

@@ -48,6 +48,13 @@ return new class extends Migration
             Cache::forget("setting:{$key}");
         }
 
+        // Le logo téléversé depuis l'admin (l'ancien panier) est retiré pour laisser
+        // place au nouveau logo par défaut (public/images/logo.svg et logo-white.svg).
+        // Le fichier reste sur le disque ; un nouveau logo peut être téléversé dans
+        // Admin > Paramètres.
+        DB::table('settings')->where('key', 'logo_path')->update(['value' => null, 'updated_at' => now()]);
+        Cache::forget('setting:logo_path');
+
         foreach (self::TEXT_COLUMNS as $table => $columns) {
             if (! Schema::hasTable($table)) {
                 continue;

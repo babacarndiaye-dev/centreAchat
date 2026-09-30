@@ -30,11 +30,7 @@
 <body class="uk-flex uk-flex-column" style="min-height: 100vh;">
 
     <div id="page-loader">
-        @if($logoPath)
-            <img src="{{ asset('fichiers/'.$logoPath) }}" alt="{{ $siteName }}">
-        @else
-            <span style="font-size:3rem;">🌿</span>
-        @endif
+        <img src="{{ $logoPath ? asset('fichiers/'.$logoPath) : asset('images/logo.svg') }}" alt="{{ $siteName }}">
     </div>
     <script>
         if (sessionStorage.getItem('caPageLoaderShown')) {
@@ -58,12 +54,8 @@
     <header id="site-header" x-data="{ mobileOpen: false }" class="sticky top-0 z-50 bg-white/60 backdrop-blur transition-colors duration-300">
         <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
             <a href="{{ route('accueil') }}" class="flex items-center gap-2">
-                @if($logoPath)
-                    <img src="{{ asset('fichiers/'.$logoPath) }}" alt="{{ $siteName }}" class="h-9 w-9 rounded-full object-cover">
-                @else
-                    <span class="text-2xl">🌿</span>
-                @endif
-                <span class="font-display text-xl font-semibold text-terroir-green">{{ $siteName }}</span>
+                <img src="{{ $logoPath ? asset('fichiers/'.$logoPath) : asset('images/logo.svg') }}" alt="" class="h-11 w-auto object-contain">
+                <span class="font-display text-3xl uppercase leading-none tracking-wider text-terroir-green">{{ $siteName }}</span>
             </a>
 
             <nav class="ml-10 hidden items-center gap-7 lg:flex">
@@ -154,12 +146,8 @@
             <div class="grid gap-10 sm:grid-cols-2 md:grid-cols-4">
                 <div class="hidden sm:block">
                     <div class="flex items-center">
-                        @if($logoPath)
-                            <img src="{{ asset('fichiers/'.$logoPath) }}" alt="{{ $siteName }}" width="32" height="32" class="mr-2 rounded-full object-cover">
-                        @else
-                            <span class="mr-1.5 text-2xl">🌿</span>
-                        @endif
-                        <span class="font-display text-lg font-semibold text-white">{{ $siteName }}</span>
+                        <img src="{{ $logoPath ? asset('fichiers/'.$logoPath) : asset('images/logo-white.svg') }}" alt="" class="mr-3 h-12 w-auto object-contain">
+                        <span class="font-display text-2xl uppercase leading-none tracking-wider text-white">{{ $siteName }}</span>
                     </div>
                     <p class="mt-4 text-sm text-white/70">Du terroir local à votre table. Nous soutenons l'économie locale en facilitant l'accès à des produits frais et authentiques du Sénégal.</p>
                     <p class="mt-3 text-sm text-white/70">📍 {{ \App\Models\Setting::get('address', 'Rond-Point Malicounda, Mbour – Sénégal') }}</p>

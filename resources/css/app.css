@@ -302,10 +302,9 @@
     transition: opacity .5s ease, visibility .5s ease;
 }
 #page-loader img {
-    height: 4rem;
-    width: 4rem;
-    border-radius: 50%;
-    object-fit: cover;
+    height: 5rem;
+    width: auto;
+    object-fit: contain;
 }
 #page-loader img,
 #page-loader span {
@@ -342,11 +341,8 @@
     transition: opacity .6s ease, visibility .6s ease;
 }
 #boot-splash img {
-    height: 5.5rem;
-    width: 5.5rem;
-    border-radius: 50%;
-    background: #F0F0E8;
-    padding: 0.5rem;
+    height: 7rem;
+    width: auto;
     animation: boot-splash-pulse 2.4s ease-in-out infinite;
 }
 #boot-splash span {

@@ -10,12 +10,8 @@ export default function GuestLayout({ children }) {
             <header className="py-6">
                 <div className="mx-auto flex max-w-7xl justify-center px-4 sm:px-6 lg:px-8">
                     <Link href={route('accueil')} className="flex items-center gap-2">
-                        {logoUrl ? (
-                            <img src={logoUrl} alt={siteName} className="h-9 w-9 rounded-full object-cover" />
-                        ) : (
-                            <span className="material-symbols-outlined text-2xl">eco</span>
-                        )}
-                        <span className="font-display text-xl font-semibold text-terroir-green">{siteName}</span>
+                        <img src={logoUrl || '/images/logo.svg'} alt="" className="h-12 w-auto object-contain" />
+                        <span className="font-display text-3xl uppercase leading-none tracking-wider text-terroir-green">{siteName}</span>
                     </Link>
                 </div>
             </header>

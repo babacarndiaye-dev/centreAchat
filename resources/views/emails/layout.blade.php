@@ -20,6 +20,8 @@
                     <td style="background-color:#101818; padding:28px 32px; text-align:center;">
                         @if($logoPath)
                             <img src="{{ asset('fichiers/'.$logoPath) }}" alt="{{ $siteName }}" width="48" height="48" style="border-radius:50%; object-fit:cover; display:block; margin:0 auto 10px;">
+                        @else
+                            <img src="{{ asset('images/logo-white.png') }}" alt="{{ $siteName }}" width="84" style="display:block; margin:0 auto 12px; height:auto;">
                         @endif
                         <span style="font-family:'Bebas Neue', Impact, 'Arial Narrow', sans-serif; font-size:28px; font-weight:normal; color:#F0F0E8; letter-spacing:0.12em; text-transform:uppercase;">{{ $siteName }}</span>
                     </td>

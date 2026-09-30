@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'centraldachat-v1';
+const CACHE_VERSION = 'diabahotel-v2';
 const OFFLINE_URL = '/hors-ligne';
 const PRECACHE = [
     OFFLINE_URL,

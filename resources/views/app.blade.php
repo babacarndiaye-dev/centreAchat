@@ -20,7 +20,7 @@
 </head>
 <body class="bg-terroir-cream text-terroir-dark antialiased">
     <div id="boot-splash">
-        <img src="{{ asset('icons/icon-512.png') }}" alt="DIABA HOTEL" width="88" height="88">
+        <img src="{{ asset('images/logo-white.svg') }}" alt="DIABA HOTEL">
         <span>DIABA HOTEL</span>
     </div>
     <script>

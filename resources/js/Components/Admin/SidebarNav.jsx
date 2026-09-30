@@ -87,12 +87,8 @@ export default function SidebarNav() {
     return (
         <>
             <div className="flex h-16 shrink-0 items-center gap-2 border-b border-white/10 px-6">
-                {logoUrl ? (
-                    <img src={logoUrl} alt={siteName} width="28" height="28" className="rounded-full object-cover" />
-                ) : (
-                    <span className="material-symbols-outlined text-xl">eco</span>
-                )}
-                <span className="font-display text-base font-semibold text-white">{siteName}</span>
+                <img src={logoUrl || '/images/logo-white.svg'} alt="" className="h-9 w-auto object-contain" />
+                <span className="font-display text-xl uppercase leading-none tracking-wider text-white">{siteName}</span>
             </div>
 
             <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">

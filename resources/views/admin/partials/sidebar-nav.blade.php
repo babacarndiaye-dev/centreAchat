@@ -97,12 +97,8 @@
 @endphp
 
 <div class="flex h-16 shrink-0 items-center gap-2 border-b border-white/10 px-6">
-    @if($sidebarLogoPath)
-        <img src="{{ asset('fichiers/'.$sidebarLogoPath) }}" alt="{{ $sidebarSiteName }}" width="28" height="28" class="rounded-full object-cover">
-    @else
-        <span class="material-symbols-outlined text-xl">eco</span>
-    @endif
-    <span class="font-display text-base font-semibold text-white">{{ $sidebarSiteName }}</span>
+    <img src="{{ $sidebarLogoPath ? asset('fichiers/'.$sidebarLogoPath) : asset('images/logo-white.svg') }}" alt="" class="h-9 w-auto object-contain">
+    <span class="font-display text-xl uppercase leading-none tracking-wider text-white">{{ $sidebarSiteName }}</span>
 </div>
 
 <nav class="flex-1 space-y-1 overflow-y-auto px-3 py-4">
