@@ -9,6 +9,9 @@
 # Usage :
 #   scripts/deploy-ftp.sh --dry-run   # affiche ce qui serait envoyé, sans rien envoyer
 #   scripts/deploy-ftp.sh             # envoie réellement
+#   scripts/deploy-ftp.sh --full      # répare un envoi incomplet : renvoie tout fichier dont
+#                                     # la taille diffère du serveur (fichier tronqué, vendor
+#                                     # incomplet → « Class ... not found »)
 #   FTP_DIR=public_html scripts/deploy-ftp.sh   # si l'application est dans un sous-dossier
 #
 # Le mot de passe FTP est demandé au clavier : il n'est jamais écrit sur disque.
@@ -23,7 +26,14 @@ FTP_USER="${FTP_USER:-Hotelcentraleachat@hotelcentraleachat.com}"
 # contient « artisan », « app » et « bootstrap » (pas seulement « public »).
 FTP_DIR="${FTP_DIR:-.}"
 DRY_RUN=""
-[[ "${1:-}" == "--dry-run" ]] && DRY_RUN="--dry-run"
+COMPARE="--only-newer"
+for arg in "$@"; do
+    case "$arg" in
+        --dry-run) DRY_RUN="--dry-run" ;;
+        --full) COMPARE="--ignore-time" ;;
+        *) echo "✗ Option inconnue : $arg (options : --dry-run, --full)" >&2; exit 1 ;;
+    esac
+done
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
@@ -100,7 +110,7 @@ restore_dev() {
 trap restore_dev EXIT
 
 echo "→ Envoi (seuls les fichiers modifiés)…"
-lftp_session "mirror --reverse --only-newer --no-perms --verbose=1 $DRY_RUN \
+lftp_session "mirror --reverse $COMPARE --no-perms --verbose=1 $DRY_RUN \
   --exclude-glob .git/ \
   --exclude-glob .github/ \
   --exclude-glob .vscode/ \
@@ -129,6 +139,17 @@ echo
 if [[ -n "$DRY_RUN" ]]; then
     echo "✓ Simulation terminée : rien n'a été envoyé."
 else
+    # Supprime les caches Laravel obsolètes laissés sur le serveur (config ou routes
+    # mises en cache par un ancien « optimize ») : ils sont régénérés automatiquement.
+    lftp_session 'rm -f bootstrap/cache/routes-v7.php bootstrap/cache/config.php bootstrap/cache/events.php' >/dev/null 2>&1 || true
+
+    # Contrôle qu'un fichier clé du dossier vendor est bien arrivé en entier.
+    CHECK="$(lftp_session 'cls -1 vendor/laravel/serializable-closure/src/Serializers' 2>/dev/null || true)"
+    if ! grep -q 'Native.php$' <<<"$CHECK"; then
+        echo "⚠ vendor/laravel/serializable-closure est incomplet sur le serveur."
+        echo "  Relancez : $0 --full"
+    fi
+
     echo "✓ Fichiers envoyés."
     echo "  À lancer maintenant dans le Terminal cPanel (dossier de l'application) :"
     echo "    php artisan migrate --force && php artisan optimize:clear"
