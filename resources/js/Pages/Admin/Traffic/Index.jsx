@@ -145,7 +145,7 @@ export default function TrafficIndex({ stats, visitsByDay, deviceBreakdown, topP
                                     datasets: [{
                                         data: deviceEntries.map(([, v]) => v),
                                         backgroundColor: [chartPalette.green, chartPalette.gold, chartPalette.blue],
-                                        borderColor: '#F6F1E4',
+                                        borderColor: '#F0F0E8',
                                         borderWidth: 2,
                                     }],
                                 }}

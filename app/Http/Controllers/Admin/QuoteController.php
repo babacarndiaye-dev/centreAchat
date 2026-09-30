@@ -123,7 +123,7 @@ class QuoteController extends Controller
         Log::info('Devis PDF généré', ['quote_id' => $devis->id, 'bytes' => strlen($pdfContent)]);
 
         try {
-            $siteName = Setting::get('site_name') ?: "Centrale d'achat";
+            $siteName = Setting::get('site_name') ?: 'DIABA HOTEL';
 
             Mail::send('emails.layout', [
                 'title' => 'Votre devis — '.$devis->quote_number,

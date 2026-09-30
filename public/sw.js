@@ -58,11 +58,11 @@ self.addEventListener('push', (event) => {
     try {
         payload = event.data.json();
     } catch (e) {
-        payload = { title: 'Central d\'Achat', body: event.data.text() };
+        payload = { title: 'DIABA HOTEL', body: event.data.text() };
     }
 
     event.waitUntil(
-        self.registration.showNotification(payload.title || 'Central d\'Achat', {
+        self.registration.showNotification(payload.title || 'DIABA HOTEL', {
             body: payload.body || '',
             icon: '/icons/icon-192.png',
             badge: '/icons/icon-192.png',

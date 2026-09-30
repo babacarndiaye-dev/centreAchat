@@ -17,7 +17,7 @@ export default function CartIndex({ items, subtotal }) {
 
     return (
         <SiteLayout>
-            <Head title="Votre panier — Centrale d'achat" />
+            <Head title="Votre panier — DIABA HOTEL" />
 
             <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
                 <h1 className="section-title text-center">Votre panier</h1>

@@ -35,13 +35,13 @@ export default function Register({ initialType = 'particulier' }) {
 
     return (
         <GuestLayout>
-            <Head title="Créer un compte — Centrale d'achat" />
+            <Head title="Créer un compte — DIABA HOTEL" />
 
             <section className="mx-auto flex w-full max-w-6xl flex-1 flex-col lg:my-auto lg:flex-row">
                 <div className="relative hidden overflow-hidden rounded-xl2 bg-terroir-green lg:block lg:w-2/5">
                     <img
                         src="/images/mbour-terroir-nobg.png"
-                        alt="Centrale d'achat — produits du terroir sénégalais"
+                        alt="DIABA HOTEL — produits du terroir sénégalais"
                         className="absolute inset-0 h-full w-full object-cover object-top"
                     />
                 </div>
@@ -49,7 +49,7 @@ export default function Register({ initialType = 'particulier' }) {
                 <div className="flex w-full flex-col px-4 py-12 sm:px-6 lg:w-3/5 lg:justify-center lg:px-12 lg:py-16">
                 <h1 className="section-title text-center lg:text-left">Créer un compte</h1>
                 <p className="mt-2 text-center text-sm text-terroir-dark/60 lg:text-left">
-                    Particulier, hôtel, restaurant, entreprise... rejoignez Centrale d'achat.
+                    Particulier, hôtel, restaurant, entreprise... rejoignez DIABA HOTEL.
                 </p>
 
                 <form onSubmit={submit} className="card mt-10 space-y-5 p-8">

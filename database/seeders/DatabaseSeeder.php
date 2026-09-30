@@ -60,7 +60,7 @@ class DatabaseSeeder extends Seeder
     protected function seedSettings(): void
     {
         $settings = [
-            'site_name' => "Centrale d'achat",
+            'site_name' => 'DIABA HOTEL',
             'tagline' => 'Du terroir local à votre table',
             'phone' => '+221 77 000 00 00',
             'whatsapp' => '+221 77 000 00 00',
@@ -69,9 +69,9 @@ class DatabaseSeeder extends Seeder
             'opening_hours' => 'Lundi - Samedi : 8h00 - 19h00',
             'facebook_url' => 'https://facebook.com',
             'instagram_url' => 'https://instagram.com',
-            'color_primary' => '#1E4A3D',
-            'color_secondary' => '#C1623E',
-            'color_accent' => '#D6A144',
+            'color_primary' => '#009C4A',
+            'color_secondary' => '#C62828',
+            'color_accent' => '#1DBF63',
             'currency_symbol' => 'FCFA',
             'timezone' => 'Africa/Dakar',
             'lang_fr_active' => '1',
@@ -93,7 +93,7 @@ class DatabaseSeeder extends Seeder
         User::firstOrCreate(
             ['email' => 'admin@centraldachat.sn'],
             [
-                'name' => 'Administrateur Central d\'Achat',
+                'name' => 'Administrateur DIABA HOTEL',
                 'password' => bcrypt('password'),
                 'is_admin' => true,
                 'user_type' => 'particulier',
@@ -190,8 +190,8 @@ class DatabaseSeeder extends Seeder
                     'producer_id' => $data['producer'] !== null ? $producers[$data['producer']]->id : null,
                     'name' => $data['name'],
                     'slug' => \Illuminate\Support\Str::slug($data['name']),
-                    'short_description' => 'Produit local authentique, sélectionné avec soin par Central d\'Achat.',
-                    'description' => "Ce produit est issu de la sélection rigoureuse de Centrale d'achat auprès de producteurs locaux. Fraîcheur, qualité et authenticité garanties.",
+                    'short_description' => 'Produit local authentique, sélectionné avec soin par DIABA HOTEL.',
+                    'description' => "Ce produit est issu de la sélection rigoureuse de DIABA HOTEL auprès de producteurs locaux. Fraîcheur, qualité et authenticité garanties.",
                     'origin' => $data['origin'],
                     'unit' => $data['unit'],
                     'price' => $data['price'],
@@ -210,20 +210,20 @@ class DatabaseSeeder extends Seeder
     protected function seedPages(): void
     {
         $pages = [
-            ['slug' => 'a-propos', 'title' => 'À propos de Central d\'Achat', 'content' => "Centrale d'achat est une structure spécialisée dans l'achat, l'approvisionnement, la valorisation, le stockage et la commercialisation de produits locaux.\n\nBasés au Rond-Point Malicounda à Mbour, nous travaillons chaque jour avec des producteurs et fournisseurs locaux pour proposer des produits authentiques, frais et de qualité aux particuliers, hôtels, restaurants et professionnels du Sénégal."],
-            ['slug' => 'notre-histoire', 'title' => 'Notre histoire', 'content' => "Centrale d'achat est né de la volonté de valoriser le terroir sénégalais et de faciliter l'accès à des produits locaux de qualité, en soutenant l'économie locale."],
+            ['slug' => 'a-propos', 'title' => 'À propos de DIABA HOTEL', 'content' => "DIABA HOTEL est une structure spécialisée dans l'achat, l'approvisionnement, la valorisation, le stockage et la commercialisation de produits locaux.\n\nBasés au Rond-Point Malicounda à Mbour, nous travaillons chaque jour avec des producteurs et fournisseurs locaux pour proposer des produits authentiques, frais et de qualité aux particuliers, hôtels, restaurants et professionnels du Sénégal."],
+            ['slug' => 'notre-histoire', 'title' => 'Notre histoire', 'content' => "DIABA HOTEL est né de la volonté de valoriser le terroir sénégalais et de faciliter l'accès à des produits locaux de qualité, en soutenant l'économie locale."],
             ['slug' => 'notre-mission', 'title' => 'Notre mission', 'content' => "Faciliter l'approvisionnement en produits frais et de qualité issus du terroir sénégalais, pour tous : particuliers, professionnels, hôtels et institutions."],
             ['slug' => 'nos-engagements', 'title' => 'Nos engagements', 'content' => "Qualité, traçabilité, soutien aux producteurs locaux et développement durable sont au cœur de nos engagements."],
-            ['slug' => 'hotels-professionnels', 'title' => 'Hôtels & Professionnels', 'content' => "Centrale d'achat accompagne les hôtels, restaurants et professionnels avec des tarifs dégressifs, des commandes en gros, des devis personnalisés et une facturation adaptée.\n\nCréez votre compte professionnel en ligne ci-dessous : après validation par notre équipe, vous accédez immédiatement aux tarifs professionnels et de gros."],
+            ['slug' => 'hotels-professionnels', 'title' => 'Hôtels & Professionnels', 'content' => "DIABA HOTEL accompagne les hôtels, restaurants et professionnels avec des tarifs dégressifs, des commandes en gros, des devis personnalisés et une facturation adaptée.\n\nCréez votre compte professionnel en ligne ci-dessous : après validation par notre équipe, vous accédez immédiatement aux tarifs professionnels et de gros."],
             ['slug' => 'espace-touristes', 'title' => 'Espace Touristes', 'content' => "Découvrez l'authenticité du terroir sénégalais à travers nos produits et nos coffrets souvenirs. Livraison possible directement à votre hôtel."],
             ['slug' => 'coffrets-cadeaux', 'title' => 'Coffrets & Cadeaux', 'content' => "Nos coffrets rassemblent une sélection de produits Anfa Agro, prêts à offrir. Ajoutez un message personnalisé lors de votre commande."],
             ['slug' => 'faq', 'title' => 'Questions fréquentes', 'content' => "Comment passer commande ?\nVous pouvez commander directement en ligne ou nous contacter par téléphone.\n\nQuels sont les délais de livraison ?\nEn général sous 24 à 48h dans la région de Mbour.\n\nProposez-vous des tarifs professionnels ?\nOui, contactez-nous pour ouvrir un compte professionnel."],
             ['slug' => 'livraison', 'title' => 'Livraison', 'content' => "Nous livrons à domicile, en entreprise ou à l'hôtel dans la région de Mbour et au-delà. Retrait en boutique également possible au Rond-Point Malicounda."],
             ['slug' => 'devenir-fournisseur', 'title' => 'Devenir fournisseur', 'content' => "Vous êtes producteur ou fournisseur de produits locaux ? Rejoignez notre réseau de partenaires et bénéficiez d'un accès à nos canaux de distribution."],
             ['slug' => 'contact', 'title' => 'Contactez-nous', 'content' => "Une question, une demande de devis ou simplement envie d'en savoir plus ? Notre équipe vous répond rapidement."],
-            ['slug' => 'mentions-legales', 'title' => 'Mentions légales', 'content' => "Centrale d'achat — Rond-Point Malicounda, Mbour, Sénégal. Ce site est édité et exploité par Centrale d'achat."],
-            ['slug' => 'politique-de-confidentialite', 'title' => 'Politique de confidentialité', 'content' => "Centrale d'achat s'engage à protéger la confidentialité des données personnelles de ses utilisateurs conformément à la réglementation en vigueur."],
-            ['slug' => 'conditions-generales', 'title' => 'Conditions générales de vente', 'content' => "Les présentes conditions générales de vente régissent les relations contractuelles entre Centrale d'achat et ses clients."],
+            ['slug' => 'mentions-legales', 'title' => 'Mentions légales', 'content' => "DIABA HOTEL — Rond-Point Malicounda, Mbour, Sénégal. Ce site est édité et exploité par DIABA HOTEL."],
+            ['slug' => 'politique-de-confidentialite', 'title' => 'Politique de confidentialité', 'content' => "DIABA HOTEL s'engage à protéger la confidentialité des données personnelles de ses utilisateurs conformément à la réglementation en vigueur."],
+            ['slug' => 'conditions-generales', 'title' => 'Conditions générales de vente', 'content' => "Les présentes conditions générales de vente régissent les relations contractuelles entre DIABA HOTEL et ses clients."],
         ];
 
         foreach ($pages as $page) {
@@ -236,7 +236,7 @@ class DatabaseSeeder extends Seeder
         $posts = [
             ['title' => 'La mangue Kent, star de la saison', 'type' => 'actualite', 'excerpt' => 'Découvrez pourquoi la mangue Kent du Sénégal est très appréciée cette saison.'],
             ['title' => 'Recette : Thiéboudienne traditionnel', 'type' => 'recette', 'excerpt' => 'Notre recette pas à pas du plat national sénégalais avec nos produits du terroir.'],
-            ['title' => "Centrale d'achat ouvre son portail B2B", 'type' => 'actualite', 'excerpt' => 'Hôtels et restaurants peuvent désormais commander en ligne avec des tarifs dédiés.'],
+            ['title' => "DIABA HOTEL ouvre son portail B2B", 'type' => 'actualite', 'excerpt' => 'Hôtels et restaurants peuvent désormais commander en ligne avec des tarifs dédiés.'],
         ];
 
         foreach ($posts as $post) {
@@ -254,7 +254,7 @@ class DatabaseSeeder extends Seeder
     protected function seedTestimonials(): void
     {
         $testimonials = [
-            ['author_name' => 'Aïssatou Diop', 'author_role' => 'Hôtel Teranga Mbour', 'content' => "Des produits d'une fraîcheur remarquable et un service très professionnel. Centrale d'achat est devenu notre partenaire de confiance.", 'rating' => 5],
+            ['author_name' => 'Aïssatou Diop', 'author_role' => 'Hôtel Teranga Mbour', 'content' => "Des produits d'une fraîcheur remarquable et un service très professionnel. DIABA HOTEL est devenu notre partenaire de confiance.", 'rating' => 5],
             ['author_name' => 'Moussa Fall', 'author_role' => 'Restaurant Le Baobab', 'content' => "Livraison rapide et produits de qualité constante. Je recommande vivement pour les professionnels.", 'rating' => 5],
             ['author_name' => 'Fatou Sarr', 'author_role' => 'Particulière', 'content' => "J'adore pouvoir commander des produits locaux authentiques directement en ligne, ça soutient nos producteurs !", 'rating' => 4],
         ];
@@ -793,25 +793,25 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Confirmation de commande',
                 'subject' => 'Confirmation de votre commande {{commande_numero}}',
                 'body' => 'Bonjour {{client_nom}}, nous avons bien reçu votre commande {{commande_numero}} d\'un montant de {{commande_total}} FCFA. Nous vous tiendrons informé de son avancement.',
-                'sms' => 'Central d\'Achat : commande {{commande_numero}} reçue ({{commande_total}} FCFA). Merci !',
+                'sms' => 'DIABA HOTEL : commande {{commande_numero}} reçue ({{commande_total}} FCFA). Merci !',
             ],
             'commande_statut' => [
                 'name' => 'Mise à jour du statut de commande',
                 'subject' => 'Mise à jour de votre commande {{commande_numero}}',
                 'body' => 'Bonjour {{client_nom}}, le statut de votre commande {{commande_numero}} est désormais : {{commande_statut}}.',
-                'sms' => 'Central d\'Achat : commande {{commande_numero}} → {{commande_statut}}.',
+                'sms' => 'DIABA HOTEL : commande {{commande_numero}} → {{commande_statut}}.',
             ],
             'paiement_recu' => [
                 'name' => 'Paiement reçu',
                 'subject' => 'Paiement reçu — commande {{commande_numero}}',
                 'body' => 'Bonjour {{client_nom}}, nous avons bien reçu votre paiement de {{paiement_montant}} FCFA pour la commande {{commande_numero}}. Solde restant : {{commande_solde}} FCFA.',
-                'sms' => 'Central d\'Achat : paiement de {{paiement_montant}} FCFA reçu pour la commande {{commande_numero}}.',
+                'sms' => 'DIABA HOTEL : paiement de {{paiement_montant}} FCFA reçu pour la commande {{commande_numero}}.',
             ],
             'livraison_statut' => [
                 'name' => 'Mise à jour de livraison',
                 'subject' => 'Livraison — commande {{commande_numero}}',
                 'body' => 'Bonjour {{client_nom}}, votre commande {{commande_numero}} est maintenant : {{commande_statut}}.',
-                'sms' => 'Central d\'Achat : livraison {{commande_numero}} → {{commande_statut}}.',
+                'sms' => 'DIABA HOTEL : livraison {{commande_numero}} → {{commande_statut}}.',
             ],
             'stock_faible' => [
                 'name' => 'Alerte stock faible',
@@ -847,13 +847,13 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Compte professionnel validé',
                 'subject' => 'Votre compte professionnel est validé',
                 'body' => 'Bonjour {{client_nom}}, votre compte {{compte_type}} est validé. Vous bénéficiez désormais des tarifs professionnels, pouvez demander des devis et programmer des commandes récurrentes.',
-                'sms' => 'Central d\'Achat : votre compte {{compte_type}} est validé, les tarifs pro s\'appliquent désormais.',
+                'sms' => 'DIABA HOTEL : votre compte {{compte_type}} est validé, les tarifs pro s\'appliquent désormais.',
             ],
             'b2b_compte_refuse' => [
                 'name' => 'Compte professionnel refusé',
                 'subject' => 'Votre demande de compte professionnel',
                 'body' => 'Bonjour {{client_nom}}, votre demande de compte {{compte_type}} n\'a pas pu être validée en l\'état. Contactez-nous pour en savoir plus ou compléter votre dossier.',
-                'sms' => 'Central d\'Achat : votre demande de compte {{compte_type}} n\'a pas été validée. Contactez-nous pour plus d\'informations.',
+                'sms' => 'DIABA HOTEL : votre demande de compte {{compte_type}} n\'a pas été validée. Contactez-nous pour plus d\'informations.',
             ],
         ];
 
@@ -886,9 +886,9 @@ class DatabaseSeeder extends Seeder
         $entries = [
             // --- Présentation générale ---
             [
-                'question' => 'Qu\'est-ce que Central d\'Achat ?',
-                'answer' => 'Central d\'Achat est une structure sénégalaise spécialisée dans l\'approvisionnement, la sélection et la vente de produits locaux de qualité, auprès de producteurs et fournisseurs du terroir. Nous servons particuliers, touristes, hôtels, restaurants et professionnels.',
-                'keywords' => 'quest ce que, presentation, qui etes vous, central achat, activite',
+                'question' => 'Qu\'est-ce que DIABA HOTEL ?',
+                'answer' => 'DIABA HOTEL est une structure sénégalaise spécialisée dans l\'approvisionnement, la sélection et la vente de produits locaux de qualité, auprès de producteurs et fournisseurs du terroir. Nous servons particuliers, touristes, hôtels, restaurants et professionnels.',
+                'keywords' => 'quest ce que, presentation, qui etes vous, diaba hotel, central achat, activite',
                 'category' => 'Présentation',
                 'position' => 1,
             ],
@@ -907,7 +907,7 @@ class DatabaseSeeder extends Seeder
                 'position' => 3,
             ],
             [
-                'question' => 'Pourquoi acheter chez Central d\'Achat ?',
+                'question' => 'Pourquoi acheter chez DIABA HOTEL ?',
                 'answer' => 'Nous facilitons l\'accès à des produits locaux sélectionnés avec soin, à prix juste, tout en valorisant directement les producteurs et fournisseurs sénégalais.',
                 'keywords' => 'pourquoi, avantage, interet, difference',
                 'category' => 'Présentation',
@@ -1232,7 +1232,7 @@ class DatabaseSeeder extends Seeder
 
             // --- Messagerie & assistance ---
             [
-                'question' => 'Comment contacter Central d\'Achat ?',
+                'question' => 'Comment contacter DIABA HOTEL ?',
                 'answer' => 'Le plus rapide est ce chat, disponible sur toutes les pages du site. Notre équipe est aussi disponible du lundi au samedi de 8h à 19h.',
                 'keywords' => 'contacter, horaires, ouverture, disponibilite, heure, joindre',
                 'category' => 'Contact',

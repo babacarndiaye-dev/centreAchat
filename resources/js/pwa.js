@@ -19,7 +19,7 @@ async function registerServiceWorker() {
     }
 }
 
-window.CentralAchatPush = {
+window.DiabaHotelPush = {
     async status() {
         if (!('serviceWorker' in navigator) || !('PushManager' in window)) return 'unsupported';
         const reg = await navigator.serviceWorker.ready;

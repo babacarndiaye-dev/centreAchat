@@ -7,9 +7,9 @@ use App\Models\Setting;
 class Theme
 {
     protected const DEFAULTS = [
-        'color_primary' => '#123D2E',
-        'color_secondary' => '#7A1F2B',
-        'color_accent' => '#C9A227',
+        'color_primary' => '#009C4A',
+        'color_secondary' => '#C62828',
+        'color_accent' => '#1DBF63',
     ];
 
     protected const CSS_VARS = [
@@ -39,7 +39,7 @@ class Theme
         }
 
         if (! preg_match('/^[0-9a-fA-F]{6}$/', $hex)) {
-            $hex = '1E4A3D';
+            $hex = '009C4A';
         }
 
         $r = hexdec(substr($hex, 0, 2));

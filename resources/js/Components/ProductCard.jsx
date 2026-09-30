@@ -76,11 +76,11 @@ export default function ProductCard({ product, showProPrice }) {
 
             <div className="flex flex-1 flex-col p-5">
                 {product.category_name && (
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-terroir-gold">{product.category_name}</p>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-terroir-green">{product.category_name}</p>
                 )}
 
                 <Link href={route('produits.show', product.slug)} className="text-terroir-dark">
-                    <h3 className="mt-1.5 font-display text-[1.05rem] font-semibold leading-snug transition group-hover:text-terroir-green">{product.name}</h3>
+                    <h3 className="mt-1.5 font-display text-xl leading-snug transition group-hover:text-terroir-green">{product.name}</h3>
                 </Link>
 
                 {(product.rating || product.producer_name) && (
@@ -105,7 +105,7 @@ export default function ProductCard({ product, showProPrice }) {
                         {product.is_on_promo ? (
                             <>
                                 <span className="block text-xs text-terroir-dark/35 line-through">{formatFcfa(product.price)}</span>
-                                <span className="block font-display text-lg font-bold leading-tight text-terroir-gold">{formatFcfa(product.promo_price)}</span>
+                                <span className="block font-display text-lg font-bold leading-tight text-terroir-green">{formatFcfa(product.promo_price)}</span>
                             </>
                         ) : (
                             <span className="block font-display text-lg font-bold leading-tight text-terroir-dark">{formatFcfa(product.price)}</span>

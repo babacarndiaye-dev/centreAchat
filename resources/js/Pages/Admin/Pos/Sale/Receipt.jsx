@@ -17,7 +17,7 @@ export default function Receipt({ order, siteAddress, sitePhone }) {
             </div>
 
             <div className="text-center">
-                <p className="font-display text-lg font-semibold text-terroir-green">Centrale d'achat</p>
+                <p className="font-display text-lg font-semibold text-terroir-green">DIABA HOTEL</p>
                 {siteAddress && <p className="text-sm text-terroir-dark/50">{siteAddress}</p>}
                 {sitePhone && <p className="text-sm text-terroir-dark/50">{sitePhone}</p>}
             </div>

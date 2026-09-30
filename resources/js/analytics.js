@@ -3,21 +3,21 @@ import { Chart, LineController, BarController, DoughnutController, LineElement, 
 Chart.register(LineController, BarController, DoughnutController, LineElement, BarElement, ArcElement, PointElement, LinearScale, CategoryScale, Tooltip, Legend);
 
 const palette = {
-    green: '#2F9E6B',
-    terracotta: '#C1440E',
-    gold: '#D9A61E',
-    mint: '#3FAF8C',
-    sienna: '#A0522D',
+    green: '#009C4A',
+    terracotta: '#C62828',
+    gold: '#101818',
+    mint: '#1DBF63',
+    sienna: '#6B726D',
     blue: '#0A7EA4',
 };
 
 const categoricalOrder = [palette.green, palette.terracotta, palette.gold, palette.mint, palette.sienna, palette.blue];
 
-const baseFont = { family: 'Figtree, sans-serif', size: 12 };
+const baseFont = { family: 'Montserrat, sans-serif', size: 12 };
 
 Chart.defaults.font = baseFont;
-Chart.defaults.color = '#5B3A29';
-Chart.defaults.plugins.tooltip.backgroundColor = '#16201B';
+Chart.defaults.color = '#6B726D';
+Chart.defaults.plugins.tooltip.backgroundColor = '#101818';
 Chart.defaults.plugins.tooltip.padding = 10;
 Chart.defaults.plugins.tooltip.cornerRadius = 8;
 Chart.defaults.plugins.tooltip.titleFont = baseFont;
@@ -99,7 +99,7 @@ export function initAnalyticsCharts(data) {
                 datasets: [{
                     data: data.channels.map((c) => c.value),
                     backgroundColor: categoricalOrder.slice(0, data.channels.length),
-                    borderColor: '#F6F1E4',
+                    borderColor: '#F0F0E8',
                     borderWidth: 2,
                 }],
             },

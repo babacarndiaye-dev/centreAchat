@@ -10,7 +10,7 @@ function PushNotificationButton({ vapidPublicKey }) {
     const [status, setStatus] = useState('unsupported');
 
     async function refresh() {
-        setStatus(window.CentralAchatPush ? await window.CentralAchatPush.status() : 'unsupported');
+        setStatus(window.DiabaHotelPush ? await window.DiabaHotelPush.status() : 'unsupported');
     }
 
     useEffect(() => {
@@ -19,11 +19,11 @@ function PushNotificationButton({ vapidPublicKey }) {
     }, []);
 
     async function toggle() {
-        if (!window.CentralAchatPush) return;
+        if (!window.DiabaHotelPush) return;
         if (status === 'subscribed') {
-            await window.CentralAchatPush.unsubscribe();
+            await window.DiabaHotelPush.unsubscribe();
         } else {
-            await window.CentralAchatPush.subscribe(vapidPublicKey);
+            await window.DiabaHotelPush.subscribe(vapidPublicKey);
         }
         await refresh();
     }

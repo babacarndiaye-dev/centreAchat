@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $post->title." — Central d'Achat")
+@section('title', $post->title." — DIABA HOTEL")
 
 @section('content')
 <article class="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">

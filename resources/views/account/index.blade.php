@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', "Mon compte — Central d'Achat")
+@section('title', "Mon compte — DIABA HOTEL")
 
 @section('content')
 <section class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
@@ -14,13 +14,13 @@
                 <button
                     x-data="{
                         status: 'unsupported',
-                        async refresh() { this.status = window.CentralAchatPush ? await window.CentralAchatPush.status() : 'unsupported'; },
+                        async refresh() { this.status = window.DiabaHotelPush ? await window.DiabaHotelPush.status() : 'unsupported'; },
                         async toggle() {
-                            if (!window.CentralAchatPush) return;
+                            if (!window.DiabaHotelPush) return;
                             if (this.status === 'subscribed') {
-                                await window.CentralAchatPush.unsubscribe();
+                                await window.DiabaHotelPush.unsubscribe();
                             } else {
-                                await window.CentralAchatPush.subscribe('{{ config('services.vapid.public_key') }}');
+                                await window.DiabaHotelPush.subscribe('{{ config('services.vapid.public_key') }}');
                             }
                             await this.refresh();
                         },

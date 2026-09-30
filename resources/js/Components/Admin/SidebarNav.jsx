@@ -80,7 +80,7 @@ export default function SidebarNav() {
     const { props } = usePage();
     const groups = props.admin?.nav ?? [];
     const unreadChat = props.admin?.unreadChat ?? 0;
-    const siteName = props.site?.name ?? "Centrale d'achat";
+    const siteName = props.site?.name ?? "DIABA HOTEL";
     const logoUrl = props.site?.logoUrl;
     const currentRoute = route().current();
 

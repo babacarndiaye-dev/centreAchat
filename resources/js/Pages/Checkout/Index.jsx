@@ -36,7 +36,7 @@ export default function CheckoutIndex({ items, subtotal, deliveryZones, selected
 
     return (
         <SiteLayout>
-            <Head title="Finaliser la commande — Centrale d'achat" />
+            <Head title="Finaliser la commande — DIABA HOTEL" />
 
             <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
                 <h1 className="section-title text-center">Finaliser votre commande</h1>

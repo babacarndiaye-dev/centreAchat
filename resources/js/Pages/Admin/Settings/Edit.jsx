@@ -7,7 +7,7 @@ const TIMEZONES = ['Africa/Dakar', 'Africa/Abidjan', 'Europe/Paris', 'UTC'];
 const COLOR_FIELDS = [
     { key: 'color_primary', label: 'Couleur primaire (vert)' },
     { key: 'color_secondary', label: 'Couleur alerte (erreurs, ruptures)' },
-    { key: 'color_accent', label: 'Couleur accent (or)' },
+    { key: 'color_accent', label: 'Couleur accent (vert clair)' },
 ];
 
 const SECTION_TOGGLES = [
@@ -32,9 +32,9 @@ export default function Edit({ settings, logoUrl, heroImageUrl }) {
         address: settings.address ?? '',
         facebook_url: settings.facebook_url ?? '',
         instagram_url: settings.instagram_url ?? '',
-        color_primary: settings.color_primary ?? '#123D2E',
-        color_secondary: settings.color_secondary ?? '#7A1F2B',
-        color_accent: settings.color_accent ?? '#C9A227',
+        color_primary: settings.color_primary ?? '#009C4A',
+        color_secondary: settings.color_secondary ?? '#C62828',
+        color_accent: settings.color_accent ?? '#1DBF63',
         hero_title: settings.hero_title ?? '',
         hero_subtitle: settings.hero_subtitle ?? '',
         hero_image: null,
@@ -172,7 +172,7 @@ export default function Edit({ settings, logoUrl, heroImageUrl }) {
                                 <div className="flex items-center gap-2">
                                     <input
                                         type="color"
-                                        value={data[key] || '#1E4A3D'}
+                                        value={data[key] || '#009C4A'}
                                         onChange={(e) => setData(key, e.target.value)}
                                         className="h-10 w-16 shrink-0 rounded-lg border border-terroir-green/20 p-0.5"
                                     />

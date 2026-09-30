@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Administration') — Central d'Achat</title>
+    <title>@yield('title', 'Administration') — DIABA HOTEL</title>
 
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('icons/favicon-32.png') }}">
     <link rel="icon" type="image/png" sizes="64x64" href="{{ asset('icons/favicon-64.png') }}">
     <link rel="manifest" href="{{ route('pwa.manifest') }}">
-    <meta name="theme-color" content="#123D2E">
+    <meta name="theme-color" content="#101818">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="vapid-public-key" content="{{ config('services.vapid.public_key') }}">
@@ -45,13 +45,13 @@
                     <button
                         x-data="{
                             status: 'unsupported',
-                            async refresh() { this.status = window.CentralAchatPush ? await window.CentralAchatPush.status() : 'unsupported'; },
+                            async refresh() { this.status = window.DiabaHotelPush ? await window.DiabaHotelPush.status() : 'unsupported'; },
                             async toggle() {
-                                if (!window.CentralAchatPush) return;
+                                if (!window.DiabaHotelPush) return;
                                 if (this.status === 'subscribed') {
-                                    await window.CentralAchatPush.unsubscribe();
+                                    await window.DiabaHotelPush.unsubscribe();
                                 } else {
-                                    await window.CentralAchatPush.subscribe('{{ config('services.vapid.public_key') }}');
+                                    await window.DiabaHotelPush.subscribe('{{ config('services.vapid.public_key') }}');
                                 }
                                 await this.refresh();
                             },

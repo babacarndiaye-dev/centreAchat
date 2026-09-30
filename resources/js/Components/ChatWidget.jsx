@@ -186,7 +186,7 @@ export default function ChatWidget() {
                             <div>
                                 <p className="flex items-center gap-1.5 text-sm text-terroir-dark">
                                     <span className="material-symbols-outlined text-base">waving_hand</span>
-                                    Bonjour et bienvenue chez Centrale d'achat !
+                                    Bonjour et bienvenue chez DIABA HOTEL !
                                 </p>
                                 <p className="mt-1 text-sm text-terroir-dark/60">Comment puis-je vous aider aujourd'hui ?</p>
                                 <div className="mt-3 flex flex-wrap gap-1.5">

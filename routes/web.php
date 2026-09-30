@@ -108,7 +108,7 @@ Route::get('/hors-ligne', fn () => view('offline'))->name('pwa.offline');
 
 // PWA manifest — dynamic so it follows the site's branding settings
 Route::get('/manifest.webmanifest', function () {
-    $siteName = \App\Models\Setting::get('site_name') ?: "Centrale d'achat";
+    $siteName = \App\Models\Setting::get('site_name') ?: 'DIABA HOTEL';
 
     return response()->json([
         'name' => $siteName,
@@ -118,8 +118,8 @@ Route::get('/manifest.webmanifest', function () {
         'scope' => '/',
         'display' => 'standalone',
         'orientation' => 'portrait-primary',
-        'background_color' => '#F6F1E4',
-        'theme_color' => '#123D2E',
+        'background_color' => '#F0F0E8',
+        'theme_color' => '#101818',
         'icons' => [
             ['src' => '/icons/icon-192.png', 'sizes' => '192x192', 'type' => 'image/png', 'purpose' => 'any'],
             ['src' => '/icons/icon-512.png', 'sizes' => '512x512', 'type' => 'image/png', 'purpose' => 'any'],

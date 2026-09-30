@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', "Central d'Achat — Le meilleur du terroir local, sélectionné pour vous")
+@section('title', "DIABA HOTEL — Le meilleur du terroir local, sélectionné pour vous")
 
 @section('content')
 
@@ -35,7 +35,7 @@
                         {{ \App\Models\Setting::get('hero_title') ?: 'Le meilleur du terroir local, sélectionné pour vous.' }}
                     </h1>
                     <p class="mt-4 max-w-md text-lg leading-relaxed text-white/70">
-                        {{ \App\Models\Setting::get('hero_subtitle') ?: "Des producteurs locaux aux hôtels, professionnels et consommateurs, Central d'Achat facilite l'accès à des produits authentiques, frais et de qualité." }}
+                        {{ \App\Models\Setting::get('hero_subtitle') ?: "Des producteurs locaux aux hôtels, professionnels et consommateurs, DIABA HOTEL facilite l'accès à des produits authentiques, frais et de qualité." }}
                     </p>
                     <div class="mt-8 flex flex-wrap gap-3.5">
                         <a href="{{ route('produits.index') }}" class="btn-gold">
@@ -106,12 +106,12 @@
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="grid items-center gap-4 md:grid-cols-2 md:gap-8">
                 <div class="reveal order-1">
-                    <img src="{{ asset('images/mbour-terroir.jpg') }}" alt="Centre d'achat de Mbour — produits du terroir sénégalais" class="mx-auto w-full max-w-[5.5rem] rounded-xl2 shadow-soft">
+                    <img src="{{ asset('images/mbour-terroir.jpg') }}" alt="DIABA HOTEL — produits du terroir sénégalais" class="mx-auto w-full max-w-[5.5rem] rounded-xl2 shadow-soft">
                 </div>
                 <div class="reveal order-2" style="transition-delay:.1s">
                     <span class="section-eyebrow">Qui sommes-nous</span>
-                    <h2 class="section-title mt-1">Centre d'achat de Mbour</h2>
-                    <p class="mt-2 text-sm leading-relaxed text-terroir-dark/70">Le Centre d'achat de Mbour est une plateforme dédiée à la commercialisation et à la valorisation des produits locaux sénégalais. Situé à Mbour – Rond-Point Malicounda, il met en relation producteurs, fournisseurs et artisans avec les hôtels, restaurants, entreprises et touristes.</p>
+                    <h2 class="section-title mt-1">DIABA HOTEL</h2>
+                    <p class="mt-2 text-sm leading-relaxed text-terroir-dark/70">DIABA HOTEL est une plateforme dédiée à la commercialisation et à la valorisation des produits locaux sénégalais. Situé à Mbour – Rond-Point Malicounda, il met en relation producteurs, fournisseurs et artisans avec les hôtels, restaurants, entreprises et touristes.</p>
                     <p class="mt-2 text-sm leading-relaxed text-terroir-dark/70">Sa mission est de faciliter l'accès aux marchés, promouvoir le savoir-faire local et renforcer les circuits de distribution des produits sénégalais.</p>
                     <p class="mt-3 font-display text-lg italic text-terroir-green">« Le terroir sénégalais au cœur du commerce. »</p>
                 </div>

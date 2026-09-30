@@ -149,7 +149,7 @@ export default function Index({
                                         datasets: [{
                                             data: salesByChannel.map((c) => c.value),
                                             backgroundColor: chartCategoricalOrder.slice(0, salesByChannel.length),
-                                            borderColor: '#F6F1E4',
+                                            borderColor: '#F0F0E8',
                                             borderWidth: 2,
                                         }],
                                     }}

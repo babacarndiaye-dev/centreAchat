@@ -15,7 +15,7 @@
     </div>
 
     <div class="text-center">
-        <p class="font-display text-lg font-semibold text-terroir-green">Central d'Achat</p>
+        <p class="font-display text-lg font-semibold text-terroir-green">DIABA HOTEL</p>
         <p class="text-sm text-terroir-dark/50">{{ \App\Models\Setting::get('address') }}</p>
         <p class="text-sm text-terroir-dark/50">{{ \App\Models\Setting::get('phone') }}</p>
     </div>

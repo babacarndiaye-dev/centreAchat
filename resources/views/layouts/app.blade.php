@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Central d\'Achat — Le meilleur du terroir sénégalais')</title>
-    <meta name="description" content="@yield('meta_description', 'Central d\'Achat sélectionne, valorise et livre des produits locaux authentiques aux particuliers, hôtels, restaurants et professionnels à Mbour et au Sénégal.')">
+    <title>@yield('title', 'DIABA HOTEL — Le meilleur du terroir sénégalais')</title>
+    <meta name="description" content="@yield('meta_description', 'DIABA HOTEL sélectionne, valorise et livre des produits locaux authentiques aux particuliers, hôtels, restaurants et professionnels à Mbour et au Sénégal.')">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('icons/favicon-32.png') }}">
     <link rel="icon" type="image/png" sizes="64x64" href="{{ asset('icons/favicon-64.png') }}">
 
     <link rel="manifest" href="{{ route('pwa.manifest') }}">
-    <meta name="theme-color" content="#123D2E">
+    <meta name="theme-color" content="#101818">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Central d'Achat">
+    <meta name="apple-mobile-web-app-title" content="DIABA HOTEL">
     <meta name="vapid-public-key" content="{{ config('services.vapid.public_key') }}">
     <link rel="apple-touch-icon" href="{{ asset('icons/apple-touch-icon.png') }}">
 
@@ -22,7 +22,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 @php
-    $siteName = \App\Models\Setting::get('site_name') ?: "Central d'Achat";
+    $siteName = \App\Models\Setting::get('site_name') ?: 'DIABA HOTEL';
     $logoPath = \App\Models\Setting::get('logo_path');
     $announcementActive = \App\Models\Setting::getBool('announcement_active', false);
     $announcementText = \App\Models\Setting::get('announcement_text');
@@ -49,7 +49,7 @@
     </div>
 
     @if($announcementActive && $announcementText)
-        <div class="flex items-center justify-center gap-2 bg-terroir-terracotta px-4 py-2.5 text-center text-sm font-medium text-white">
+        <div class="flex items-center justify-center gap-2 bg-terroir-dark px-4 py-2.5 text-center text-sm font-medium text-white">
             <span class="material-symbols-outlined text-base is-filled">campaign</span>
             <span>{{ $announcementText }}</span>
         </div>
@@ -67,12 +67,12 @@
             </a>
 
             <nav class="ml-10 hidden items-center gap-7 lg:flex">
-                <a href="{{ route('produits.index') }}" class="text-sm font-medium text-terroir-dark/80 transition hover:text-terroir-terracotta">Nos produits</a>
-                <a href="{{ route('produits.index', ['promo' => 1]) }}" class="text-sm font-medium text-terroir-dark/80 transition hover:text-terroir-terracotta">Promotions</a>
-                <a href="{{ route('pages.show', 'hotels-professionnels') }}" class="text-sm font-medium text-terroir-dark/80 transition hover:text-terroir-terracotta">Hôtels &amp; Pro</a>
-                <a href="{{ route('pages.show', 'espace-touristes') }}" class="text-sm font-medium text-terroir-dark/80 transition hover:text-terroir-terracotta">Touristes</a>
-                <a href="{{ route('blog.index') }}" class="text-sm font-medium text-terroir-dark/80 transition hover:text-terroir-terracotta">Actualités</a>
-                <a href="{{ route('pages.show', 'contact') }}" class="text-sm font-medium text-terroir-dark/80 transition hover:text-terroir-terracotta">Contact</a>
+                <a href="{{ route('produits.index') }}" class="text-sm font-medium text-terroir-dark/80 transition hover:text-terroir-green">Nos produits</a>
+                <a href="{{ route('produits.index', ['promo' => 1]) }}" class="text-sm font-medium text-terroir-dark/80 transition hover:text-terroir-green">Promotions</a>
+                <a href="{{ route('pages.show', 'hotels-professionnels') }}" class="text-sm font-medium text-terroir-dark/80 transition hover:text-terroir-green">Hôtels &amp; Pro</a>
+                <a href="{{ route('pages.show', 'espace-touristes') }}" class="text-sm font-medium text-terroir-dark/80 transition hover:text-terroir-green">Touristes</a>
+                <a href="{{ route('blog.index') }}" class="text-sm font-medium text-terroir-dark/80 transition hover:text-terroir-green">Actualités</a>
+                <a href="{{ route('pages.show', 'contact') }}" class="text-sm font-medium text-terroir-dark/80 transition hover:text-terroir-green">Contact</a>
             </nav>
 
             <form action="{{ route('produits.index') }}" method="GET" class="relative mx-4 hidden max-w-xs flex-1 xl:flex">
@@ -84,14 +84,14 @@
 
             <div class="flex items-center gap-3">
                 @auth
-                    <a href="{{ auth()->user()->is_admin ? route('admin.dashboard') : route('compte.index') }}" class="hidden text-sm font-medium text-terroir-dark/80 hover:text-terroir-terracotta sm:block">
+                    <a href="{{ auth()->user()->is_admin ? route('admin.dashboard') : route('compte.index') }}" class="hidden text-sm font-medium text-terroir-dark/80 hover:text-terroir-green sm:block">
                         {{ auth()->user()->is_admin ? 'Administration' : 'Mon compte' }}
                     </a>
                 @else
-                    <a href="{{ route('login') }}" class="hidden text-sm font-medium text-terroir-dark/80 hover:text-terroir-terracotta sm:block">Connexion</a>
+                    <a href="{{ route('login') }}" class="hidden text-sm font-medium text-terroir-dark/80 hover:text-terroir-green sm:block">Connexion</a>
                 @endauth
 
-                <a href="{{ route('produits.index') }}" class="hidden rounded-full bg-terroir-terracotta px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white transition hover:-translate-y-0.5 hover:bg-terroir-dark sm:inline-block">Commander</a>
+                <a href="{{ route('produits.index') }}" class="hidden rounded-full bg-terroir-green px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-white transition hover:-translate-y-0.5 hover:bg-terroir-dark sm:inline-block">Commander</a>
 
                 @auth
                     <a href="{{ route('compte.favoris.index') }}" class="hidden h-10 w-10 items-center justify-center rounded-full text-xl text-terroir-dark/70 transition hover:bg-terroir-cream sm:inline-flex" aria-label="Mes favoris">
@@ -102,7 +102,7 @@
                 <a href="{{ route('panier.index') }}" class="relative inline-flex h-10 w-10 items-center justify-center rounded-full bg-terroir-green text-xl text-terroir-cream transition hover:bg-terroir-dark" aria-label="Panier">
                     <span class="material-symbols-outlined">shopping_cart</span>
                     @if(\App\Support\Cart::count() > 0)
-                        <span class="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-terroir-terracotta text-[11px] font-bold text-white">{{ \App\Support\Cart::count() }}</span>
+                        <span class="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-terroir-green text-[11px] font-bold text-white">{{ \App\Support\Cart::count() }}</span>
                     @endif
                 </a>
 

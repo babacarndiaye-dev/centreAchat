@@ -6,7 +6,7 @@ import ProductCard from '../../Components/ProductCard';
 export default function ProducersShow({ producer, products }) {
     return (
         <SiteLayout>
-            <Head title={`${producer.name} — Centrale d'achat`} />
+            <Head title={`${producer.name} — DIABA HOTEL`} />
 
             <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
                 <nav className="text-xs text-terroir-dark/50">

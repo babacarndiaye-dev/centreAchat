@@ -155,7 +155,7 @@ export default function Home({
 
     return (
         <SiteLayout>
-            <Head title="Centrale d'achat — Le meilleur du terroir local, sélectionné pour vous" />
+            <Head title="DIABA HOTEL — Le meilleur du terroir local, sélectionné pour vous" />
 
             {/* HERO */}
             <section ref={heroRef} className="relative overflow-hidden bg-gradient-to-br from-terroir-green via-terroir-dark to-terroir-dark">
@@ -185,12 +185,12 @@ export default function Home({
                                     <br />
                                 </>
                             )}
-                            <span className="section-eyebrow !text-terroir-gold">Fabriqué au Sénégal</span>
+                            <span className="section-eyebrow !text-terroir-cream">Fabriqué au Sénégal</span>
                             <h1 className="mt-3 max-w-lg font-display text-4xl font-semibold leading-tight tracking-tight text-white sm:text-6xl">
                                 {heroTitle || 'Le meilleur du terroir local, sélectionné pour vous.'}
                             </h1>
                             <p className="mt-4 max-w-md text-lg leading-relaxed text-white/70">
-                                {heroSubtitle || "Des producteurs locaux aux hôtels, professionnels et consommateurs, Centrale d'achat facilite l'accès à des produits authentiques, frais et de qualité."}
+                                {heroSubtitle || "Des producteurs locaux aux hôtels, professionnels et consommateurs, DIABA HOTEL facilite l'accès à des produits authentiques, frais et de qualité."}
                             </p>
                             <div className="mt-8 flex flex-wrap gap-3.5">
                                 <MotionLink whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} href={route('produits.index')} className="btn-gold">
@@ -256,7 +256,7 @@ export default function Home({
                             <h2 className="section-title mt-1">{promoProduct.name}</h2>
                             <p className="mt-2.5 leading-relaxed text-terroir-dark/60">{promoProduct.short_description}</p>
                             <div className="mt-3 flex items-center gap-3.5">
-                                <span className="font-display text-3xl font-bold text-terroir-gold">{formatFcfa(promoProduct.promo_price)}</span>
+                                <span className="font-display text-4xl font-bold text-terroir-green">{formatFcfa(promoProduct.promo_price)}</span>
                                 <span className="text-terroir-dark/35 line-through">{formatFcfa(promoProduct.price)}</span>
                             </div>
                             {promoProduct.stock_quantity > 0 && (
@@ -294,15 +294,15 @@ export default function Home({
                         <Reveal className="order-1">
                             <img
                                 src="/images/mbour-terroir-nobg.png"
-                                alt="Centre d'achat de Mbour — produits du terroir sénégalais"
+                                alt="DIABA HOTEL — produits du terroir sénégalais"
                                 className="mx-auto w-full max-w-sm sm:max-w-md"
                             />
                         </Reveal>
                         <Reveal delay={0.1} className="order-2">
                             <span className="section-eyebrow">Qui sommes-nous</span>
-                            <h2 className="section-title mt-1">Centre d'achat de Mbour</h2>
+                            <h2 className="section-title mt-1">DIABA HOTEL</h2>
                             <p className="mt-2 text-sm leading-relaxed text-terroir-dark/70">
-                                Le Centre d'achat de Mbour est une plateforme dédiée à la commercialisation et à la valorisation des produits locaux sénégalais. Situé à Mbour – Rond-Point Malicounda, il met en relation producteurs, fournisseurs et artisans avec les hôtels, restaurants, entreprises et touristes.
+                                DIABA HOTEL est une plateforme dédiée à la commercialisation et à la valorisation des produits locaux sénégalais. Situé à Mbour – Rond-Point Malicounda, il met en relation producteurs, fournisseurs et artisans avec les hôtels, restaurants, entreprises et touristes.
                             </p>
                             <p className="mt-2 text-sm leading-relaxed text-terroir-dark/70">
                                 Sa mission est de faciliter l'accès aux marchés, promouvoir le savoir-faire local et renforcer les circuits de distribution des produits sénégalais.
@@ -439,7 +439,7 @@ export default function Home({
                 <section className="relative overflow-hidden bg-terroir-green py-16 text-white md:py-24">
                     <div className="pointer-events-none absolute left-1/2 top-0 h-80 w-[40rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/5 blur-3xl" />
                     <Reveal className="relative mx-auto max-w-2xl px-4 text-center sm:px-6">
-                        <span className="section-eyebrow !text-terroir-gold">Fabriqué par</span>
+                        <span className="section-eyebrow !text-terroir-cream">Fabriqué par</span>
                         <h2 className="section-title mt-1 !text-white">{producer.name}</h2>
                         {producer.region && (
                             <p className="mt-2 flex items-center justify-center gap-1.5 text-white/70">

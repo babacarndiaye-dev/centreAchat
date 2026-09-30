@@ -21,7 +21,7 @@ export default function ProductsIndex({ products, categories, filters }) {
 
     return (
         <SiteLayout>
-            <Head title="Nos produits — Centrale d'achat" />
+            <Head title="Nos produits — DIABA HOTEL" />
 
             <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
                 <Reveal className="text-center">

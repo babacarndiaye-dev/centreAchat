@@ -29,11 +29,11 @@ Chart.register(
 );
 
 export const chartPalette = {
-    green: '#2F9E6B',
-    terracotta: '#C1440E',
-    gold: '#D9A61E',
-    mint: '#3FAF8C',
-    sienna: '#A0522D',
+    green: '#009C4A',
+    terracotta: '#C62828',
+    gold: '#101818',
+    mint: '#1DBF63',
+    sienna: '#6B726D',
     blue: '#0A7EA4',
 };
 
@@ -46,9 +46,9 @@ export const chartCategoricalOrder = [
     chartPalette.blue,
 ];
 
-Chart.defaults.font = { family: 'Figtree, sans-serif', size: 12 };
-Chart.defaults.color = '#5B3A29';
-Chart.defaults.plugins.tooltip.backgroundColor = '#16201B';
+Chart.defaults.font = { family: 'Montserrat, sans-serif', size: 12 };
+Chart.defaults.color = '#6B726D';
+Chart.defaults.plugins.tooltip.backgroundColor = '#101818';
 Chart.defaults.plugins.tooltip.padding = 10;
 Chart.defaults.plugins.tooltip.cornerRadius = 8;
 Chart.defaults.plugins.tooltip.titleFont = Chart.defaults.font;

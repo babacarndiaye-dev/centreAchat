@@ -4,7 +4,7 @@
 
 @section('content')
 <h1 class="font-display text-2xl font-semibold">Bonjour, {{ $supplier->name }}</h1>
-<p class="mt-1 text-sm text-terroir-dark/60">Voici un aperçu de votre relation avec Centrale d'achat.</p>
+<p class="mt-1 text-sm text-terroir-dark/60">Voici un aperçu de votre relation avec DIABA HOTEL.</p>
 
 <div class="mt-6 grid grid-cols-2 gap-5 lg:grid-cols-4">
     <div class="card p-5">
@@ -53,7 +53,7 @@
             <div><dt class="text-terroir-dark/50">Conditions de paiement</dt><dd class="font-medium">{{ $supplier->payment_terms ?? '—' }}</dd></div>
             <div><dt class="text-terroir-dark/50">Statut</dt><dd class="font-medium">{{ \App\Models\Supplier::STATUSES[$supplier->status] }}</dd></div>
         </dl>
-        <p class="mt-4 text-xs text-terroir-dark/40">Pour toute modification de ces informations, contactez votre interlocuteur chez Centrale d'achat.</p>
+        <p class="mt-4 text-xs text-terroir-dark/40">Pour toute modification de ces informations, contactez votre interlocuteur chez DIABA HOTEL.</p>
     </div>
 </div>
 @endsection

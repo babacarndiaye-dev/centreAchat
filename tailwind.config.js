@@ -12,8 +12,8 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-                display: ['"Fraunces"', 'serif'],
+                sans: ['Montserrat', ...defaultTheme.fontFamily.sans],
+                display: ['"Bebas Neue"', 'Oswald', 'Impact', 'sans-serif'],
             },
             colors: {
                 terroir: {
@@ -24,14 +24,16 @@ export default {
                     terracotta: 'rgb(var(--terroir-terracotta) / <alpha-value>)',
                     gold: 'rgb(var(--terroir-gold) / <alpha-value>)',
                     // Structural/neutral tones, not exposed as admin settings.
-                    'green-light': '#3FAF8C',
-                    cream: '#F6F1E4',
-                    brown: '#6B7280',
-                    dark: '#1C1C1C',
+                    // DIABA HOTEL charter: vert #009C4A, vert clair #1DBF63,
+                    // noir #101818, blanc cassé #F0F0E8, gris #6B726D.
+                    'green-light': '#1DBF63',
+                    cream: '#F0F0E8',
+                    brown: '#6B726D',
+                    dark: '#101818',
                 },
             },
             boxShadow: {
-                soft: '0 10px 40px -12px rgba(22, 32, 27, 0.25)',
+                soft: '0 10px 40px -12px rgba(16, 24, 24, 0.25)',
             },
             borderRadius: {
                 xl2: '0.125rem',

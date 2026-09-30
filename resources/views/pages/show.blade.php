@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', $page->meta_title ?: $page->title." — Central d'Achat")
+@section('title', $page->meta_title ?: $page->title." — DIABA HOTEL")
 @section('meta_description', $page->meta_description ?? '')
 
 @section('content')
 <section class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
     <div class="text-center">
-        <span class="section-eyebrow">Central d'Achat</span>
+        <span class="section-eyebrow">DIABA HOTEL</span>
         <h1 class="section-title mt-2">{{ $page->title }}</h1>
     </div>
 

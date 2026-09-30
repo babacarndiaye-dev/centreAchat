@@ -99,7 +99,7 @@ export default function SiteLayout({ children }) {
                         ) : (
                             <span className="material-symbols-outlined text-2xl">eco</span>
                         )}
-                        <span className="font-display text-xl font-semibold text-terroir-green">{siteName}</span>
+                        <span className="font-display text-3xl uppercase leading-none tracking-wider text-terroir-green">{siteName}</span>
                     </Link>
 
                     <nav className="ml-10 hidden items-center gap-7 lg:flex">
@@ -107,7 +107,7 @@ export default function SiteLayout({ children }) {
                             <Link
                                 key={link.label}
                                 href={link.href()}
-                                className="text-xs font-semibold uppercase tracking-wide text-terroir-dark/80 transition hover:text-terroir-gold"
+                                className="text-xs font-semibold uppercase tracking-wide text-terroir-dark/80 transition hover:text-terroir-green"
                             >
                                 {link.label}
                             </Link>
@@ -130,11 +130,11 @@ export default function SiteLayout({ children }) {
                     <div className="flex items-center gap-3">
                         {user ? (
                             user.is_admin ? (
-                                <a href={route('admin.dashboard')} className="hidden text-xs font-semibold uppercase tracking-wide text-terroir-dark/80 hover:text-terroir-gold sm:block">
+                                <a href={route('admin.dashboard')} className="hidden text-xs font-semibold uppercase tracking-wide text-terroir-dark/80 hover:text-terroir-green sm:block">
                                     Administration
                                 </a>
                             ) : (
-                                <Link href={route('compte.index')} className="hidden text-xs font-semibold uppercase tracking-wide text-terroir-dark/80 hover:text-terroir-gold sm:block">
+                                <Link href={route('compte.index')} className="hidden text-xs font-semibold uppercase tracking-wide text-terroir-dark/80 hover:text-terroir-green sm:block">
                                     Mon compte
                                 </Link>
                             )
@@ -256,7 +256,7 @@ function SiteFooter({ siteName, logoUrl, address, showNewsletter }) {
                             ) : (
                                 <span className="material-symbols-outlined mr-1.5 text-2xl">eco</span>
                             )}
-                            <span className="font-display text-lg font-semibold text-white">{siteName}</span>
+                            <span className="font-display text-2xl uppercase leading-none tracking-wider text-white">{siteName}</span>
                         </div>
                         <p className="mt-4 text-sm text-white/70">
                             Du terroir local à votre table. Nous soutenons l'économie locale en facilitant l'accès à des produits frais et authentiques du Sénégal.

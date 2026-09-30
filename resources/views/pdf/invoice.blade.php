@@ -3,26 +3,26 @@
 <head>
 <meta charset="utf-8">
 <style>
-    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 12px; color: #1F2328; margin: 0; }
-    .header { background-color: #123D2E; padding: 24px 32px; }
+    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 12px; color: #101818; margin: 0; }
+    .header { background-color: #101818; padding: 24px 32px; }
     .header td { color: #ffffff; vertical-align: middle; }
     .header .brand { font-size: 20px; font-weight: bold; }
-    .header .doctype { font-size: 16px; text-align: right; color: #C9A227; font-weight: bold; text-transform: uppercase; }
-    .accent { height: 4px; background-color: #C9A227; font-size: 0; line-height: 0; }
+    .header .doctype { font-size: 16px; text-align: right; color: #1DBF63; font-weight: bold; text-transform: uppercase; }
+    .accent { height: 4px; background-color: #009C4A; font-size: 0; line-height: 0; }
     .content { padding: 28px 32px; }
     .meta-table { width: 100%; margin-bottom: 24px; }
     .meta-table td { vertical-align: top; padding: 0; }
     .meta-title { font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: #8A8F98; margin: 0 0 4px; }
-    .meta-value { font-size: 13px; color: #1F2328; line-height: 1.5; }
+    .meta-value { font-size: 13px; color: #101818; line-height: 1.5; }
     table.items { width: 100%; border-collapse: collapse; margin-top: 12px; }
-    table.items th { background-color: #F6F1E4; color: #123D2E; text-align: left; padding: 8px 10px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.03em; }
+    table.items th { background-color: #F0F0E8; color: #009C4A; text-align: left; padding: 8px 10px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.03em; }
     table.items th.num, table.items td.num { text-align: right; }
     table.items td { padding: 8px 10px; border-bottom: 1px solid #EDEAE0; font-size: 12px; }
     .totals { width: 100%; margin-top: 16px; }
     .totals td { padding: 4px 10px; font-size: 12px; }
-    .totals .label { text-align: right; color: #5B3A29; }
+    .totals .label { text-align: right; color: #6B726D; }
     .totals .value { text-align: right; width: 110px; }
-    .totals .grand td { border-top: 2px solid #123D2E; font-size: 14px; font-weight: bold; color: #123D2E; padding-top: 8px; }
+    .totals .grand td { border-top: 2px solid #009C4A; font-size: 14px; font-weight: bold; color: #009C4A; padding-top: 8px; }
     .footer { padding: 20px 32px; color: #8A8F98; font-size: 10px; border-top: 1px solid #EDEAE0; margin-top: 24px; }
 </style>
 </head>

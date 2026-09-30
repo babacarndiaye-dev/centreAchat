@@ -93,7 +93,7 @@
     );
 
     $sidebarLogoPath = \App\Models\Setting::get('logo_path');
-    $sidebarSiteName = \App\Models\Setting::get('site_name') ?: "Central d'Achat";
+    $sidebarSiteName = \App\Models\Setting::get('site_name') ?: 'DIABA HOTEL';
 @endphp
 
 <div class="flex h-16 shrink-0 items-center gap-2 border-b border-white/10 px-6">

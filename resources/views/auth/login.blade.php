@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', "Connexion — Central d'Achat")
+@section('title', "Connexion — DIABA HOTEL")
 
 @section('content')
 <section class="mx-auto flex max-w-md flex-col px-4 py-24 sm:px-6 lg:px-8">

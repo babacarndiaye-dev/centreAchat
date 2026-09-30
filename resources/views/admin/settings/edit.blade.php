@@ -102,12 +102,12 @@
             <h2 class="font-display text-lg font-semibold">Couleurs du site</h2>
             <p class="mt-1.5 text-sm text-terroir-dark/50">Appliquées immédiatement sur tout le site, sans build ni déploiement.</p>
             <div class="mt-3 grid gap-4 sm:grid-cols-3">
-                @php $colorFields = ['color_primary' => 'Couleur primaire (vert)', 'color_secondary' => 'Couleur secondaire (terracotta)', 'color_accent' => 'Couleur accent (or)']; @endphp
+                @php $colorFields = ['color_primary' => 'Couleur primaire (vert)', 'color_secondary' => 'Couleur alerte (erreurs, ruptures)', 'color_accent' => 'Couleur accent (vert clair)']; @endphp
                 @foreach($colorFields as $key => $label)
                     <div>
                         <label class="label" for="{{ $key }}">{{ $label }}</label>
                         <div class="flex items-center gap-2">
-                            <input type="color" value="{{ old($key, $settings[$key] ?? '#1E4A3D') }}" onchange="document.getElementById('{{ $key }}').value = this.value" class="h-10 w-16 shrink-0 rounded-lg border border-terroir-green/20 p-0.5">
+                            <input type="color" value="{{ old($key, $settings[$key] ?? '#009C4A') }}" onchange="document.getElementById('{{ $key }}').value = this.value" class="h-10 w-16 shrink-0 rounded-lg border border-terroir-green/20 p-0.5">
                             <input type="text" id="{{ $key }}" name="{{ $key }}" value="{{ old($key, $settings[$key] ?? '') }}" class="input">
                         </div>
                     </div>

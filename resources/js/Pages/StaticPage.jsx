@@ -96,7 +96,7 @@ function HotelsExcellenceSection() {
             <div className="mt-10 grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:gap-14">
                 <Reveal delay={0.08} className="space-y-5 text-[17px] leading-relaxed text-terroir-dark/75">
                     <p className="font-display text-xl font-semibold leading-snug text-terroir-dark">
-                        Au Centre d'Achat de Mbour, nous mettons le meilleur des produits locaux à la disposition des hôtels, restaurants et établissements touristiques.
+                        Chez DIABA HOTEL, nous mettons le meilleur des produits locaux à la disposition des hôtels, restaurants et établissements touristiques.
                     </p>
                     <p>
                         Nous sélectionnons nos produits avec exigence auprès de fournisseurs et producteurs partenaires, en accordant une attention particulière à leur{' '}
@@ -144,9 +144,9 @@ function HotelsExcellenceSection() {
                 <div className="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-terroir-green/25 blur-3xl" />
                 <div
                     className="pointer-events-none absolute inset-0 opacity-[0.06]"
-                    style={{ backgroundImage: 'repeating-linear-gradient(45deg, #C9A227 0, #C9A227 1px, transparent 1px, transparent 16px)' }}
+                    style={{ backgroundImage: 'repeating-linear-gradient(45deg, #1DBF63 0, #1DBF63 1px, transparent 1px, transparent 16px)' }}
                 />
-                <p className="relative font-display text-3xl font-bold leading-snug text-white sm:text-4xl">Le Centre d'Achat de Mbour</p>
+                <p className="relative font-display text-3xl font-bold leading-snug text-white sm:text-4xl">DIABA HOTEL</p>
                 <p className="relative mx-auto mt-4 max-w-lg text-lg text-terroir-gold">L'excellence locale, au service de vos établissements.</p>
             </Reveal>
         </div>
@@ -268,13 +268,13 @@ function CoffretsCadeauxSection({ coffrets }) {
 export default function StaticPage({ page, contactInfo, souvenirProducts, coffrets }) {
     return (
         <SiteLayout>
-            <Head title={`${page.meta_title || page.title} — Centrale d'achat`}>
+            <Head title={`${page.meta_title || page.title} — DIABA HOTEL`}>
                 {page.meta_description && <meta name="description" content={page.meta_description} />}
             </Head>
 
             <section className="mx-auto max-w-4xl overflow-x-hidden px-4 py-16 sm:px-6 lg:px-8">
                 <Reveal className="text-center">
-                    <span className="section-eyebrow">Centrale d'achat</span>
+                    <span className="section-eyebrow">DIABA HOTEL</span>
                     <h1 className="section-title mt-2">{page.title}</h1>
                 </Reveal>
 

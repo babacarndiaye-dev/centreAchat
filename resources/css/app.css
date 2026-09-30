@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Figtree:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0&display=swap');
 
 /*
  * Migration to UIkit in progress: pages already converted use only `uk-*`
@@ -29,13 +29,28 @@
         max-width: 100vw;
         overflow-x: hidden;
         overflow-y: auto;
-        font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+        font-family: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
         overscroll-behavior-y: contain;
     }
 
     .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-heading-medium, .uk-heading-large,
     h1, h2, h3 {
-        font-family: 'Fraunces', serif;
+        font-family: 'Bebas Neue', 'Oswald', Impact, sans-serif;
+        font-weight: 400;
+        letter-spacing: 0.03em;
+    }
+
+    /* UIkit impose color: #333 à tous les titres : on les laisse hériter de
+       leur conteneur (titre blanc sur carte verte, noir sur fond clair...). */
+    h1, h2, h3, h4, h5, h6 {
+        color: inherit;
+    }
+
+    /* Bebas Neue n'existe qu'en une seule graisse : on empêche le navigateur
+       de la simuler en gras quand une classe font-semibold/font-bold est posée. */
+    .font-display {
+        font-synthesis-weight: none;
+        letter-spacing: 0.03em;
     }
 
     p {
@@ -45,8 +60,8 @@
 }
 
 /* UIkit reskin — precompiled uikit.min.css ships with its default blue theme;
-   these overrides restyle the actual components in use to the Central d'Achat
-   green/terracotta/gold palette instead of recompiling UIkit from SASS. */
+   these overrides restyle the actual components in use to the DIABA HOTEL
+   green/black/white palette instead of recompiling UIkit from SASS. */
 .scrollbar-none {
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -57,44 +72,44 @@
 
 @layer components {
     .uk-button-primary {
-        background-color: #123D2E;
-        border-color: #123D2E;
+        background-color: #009C4A;
+        border-color: #009C4A;
     }
     .uk-button-primary:hover {
-        background-color: #0C2A1F;
-        border-color: #0C2A1F;
+        background-color: #007A39;
+        border-color: #007A39;
     }
     .uk-button-danger,
     .uk-badge-danger {
-        background-color: #7A1F2B;
+        background-color: #C62828;
     }
     .uk-label,
     .uk-badge {
-        background-color: #C9A227;
-        color: #1C1C1C;
+        background-color: #1DBF63;
+        color: #101818;
     }
     a,
     .uk-link {
-        color: #123D2E;
+        color: #009C4A;
     }
     a:hover,
     .uk-link:hover {
-        color: #0C2A1F;
+        color: #007A39;
     }
     .uk-navbar-nav > li > a:hover,
     .uk-navbar-nav > li.uk-active > a,
     .uk-active > a {
-        color: #123D2E;
+        color: #009C4A;
     }
     .uk-tab > .uk-active > a {
-        border-color: #123D2E;
-        color: #123D2E;
+        border-color: #009C4A;
+        color: #009C4A;
     }
     .uk-pagination > .uk-active > * {
-        color: #123D2E;
+        color: #009C4A;
     }
     .uk-text-primary {
-        color: #123D2E !important;
+        color: #009C4A !important;
     }
 }
 
@@ -104,13 +119,13 @@
 @layer components {
     .uk-card {
         border-radius: 2px;
-        border: 1px solid rgba(28, 28, 28, .06);
-        box-shadow: 0 1px 2px rgba(28, 28, 28, .04);
+        border: 1px solid rgba(16, 24, 24, .06);
+        box-shadow: 0 1px 2px rgba(16, 24, 24, .04);
         transition: transform .35s cubic-bezier(.22, 1, .36, 1), box-shadow .35s ease;
     }
     .uk-card-hover:hover {
         transform: translateY(-5px);
-        box-shadow: 0 24px 48px -20px rgba(28, 28, 28, .18);
+        box-shadow: 0 24px 48px -20px rgba(16, 24, 24, .18);
     }
     .uk-card-default {
         background-color: #fff;
@@ -124,14 +139,14 @@
     }
     .uk-button-primary,
     .uk-button-default {
-        box-shadow: 0 1px 2px rgba(28, 28, 28, .06);
+        box-shadow: 0 1px 2px rgba(16, 24, 24, .06);
     }
     .uk-button:not(.uk-button-link):hover {
         transform: translateY(-2px);
-        box-shadow: 0 12px 24px -10px rgba(18, 61, 46, .35);
+        box-shadow: 0 12px 24px -10px rgba(0, 156, 74, .35);
     }
     .uk-button-default:hover {
-        box-shadow: 0 12px 24px -10px rgba(28, 28, 28, .18);
+        box-shadow: 0 12px 24px -10px rgba(16, 24, 24, .18);
     }
 
     .uk-icon-button {
@@ -139,7 +154,7 @@
     }
     .uk-icon-button:hover {
         transform: translateY(-2px) scale(1.04);
-        box-shadow: 0 10px 20px -8px rgba(18, 61, 46, .4);
+        box-shadow: 0 10px 20px -8px rgba(0, 156, 74, .4);
     }
 
     .uk-input,
@@ -149,8 +164,8 @@
     }
     .uk-input:focus,
     .uk-search-input:focus {
-        border-color: #123D2E;
-        box-shadow: 0 0 0 3px rgba(18, 61, 46, .12);
+        border-color: #009C4A;
+        box-shadow: 0 0 0 3px rgba(0, 156, 74, .12);
     }
 
     .uk-navbar-nav > li > a {
@@ -163,7 +178,7 @@
         font-weight: 600;
         letter-spacing: .02em;
         padding: 3px 10px;
-        box-shadow: 0 2px 6px rgba(28, 28, 28, .12);
+        box-shadow: 0 2px 6px rgba(16, 24, 24, .12);
     }
 
 }
@@ -200,11 +215,11 @@
     }
 
     .section-title {
-        @apply font-display text-3xl md:text-4xl font-semibold text-terroir-dark;
+        @apply font-display text-4xl md:text-5xl text-terroir-dark;
     }
 
     .section-eyebrow {
-        @apply inline-block text-xs font-semibold uppercase tracking-[0.25em] text-terroir-gold;
+        @apply inline-block text-xs font-semibold uppercase tracking-[0.25em] text-terroir-green;
     }
 
     .card {
@@ -283,7 +298,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #F6F1E4;
+    background: #F0F0E8;
     transition: opacity .5s ease, visibility .5s ease;
 }
 #page-loader img {
@@ -323,23 +338,23 @@
     align-items: center;
     justify-content: center;
     gap: 1.25rem;
-    background: #123D2E;
+    background: #101818;
     transition: opacity .6s ease, visibility .6s ease;
 }
 #boot-splash img {
     height: 5.5rem;
     width: 5.5rem;
     border-radius: 50%;
-    background: #F6F1E4;
+    background: #F0F0E8;
     padding: 0.5rem;
     animation: boot-splash-pulse 2.4s ease-in-out infinite;
 }
 #boot-splash span {
-    font-family: 'Fraunces', serif;
-    font-size: 1.25rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    color: #C9A227;
+    font-family: 'Bebas Neue', 'Oswald', Impact, sans-serif;
+    font-size: 1.75rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    color: #1DBF63;
     animation: boot-splash-pulse 2.4s ease-in-out infinite;
 }
 #boot-splash.is-hidden {

@@ -180,7 +180,7 @@ class CheckoutController extends Controller
         Log::info('Facture PDF générée', ['order_id' => $order->id, 'bytes' => strlen($pdfContent)]);
 
         try {
-            $siteName = \App\Models\Setting::get('site_name') ?: "Centrale d'achat";
+            $siteName = \App\Models\Setting::get('site_name') ?: 'DIABA HOTEL';
 
             Mail::send('emails.layout', [
                 'title' => 'Votre facture — '.$order->order_number,
