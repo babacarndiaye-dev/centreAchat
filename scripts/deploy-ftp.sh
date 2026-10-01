@@ -3,12 +3,14 @@
 # Met à jour DIABA HOTEL en ligne depuis votre poste, par FTPS, en une commande :
 # prépare les fichiers de production puis n'envoie que ce qui a changé.
 #
-# Prérequis (macOS) : brew install lftp php composer node
+# Prérequis (macOS) : brew install lftp node   (+ php et composer, sauf avec --sans-vendor)
 #   PHP 8.3 minimum, avec l'extension « gmp » (notifications push).
 #
 # Usage :
 #   scripts/deploy-ftp.sh --dry-run   # affiche ce qui serait envoyé, sans rien envoyer
 #   scripts/deploy-ftp.sh             # envoie réellement
+#   scripts/deploy-ftp.sh --sans-vendor   # n'envoie ni vendor ni PHP/Composer local : le dossier
+#                                     # vendor est construit sur le serveur avec Composer
 #   scripts/deploy-ftp.sh --full      # répare un envoi incomplet : renvoie tout fichier dont
 #                                     # la taille diffère du serveur (fichier tronqué, vendor
 #                                     # incomplet → « Class ... not found »)
@@ -27,24 +29,31 @@ FTP_USER="${FTP_USER:-Hotelcentraleachat@hotelcentraleachat.com}"
 FTP_DIR="${FTP_DIR:-.}"
 DRY_RUN=""
 COMPARE="--only-newer"
+SANS_VENDOR=""
 for arg in "$@"; do
     case "$arg" in
         --dry-run) DRY_RUN="--dry-run" ;;
         --full) COMPARE="--ignore-time" ;;
-        *) echo "✗ Option inconnue : $arg (options : --dry-run, --full)" >&2; exit 1 ;;
+        --sans-vendor) SANS_VENDOR=1 ;;
+        *) echo "✗ Option inconnue : $arg (options : --dry-run, --full, --sans-vendor)" >&2; exit 1 ;;
     esac
 done
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-for tool in lftp php composer npm; do
+TOOLS="lftp php composer npm"
+[[ -n "$SANS_VENDOR" ]] && TOOLS="lftp npm"
+for tool in $TOOLS; do
     command -v "$tool" >/dev/null || { echo "✗ « $tool » est introuvable (macOS : brew install $tool)." >&2; exit 1; }
 done
-php -r 'exit(version_compare(PHP_VERSION, "8.3.0", ">=") ? 0 : 1);' || {
-    echo "✗ PHP $(php -r 'echo PHP_VERSION;') détecté : PHP 8.3 minimum est requis." >&2
-    exit 1
-}
+if [[ -z "$SANS_VENDOR" ]]; then
+    php -r 'exit(version_compare(PHP_VERSION, "8.3.0", ">=") ? 0 : 1);' || {
+        echo "✗ PHP $(php -r 'echo PHP_VERSION;') détecté : PHP 8.3 minimum est requis." >&2
+        echo "  (ou relancez avec --sans-vendor pour ne pas utiliser PHP en local)" >&2
+        exit 1
+    }
+fi
 
 if [[ -n "$(git status --porcelain --untracked-files=no)" ]]; then
     echo "⚠ Vous avez des modifications non commitées : elles seront envoyées telles quelles."
@@ -94,8 +103,10 @@ if ! grep -qx 'artisan' <<<"$REMOTE_FILES"; then
     [[ "$answer" =~ ^[oOyY]$ ]] || exit 1
 fi
 
-echo "→ Dépendances PHP de production…"
-composer install --no-dev --optimize-autoloader --no-interaction --no-progress
+if [[ -z "$SANS_VENDOR" ]]; then
+    echo "→ Dépendances PHP de production…"
+    composer install --no-dev --optimize-autoloader --no-interaction --no-progress
+fi
 
 echo "→ Compilation du front (Vite)…"
 npm ci --ignore-scripts --no-audit --no-fund
@@ -103,11 +114,18 @@ npm run build
 
 # Remet les outils de développement sur le poste, même en cas d'échec de l'envoi.
 restore_dev() {
-    echo "→ Réinstallation des dépendances de développement sur le poste…"
-    composer install --no-interaction --no-progress >/dev/null 2>&1 || true
+    if [[ -z "$SANS_VENDOR" ]]; then
+        echo "→ Réinstallation des dépendances de développement sur le poste…"
+        composer install --no-interaction --no-progress >/dev/null 2>&1 || true
+    fi
     unset LFTP_PASSWORD
 }
 trap restore_dev EXIT
+
+# Avec --sans-vendor, le serveur garde son propre vendor et ses caches de paquets
+# (bootstrap/cache/packages.php et services.php), générés par Composer sur place.
+EXTRA_EXCLUDES=""
+[[ -n "$SANS_VENDOR" ]] && EXTRA_EXCLUDES="--exclude-glob vendor/ --exclude-glob bootstrap/cache/packages.php --exclude-glob bootstrap/cache/services.php"
 
 echo "→ Envoi (seuls les fichiers modifiés)…"
 lftp_session "mirror --reverse $COMPARE --no-perms --verbose=1 $DRY_RUN \
@@ -133,6 +151,7 @@ lftp_session "mirror --reverse $COMPARE --no-perms --verbose=1 $DRY_RUN \
   --exclude-glob bootstrap/cache/routes-v7.php \
   --exclude-glob .phpunit.result.cache \
   --exclude-glob .phpunit.cache/ \
+  $EXTRA_EXCLUDES \
   ./ ./"
 
 echo
@@ -143,11 +162,20 @@ else
     # mises en cache par un ancien « optimize ») : ils sont régénérés automatiquement.
     lftp_session 'rm -f bootstrap/cache/routes-v7.php bootstrap/cache/config.php bootstrap/cache/events.php' >/dev/null 2>&1 || true
 
-    # Contrôle qu'un fichier clé du dossier vendor est bien arrivé en entier.
-    CHECK="$(lftp_session 'cls -1 vendor/laravel/serializable-closure/src/Serializers' 2>/dev/null || true)"
-    if ! grep -q 'Native.php$' <<<"$CHECK"; then
-        echo "⚠ vendor/laravel/serializable-closure est incomplet sur le serveur."
-        echo "  Relancez : $0 --full"
+    # storage/ n'est jamais envoyé : on s'assure seulement que l'arborescence
+    # attendue par Laravel existe (sans toucher à son contenu).
+    lftp_session 'mkdir -p storage/app/public storage/app/private storage/framework/cache/data storage/framework/sessions storage/framework/views storage/framework/testing storage/logs bootstrap/cache' >/dev/null 2>&1 || true
+
+    if [[ -z "$SANS_VENDOR" ]]; then
+        # Contrôle qu'un fichier clé du dossier vendor est bien arrivé en entier.
+        CHECK="$(lftp_session 'cls -1 vendor/laravel/serializable-closure/src/Serializers' 2>/dev/null || true)"
+        if ! grep -q 'Native.php$' <<<"$CHECK"; then
+            echo "⚠ vendor/laravel/serializable-closure est incomplet sur le serveur."
+            echo "  Relancez : $0 --full"
+        fi
+    else
+        echo "  Si composer.json ou composer.lock ont changé, reconstruisez vendor sur le serveur :"
+        echo "    php -d allow_url_fopen=On composer.phar install --no-dev --optimize-autoloader"
     fi
 
     echo "✓ Fichiers envoyés."
