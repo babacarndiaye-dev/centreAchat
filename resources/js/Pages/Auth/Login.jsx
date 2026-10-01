@@ -15,13 +15,13 @@ export default function Login() {
 
     return (
         <GuestLayout>
-            <Head title="Connexion — DIABA HOTEL" />
+            <Head title="Connexion — DIABA HOTEL Produits du Sénégal (D.H.P.S)" />
 
             <section className="mx-auto flex w-full max-w-5xl flex-1 flex-col lg:my-auto lg:flex-row">
                 <div className="relative hidden overflow-hidden rounded-xl2 bg-terroir-green lg:block lg:w-2/5">
                     <img
                         src="/images/mbour-terroir-nobg.png"
-                        alt="DIABA HOTEL — produits du terroir sénégalais"
+                        alt="DIABA HOTEL Produits du Sénégal (D.H.P.S) — produits du terroir sénégalais"
                         className="absolute inset-0 h-full w-full object-cover object-top"
                     />
                 </div>

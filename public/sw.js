@@ -58,11 +58,11 @@ self.addEventListener('push', (event) => {
     try {
         payload = event.data.json();
     } catch (e) {
-        payload = { title: 'DIABA HOTEL', body: event.data.text() };
+        payload = { title: 'DIABA HOTEL Produits du Sénégal (D.H.P.S)', body: event.data.text() };
     }
 
     event.waitUntil(
-        self.registration.showNotification(payload.title || 'DIABA HOTEL', {
+        self.registration.showNotification(payload.title || 'DIABA HOTEL Produits du Sénégal (D.H.P.S)', {
             body: payload.body || '',
             icon: '/icons/icon-192.png',
             badge: '/icons/icon-192.png',

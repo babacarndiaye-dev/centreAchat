@@ -93,12 +93,17 @@
     );
 
     $sidebarLogoPath = \App\Models\Setting::get('logo_path');
-    $sidebarSiteName = \App\Models\Setting::get('site_name') ?: 'DIABA HOTEL';
+    $sidebarSiteName = \App\Models\Setting::get('site_name') ?: 'DIABA HOTEL Produits du Sénégal (D.H.P.S)';
+    $brandMain = trim(\Illuminate\Support\Str::before($sidebarSiteName, ' Produits du'));
+    $brandSub = $brandMain !== $sidebarSiteName ? trim(substr($sidebarSiteName, strlen($brandMain))) : '';
 @endphp
 
 <div class="flex h-16 shrink-0 items-center gap-2 border-b border-white/10 px-6">
     <img src="{{ $sidebarLogoPath ? asset('fichiers/'.$sidebarLogoPath) : asset('images/logo-white.svg') }}" alt="" class="h-9 w-auto object-contain">
-    <span class="font-display text-xl uppercase leading-none tracking-wider text-white">{{ $sidebarSiteName }}</span>
+    <span class="flex flex-col whitespace-nowrap leading-none">
+        <span class="font-display text-lg uppercase tracking-wider text-white">{{ $brandMain }}</span>
+        @if($brandSub)<span class="mt-1 text-[8px] font-semibold uppercase tracking-[0.1em] text-white/70">{{ $brandSub }}</span>@endif
+    </span>
 </div>
 
 <nav class="flex-1 space-y-1 overflow-y-auto px-3 py-4">

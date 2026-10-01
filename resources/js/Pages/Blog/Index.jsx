@@ -13,7 +13,7 @@ const TYPES = [
 export default function BlogIndex({ posts, currentType }) {
     return (
         <SiteLayout>
-            <Head title="Actualités & recettes — DIABA HOTEL" />
+            <Head title="Actualités & recettes — DIABA HOTEL Produits du Sénégal (D.H.P.S)" />
 
             <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
                 <Reveal className="text-center">

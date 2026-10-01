@@ -46,7 +46,7 @@ export default function AccountIndex({ orders, isProfessional, isApprovedB2b, cr
 
     return (
         <SiteLayout>
-            <Head title="Mon compte — DIABA HOTEL" />
+            <Head title="Mon compte — DIABA HOTEL Produits du Sénégal (D.H.P.S)" />
 
             <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
                 <div className="flex flex-wrap items-center justify-between gap-4">

@@ -6,7 +6,7 @@
     body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 12px; color: #101818; margin: 0; }
     .header { background-color: #101818; padding: 24px 32px; }
     .header td { color: #ffffff; vertical-align: middle; }
-    .header .brand { font-size: 20px; font-weight: bold; }
+    .header .brand { font-size: 15px; font-weight: bold; }
     .header .doctype { font-size: 16px; text-align: right; color: #1DBF63; font-weight: bold; text-transform: uppercase; }
     .accent { height: 4px; background-color: #009C4A; font-size: 0; line-height: 0; }
     .content { padding: 28px 32px; }

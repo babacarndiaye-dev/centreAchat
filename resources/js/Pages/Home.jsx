@@ -155,7 +155,7 @@ export default function Home({
 
     return (
         <SiteLayout>
-            <Head title="DIABA HOTEL — Le meilleur du terroir local, sélectionné pour vous" />
+            <Head title="DIABA HOTEL Produits du Sénégal (D.H.P.S) — Le meilleur du terroir local, sélectionné pour vous" />
 
             {/* HERO */}
             <section ref={heroRef} className="relative overflow-hidden bg-gradient-to-br from-terroir-green via-terroir-dark to-terroir-dark">
@@ -190,7 +190,7 @@ export default function Home({
                                 {heroTitle || 'Le meilleur du terroir local, sélectionné pour vous.'}
                             </h1>
                             <p className="mt-4 max-w-md text-lg leading-relaxed text-white/70">
-                                {heroSubtitle || "Des producteurs locaux aux hôtels, professionnels et consommateurs, DIABA HOTEL facilite l'accès à des produits authentiques, frais et de qualité."}
+                                {heroSubtitle || "Des producteurs locaux aux hôtels, professionnels et consommateurs, DIABA HOTEL Produits du Sénégal (D.H.P.S) facilite l'accès à des produits authentiques, frais et de qualité."}
                             </p>
                             <div className="mt-8 flex flex-wrap gap-3.5">
                                 <MotionLink whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} href={route('produits.index')} className="btn-gold">
@@ -294,15 +294,15 @@ export default function Home({
                         <Reveal className="order-1">
                             <img
                                 src="/images/mbour-terroir-nobg.png"
-                                alt="DIABA HOTEL — produits du terroir sénégalais"
+                                alt="DIABA HOTEL Produits du Sénégal (D.H.P.S) — produits du terroir sénégalais"
                                 className="mx-auto w-full max-w-sm sm:max-w-md"
                             />
                         </Reveal>
                         <Reveal delay={0.1} className="order-2">
                             <span className="section-eyebrow">Qui sommes-nous</span>
-                            <h2 className="section-title mt-1">DIABA HOTEL</h2>
+                            <h2 className="section-title mt-1">DIABA HOTEL Produits du Sénégal (D.H.P.S)</h2>
                             <p className="mt-2 text-sm leading-relaxed text-terroir-dark/70">
-                                DIABA HOTEL est une plateforme dédiée à la commercialisation et à la valorisation des produits locaux sénégalais. Situé à Mbour – Rond-Point Malicounda, il met en relation producteurs, fournisseurs et artisans avec les hôtels, restaurants, entreprises et touristes.
+                                DIABA HOTEL Produits du Sénégal (D.H.P.S) est une plateforme dédiée à la commercialisation et à la valorisation des produits locaux sénégalais. Situé à Mbour – Rond-Point Malicounda, il met en relation producteurs, fournisseurs et artisans avec les hôtels, restaurants, entreprises et touristes.
                             </p>
                             <p className="mt-2 text-sm leading-relaxed text-terroir-dark/70">
                                 Sa mission est de faciliter l'accès aux marchés, promouvoir le savoir-faire local et renforcer les circuits de distribution des produits sénégalais.

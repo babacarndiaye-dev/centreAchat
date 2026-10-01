@@ -108,11 +108,11 @@ Route::get('/hors-ligne', fn () => view('offline'))->name('pwa.offline');
 
 // PWA manifest — dynamic so it follows the site's branding settings
 Route::get('/manifest.webmanifest', function () {
-    $siteName = \App\Models\Setting::get('site_name') ?: 'DIABA HOTEL';
+    $siteName = \App\Models\Setting::get('site_name') ?: 'DIABA HOTEL Produits du Sénégal (D.H.P.S)';
 
     return response()->json([
         'name' => $siteName,
-        'short_name' => strlen($siteName) <= 15 ? $siteName : \Illuminate\Support\Str::limit($siteName, 12),
+        'short_name' => strlen($siteName) <= 15 ? $siteName : \Illuminate\Support\Str::limit(trim(\Illuminate\Support\Str::before($siteName, ' Produits du')), 15, ''),
         'description' => "Produits locaux du Sénégal — boutique, professionnels et fournisseurs.",
         'start_url' => '/?source=pwa',
         'scope' => '/',

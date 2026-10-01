@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { isAdminInertiaRoute } from '../../Support/adminInertiaRoutes';
+import BrandName from '../BrandName';
 
 function routeBase(name) {
     const idx = name.lastIndexOf('.');
@@ -80,7 +81,7 @@ export default function SidebarNav() {
     const { props } = usePage();
     const groups = props.admin?.nav ?? [];
     const unreadChat = props.admin?.unreadChat ?? 0;
-    const siteName = props.site?.name ?? "DIABA HOTEL";
+    const siteName = props.site?.name ?? "DIABA HOTEL Produits du Sénégal (D.H.P.S)";
     const logoUrl = props.site?.logoUrl;
     const currentRoute = route().current();
 
@@ -88,7 +89,7 @@ export default function SidebarNav() {
         <>
             <div className="flex h-16 shrink-0 items-center gap-2 border-b border-white/10 px-6">
                 <img src={logoUrl || '/images/logo-white.svg'} alt="" className="h-9 w-auto object-contain" />
-                <span className="font-display text-xl uppercase leading-none tracking-wider text-white">{siteName}</span>
+                <BrandName name={siteName} tone="light" size="sm" />
             </div>
 
             <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">

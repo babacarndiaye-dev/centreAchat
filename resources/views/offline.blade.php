@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hors ligne — DIABA HOTEL</title>
+    <title>Hors ligne — DIABA HOTEL Produits du Sénégal (D.H.P.S)</title>
     <style>
         body {
             margin: 0;

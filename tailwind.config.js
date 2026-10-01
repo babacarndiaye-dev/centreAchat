@@ -24,7 +24,7 @@ export default {
                     terracotta: 'rgb(var(--terroir-terracotta) / <alpha-value>)',
                     gold: 'rgb(var(--terroir-gold) / <alpha-value>)',
                     // Structural/neutral tones, not exposed as admin settings.
-                    // DIABA HOTEL charter: vert #009C4A, vert clair #1DBF63,
+                    // DIABA HOTEL Produits du Sénégal (D.H.P.S) charter: vert #009C4A, vert clair #1DBF63,
                     // noir #101818, blanc cassé #F0F0E8, gris #6B726D.
                     'green-light': '#1DBF63',
                     cream: '#F0F0E8',

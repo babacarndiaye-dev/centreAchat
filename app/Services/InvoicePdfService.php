@@ -13,7 +13,7 @@ class InvoicePdfService
     protected function company(): array
     {
         return [
-            'name' => Setting::get('site_name') ?: 'DIABA HOTEL',
+            'name' => Setting::get('site_name') ?: 'DIABA HOTEL Produits du Sénégal (D.H.P.S)',
             'address' => Setting::get('address'),
             'phone' => Setting::get('phone'),
             'email' => Setting::get('email'),

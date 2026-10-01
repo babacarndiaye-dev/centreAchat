@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', 'Portail fournisseur') — DIABA HOTEL</title>
+    <title>@yield('title', 'Portail fournisseur') — DIABA HOTEL Produits du Sénégal (D.H.P.S)</title>
     <style>{!! \App\Support\Theme::cssVariables() !!}</style>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -15,7 +15,7 @@
                 <span class="material-symbols-outlined text-2xl">handshake</span>
                 <div>
                     <span class="block font-display text-lg font-semibold text-terroir-green">Portail Fournisseur</span>
-                    <span class="block text-xs text-terroir-dark/50">DIABA HOTEL</span>
+                    <span class="block text-xs text-terroir-dark/50">DIABA HOTEL Produits du Sénégal (D.H.P.S)</span>
                 </div>
             </a>
 

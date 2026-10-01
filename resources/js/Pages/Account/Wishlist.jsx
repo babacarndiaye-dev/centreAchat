@@ -6,7 +6,7 @@ import ProductCard from '../../Components/ProductCard';
 export default function AccountWishlist({ products, showProPrice }) {
     return (
         <SiteLayout>
-            <Head title="Mes favoris — DIABA HOTEL" />
+            <Head title="Mes favoris — DIABA HOTEL Produits du Sénégal (D.H.P.S)" />
 
             <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
                 <span className="section-eyebrow">Mon compte</span>

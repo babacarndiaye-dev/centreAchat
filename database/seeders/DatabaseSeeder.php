@@ -60,7 +60,7 @@ class DatabaseSeeder extends Seeder
     protected function seedSettings(): void
     {
         $settings = [
-            'site_name' => 'DIABA HOTEL',
+            'site_name' => 'DIABA HOTEL Produits du Sénégal (D.H.P.S)',
             'tagline' => 'Du terroir local à votre table',
             'phone' => '+221 77 000 00 00',
             'whatsapp' => '+221 77 000 00 00',
@@ -93,7 +93,7 @@ class DatabaseSeeder extends Seeder
         User::firstOrCreate(
             ['email' => 'admin@centraldachat.sn'],
             [
-                'name' => 'Administrateur DIABA HOTEL',
+                'name' => 'Administrateur DIABA HOTEL Produits du Sénégal (D.H.P.S)',
                 'password' => bcrypt('password'),
                 'is_admin' => true,
                 'user_type' => 'particulier',
@@ -190,8 +190,8 @@ class DatabaseSeeder extends Seeder
                     'producer_id' => $data['producer'] !== null ? $producers[$data['producer']]->id : null,
                     'name' => $data['name'],
                     'slug' => \Illuminate\Support\Str::slug($data['name']),
-                    'short_description' => 'Produit local authentique, sélectionné avec soin par DIABA HOTEL.',
-                    'description' => "Ce produit est issu de la sélection rigoureuse de DIABA HOTEL auprès de producteurs locaux. Fraîcheur, qualité et authenticité garanties.",
+                    'short_description' => 'Produit local authentique, sélectionné avec soin par DIABA HOTEL Produits du Sénégal (D.H.P.S).',
+                    'description' => "Ce produit est issu de la sélection rigoureuse de DIABA HOTEL Produits du Sénégal (D.H.P.S) auprès de producteurs locaux. Fraîcheur, qualité et authenticité garanties.",
                     'origin' => $data['origin'],
                     'unit' => $data['unit'],
                     'price' => $data['price'],
@@ -210,20 +210,20 @@ class DatabaseSeeder extends Seeder
     protected function seedPages(): void
     {
         $pages = [
-            ['slug' => 'a-propos', 'title' => 'À propos de DIABA HOTEL', 'content' => "DIABA HOTEL est une structure spécialisée dans l'achat, l'approvisionnement, la valorisation, le stockage et la commercialisation de produits locaux.\n\nBasés au Rond-Point Malicounda à Mbour, nous travaillons chaque jour avec des producteurs et fournisseurs locaux pour proposer des produits authentiques, frais et de qualité aux particuliers, hôtels, restaurants et professionnels du Sénégal."],
-            ['slug' => 'notre-histoire', 'title' => 'Notre histoire', 'content' => "DIABA HOTEL est né de la volonté de valoriser le terroir sénégalais et de faciliter l'accès à des produits locaux de qualité, en soutenant l'économie locale."],
+            ['slug' => 'a-propos', 'title' => 'À propos de DIABA HOTEL Produits du Sénégal (D.H.P.S)', 'content' => "DIABA HOTEL Produits du Sénégal (D.H.P.S) est une structure spécialisée dans l'achat, l'approvisionnement, la valorisation, le stockage et la commercialisation de produits locaux.\n\nBasés au Rond-Point Malicounda à Mbour, nous travaillons chaque jour avec des producteurs et fournisseurs locaux pour proposer des produits authentiques, frais et de qualité aux particuliers, hôtels, restaurants et professionnels du Sénégal."],
+            ['slug' => 'notre-histoire', 'title' => 'Notre histoire', 'content' => "DIABA HOTEL Produits du Sénégal (D.H.P.S) est né de la volonté de valoriser le terroir sénégalais et de faciliter l'accès à des produits locaux de qualité, en soutenant l'économie locale."],
             ['slug' => 'notre-mission', 'title' => 'Notre mission', 'content' => "Faciliter l'approvisionnement en produits frais et de qualité issus du terroir sénégalais, pour tous : particuliers, professionnels, hôtels et institutions."],
             ['slug' => 'nos-engagements', 'title' => 'Nos engagements', 'content' => "Qualité, traçabilité, soutien aux producteurs locaux et développement durable sont au cœur de nos engagements."],
-            ['slug' => 'hotels-professionnels', 'title' => 'Hôtels & Professionnels', 'content' => "DIABA HOTEL accompagne les hôtels, restaurants et professionnels avec des tarifs dégressifs, des commandes en gros, des devis personnalisés et une facturation adaptée.\n\nCréez votre compte professionnel en ligne ci-dessous : après validation par notre équipe, vous accédez immédiatement aux tarifs professionnels et de gros."],
+            ['slug' => 'hotels-professionnels', 'title' => 'Hôtels & Professionnels', 'content' => "DIABA HOTEL Produits du Sénégal (D.H.P.S) accompagne les hôtels, restaurants et professionnels avec des tarifs dégressifs, des commandes en gros, des devis personnalisés et une facturation adaptée.\n\nCréez votre compte professionnel en ligne ci-dessous : après validation par notre équipe, vous accédez immédiatement aux tarifs professionnels et de gros."],
             ['slug' => 'espace-touristes', 'title' => 'Espace Touristes', 'content' => "Découvrez l'authenticité du terroir sénégalais à travers nos produits et nos coffrets souvenirs. Livraison possible directement à votre hôtel."],
             ['slug' => 'coffrets-cadeaux', 'title' => 'Coffrets & Cadeaux', 'content' => "Nos coffrets rassemblent une sélection de produits Anfa Agro, prêts à offrir. Ajoutez un message personnalisé lors de votre commande."],
             ['slug' => 'faq', 'title' => 'Questions fréquentes', 'content' => "Comment passer commande ?\nVous pouvez commander directement en ligne ou nous contacter par téléphone.\n\nQuels sont les délais de livraison ?\nEn général sous 24 à 48h dans la région de Mbour.\n\nProposez-vous des tarifs professionnels ?\nOui, contactez-nous pour ouvrir un compte professionnel."],
             ['slug' => 'livraison', 'title' => 'Livraison', 'content' => "Nous livrons à domicile, en entreprise ou à l'hôtel dans la région de Mbour et au-delà. Retrait en boutique également possible au Rond-Point Malicounda."],
             ['slug' => 'devenir-fournisseur', 'title' => 'Devenir fournisseur', 'content' => "Vous êtes producteur ou fournisseur de produits locaux ? Rejoignez notre réseau de partenaires et bénéficiez d'un accès à nos canaux de distribution."],
             ['slug' => 'contact', 'title' => 'Contactez-nous', 'content' => "Une question, une demande de devis ou simplement envie d'en savoir plus ? Notre équipe vous répond rapidement."],
-            ['slug' => 'mentions-legales', 'title' => 'Mentions légales', 'content' => "DIABA HOTEL — Rond-Point Malicounda, Mbour, Sénégal. Ce site est édité et exploité par DIABA HOTEL."],
-            ['slug' => 'politique-de-confidentialite', 'title' => 'Politique de confidentialité', 'content' => "DIABA HOTEL s'engage à protéger la confidentialité des données personnelles de ses utilisateurs conformément à la réglementation en vigueur."],
-            ['slug' => 'conditions-generales', 'title' => 'Conditions générales de vente', 'content' => "Les présentes conditions générales de vente régissent les relations contractuelles entre DIABA HOTEL et ses clients."],
+            ['slug' => 'mentions-legales', 'title' => 'Mentions légales', 'content' => "DIABA HOTEL Produits du Sénégal (D.H.P.S) — Rond-Point Malicounda, Mbour, Sénégal. Ce site est édité et exploité par DIABA HOTEL Produits du Sénégal (D.H.P.S)."],
+            ['slug' => 'politique-de-confidentialite', 'title' => 'Politique de confidentialité', 'content' => "DIABA HOTEL Produits du Sénégal (D.H.P.S) s'engage à protéger la confidentialité des données personnelles de ses utilisateurs conformément à la réglementation en vigueur."],
+            ['slug' => 'conditions-generales', 'title' => 'Conditions générales de vente', 'content' => "Les présentes conditions générales de vente régissent les relations contractuelles entre DIABA HOTEL Produits du Sénégal (D.H.P.S) et ses clients."],
         ];
 
         foreach ($pages as $page) {
@@ -236,7 +236,7 @@ class DatabaseSeeder extends Seeder
         $posts = [
             ['title' => 'La mangue Kent, star de la saison', 'type' => 'actualite', 'excerpt' => 'Découvrez pourquoi la mangue Kent du Sénégal est très appréciée cette saison.'],
             ['title' => 'Recette : Thiéboudienne traditionnel', 'type' => 'recette', 'excerpt' => 'Notre recette pas à pas du plat national sénégalais avec nos produits du terroir.'],
-            ['title' => "DIABA HOTEL ouvre son portail B2B", 'type' => 'actualite', 'excerpt' => 'Hôtels et restaurants peuvent désormais commander en ligne avec des tarifs dédiés.'],
+            ['title' => "DIABA HOTEL Produits du Sénégal (D.H.P.S) ouvre son portail B2B", 'type' => 'actualite', 'excerpt' => 'Hôtels et restaurants peuvent désormais commander en ligne avec des tarifs dédiés.'],
         ];
 
         foreach ($posts as $post) {
@@ -254,7 +254,7 @@ class DatabaseSeeder extends Seeder
     protected function seedTestimonials(): void
     {
         $testimonials = [
-            ['author_name' => 'Aïssatou Diop', 'author_role' => 'Hôtel Teranga Mbour', 'content' => "Des produits d'une fraîcheur remarquable et un service très professionnel. DIABA HOTEL est devenu notre partenaire de confiance.", 'rating' => 5],
+            ['author_name' => 'Aïssatou Diop', 'author_role' => 'Hôtel Teranga Mbour', 'content' => "Des produits d'une fraîcheur remarquable et un service très professionnel. DIABA HOTEL Produits du Sénégal (D.H.P.S) est devenu notre partenaire de confiance.", 'rating' => 5],
             ['author_name' => 'Moussa Fall', 'author_role' => 'Restaurant Le Baobab', 'content' => "Livraison rapide et produits de qualité constante. Je recommande vivement pour les professionnels.", 'rating' => 5],
             ['author_name' => 'Fatou Sarr', 'author_role' => 'Particulière', 'content' => "J'adore pouvoir commander des produits locaux authentiques directement en ligne, ça soutient nos producteurs !", 'rating' => 4],
         ];
@@ -793,25 +793,25 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Confirmation de commande',
                 'subject' => 'Confirmation de votre commande {{commande_numero}}',
                 'body' => 'Bonjour {{client_nom}}, nous avons bien reçu votre commande {{commande_numero}} d\'un montant de {{commande_total}} FCFA. Nous vous tiendrons informé de son avancement.',
-                'sms' => 'DIABA HOTEL : commande {{commande_numero}} reçue ({{commande_total}} FCFA). Merci !',
+                'sms' => 'DIABA HOTEL Produits du Sénégal (D.H.P.S) : commande {{commande_numero}} reçue ({{commande_total}} FCFA). Merci !',
             ],
             'commande_statut' => [
                 'name' => 'Mise à jour du statut de commande',
                 'subject' => 'Mise à jour de votre commande {{commande_numero}}',
                 'body' => 'Bonjour {{client_nom}}, le statut de votre commande {{commande_numero}} est désormais : {{commande_statut}}.',
-                'sms' => 'DIABA HOTEL : commande {{commande_numero}} → {{commande_statut}}.',
+                'sms' => 'DIABA HOTEL Produits du Sénégal (D.H.P.S) : commande {{commande_numero}} → {{commande_statut}}.',
             ],
             'paiement_recu' => [
                 'name' => 'Paiement reçu',
                 'subject' => 'Paiement reçu — commande {{commande_numero}}',
                 'body' => 'Bonjour {{client_nom}}, nous avons bien reçu votre paiement de {{paiement_montant}} FCFA pour la commande {{commande_numero}}. Solde restant : {{commande_solde}} FCFA.',
-                'sms' => 'DIABA HOTEL : paiement de {{paiement_montant}} FCFA reçu pour la commande {{commande_numero}}.',
+                'sms' => 'DIABA HOTEL Produits du Sénégal (D.H.P.S) : paiement de {{paiement_montant}} FCFA reçu pour la commande {{commande_numero}}.',
             ],
             'livraison_statut' => [
                 'name' => 'Mise à jour de livraison',
                 'subject' => 'Livraison — commande {{commande_numero}}',
                 'body' => 'Bonjour {{client_nom}}, votre commande {{commande_numero}} est maintenant : {{commande_statut}}.',
-                'sms' => 'DIABA HOTEL : livraison {{commande_numero}} → {{commande_statut}}.',
+                'sms' => 'DIABA HOTEL Produits du Sénégal (D.H.P.S) : livraison {{commande_numero}} → {{commande_statut}}.',
             ],
             'stock_faible' => [
                 'name' => 'Alerte stock faible',
@@ -847,13 +847,13 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Compte professionnel validé',
                 'subject' => 'Votre compte professionnel est validé',
                 'body' => 'Bonjour {{client_nom}}, votre compte {{compte_type}} est validé. Vous bénéficiez désormais des tarifs professionnels, pouvez demander des devis et programmer des commandes récurrentes.',
-                'sms' => 'DIABA HOTEL : votre compte {{compte_type}} est validé, les tarifs pro s\'appliquent désormais.',
+                'sms' => 'DIABA HOTEL Produits du Sénégal (D.H.P.S) : votre compte {{compte_type}} est validé, les tarifs pro s\'appliquent désormais.',
             ],
             'b2b_compte_refuse' => [
                 'name' => 'Compte professionnel refusé',
                 'subject' => 'Votre demande de compte professionnel',
                 'body' => 'Bonjour {{client_nom}}, votre demande de compte {{compte_type}} n\'a pas pu être validée en l\'état. Contactez-nous pour en savoir plus ou compléter votre dossier.',
-                'sms' => 'DIABA HOTEL : votre demande de compte {{compte_type}} n\'a pas été validée. Contactez-nous pour plus d\'informations.',
+                'sms' => 'DIABA HOTEL Produits du Sénégal (D.H.P.S) : votre demande de compte {{compte_type}} n\'a pas été validée. Contactez-nous pour plus d\'informations.',
             ],
         ];
 
@@ -886,8 +886,8 @@ class DatabaseSeeder extends Seeder
         $entries = [
             // --- Présentation générale ---
             [
-                'question' => 'Qu\'est-ce que DIABA HOTEL ?',
-                'answer' => 'DIABA HOTEL est une structure sénégalaise spécialisée dans l\'approvisionnement, la sélection et la vente de produits locaux de qualité, auprès de producteurs et fournisseurs du terroir. Nous servons particuliers, touristes, hôtels, restaurants et professionnels.',
+                'question' => 'Qu\'est-ce que DIABA HOTEL Produits du Sénégal (D.H.P.S) ?',
+                'answer' => 'DIABA HOTEL Produits du Sénégal (D.H.P.S) est une structure sénégalaise spécialisée dans l\'approvisionnement, la sélection et la vente de produits locaux de qualité, auprès de producteurs et fournisseurs du terroir. Nous servons particuliers, touristes, hôtels, restaurants et professionnels.',
                 'keywords' => 'quest ce que, presentation, qui etes vous, diaba hotel, central achat, activite',
                 'category' => 'Présentation',
                 'position' => 1,
@@ -907,7 +907,7 @@ class DatabaseSeeder extends Seeder
                 'position' => 3,
             ],
             [
-                'question' => 'Pourquoi acheter chez DIABA HOTEL ?',
+                'question' => 'Pourquoi acheter chez DIABA HOTEL Produits du Sénégal (D.H.P.S) ?',
                 'answer' => 'Nous facilitons l\'accès à des produits locaux sélectionnés avec soin, à prix juste, tout en valorisant directement les producteurs et fournisseurs sénégalais.',
                 'keywords' => 'pourquoi, avantage, interet, difference',
                 'category' => 'Présentation',
@@ -1232,7 +1232,7 @@ class DatabaseSeeder extends Seeder
 
             // --- Messagerie & assistance ---
             [
-                'question' => 'Comment contacter DIABA HOTEL ?',
+                'question' => 'Comment contacter DIABA HOTEL Produits du Sénégal (D.H.P.S) ?',
                 'answer' => 'Le plus rapide est ce chat, disponible sur toutes les pages du site. Notre équipe est aussi disponible du lundi au samedi de 8h à 19h.',
                 'keywords' => 'contacter, horaires, ouverture, disponibilite, heure, joindre',
                 'category' => 'Contact',

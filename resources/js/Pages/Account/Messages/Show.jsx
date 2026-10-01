@@ -4,7 +4,7 @@ import SiteLayout from '../../../Layouts/SiteLayout';
 export default function MessagesShow({ conversation }) {
     return (
         <SiteLayout>
-            <Head title="Conversation — DIABA HOTEL" />
+            <Head title="Conversation — DIABA HOTEL Produits du Sénégal (D.H.P.S)" />
 
             <section className="mx-auto max-w-2xl px-4 py-16 sm:px-6 lg:px-8">
                 <span className="section-eyebrow">Espace client</span>

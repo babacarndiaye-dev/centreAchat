@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Met à jour DIABA HOTEL en ligne depuis votre poste, par FTPS, en une commande :
+# Met à jour DIABA HOTEL Produits du Sénégal (D.H.P.S) en ligne depuis votre poste, par FTPS, en une commande :
 # prépare les fichiers de production puis n'envoie que ce qui a changé.
 #
 # Prérequis (macOS) : brew install lftp node   (+ php et composer, sauf avec --sans-vendor)

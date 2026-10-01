@@ -1,6 +1,6 @@
 @php
     $logoPath = \App\Models\Setting::get('logo_path');
-    $siteName = \App\Models\Setting::get('site_name') ?: 'DIABA HOTEL';
+    $siteName = \App\Models\Setting::get('site_name') ?: 'DIABA HOTEL Produits du Sénégal (D.H.P.S)';
     $address = \App\Models\Setting::get('address', 'Rond-Point Malicounda, Mbour – Sénégal');
 @endphp
 <!DOCTYPE html>
@@ -23,7 +23,7 @@
                         @else
                             <img src="{{ asset('images/logo-white.png') }}" alt="{{ $siteName }}" width="84" style="display:block; margin:0 auto 12px; height:auto;">
                         @endif
-                        <span style="font-family:'Bebas Neue', Impact, 'Arial Narrow', sans-serif; font-size:28px; font-weight:normal; color:#F0F0E8; letter-spacing:0.12em; text-transform:uppercase;">{{ $siteName }}</span>
+                        <span style="font-family:'Bebas Neue', Impact, 'Arial Narrow', sans-serif; font-size:22px; line-height:1.25; font-weight:normal; color:#F0F0E8; letter-spacing:0.08em; text-transform:uppercase;">{{ $siteName }}</span>
                     </td>
                 </tr>
 

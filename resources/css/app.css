@@ -60,7 +60,7 @@
 }
 
 /* UIkit reskin — precompiled uikit.min.css ships with its default blue theme;
-   these overrides restyle the actual components in use to the DIABA HOTEL
+   these overrides restyle the actual components in use to the DIABA HOTEL Produits du Sénégal (D.H.P.S)
    green/black/white palette instead of recompiling UIkit from SASS. */
 .scrollbar-none {
     scrollbar-width: none;
@@ -352,6 +352,16 @@
     letter-spacing: 0.14em;
     color: #1DBF63;
     animation: boot-splash-pulse 2.4s ease-in-out infinite;
+}
+#boot-splash small {
+    margin-top: -0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+    color: #F0F0E8;
+    opacity: 0.8;
 }
 #boot-splash.is-hidden {
     opacity: 0;

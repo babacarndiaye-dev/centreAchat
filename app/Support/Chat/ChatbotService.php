@@ -14,17 +14,17 @@ class ChatbotService
 {
     protected const GREETINGS = [
         'Bonjour 👋 Comment puis-je vous aider aujourd\'hui ?',
-        'Bonjour et bienvenue chez DIABA HOTEL 🌿 Que puis-je faire pour vous ?',
+        'Bonjour et bienvenue chez DIABA HOTEL Produits du Sénégal (D.H.P.S) 🌿 Que puis-je faire pour vous ?',
     ];
 
-    protected const IDENTITY_REPLY = 'Je suis l\'assistant virtuel de DIABA HOTEL 🌿 Je peux répondre à vos questions sur les produits, les commandes, la livraison, le paiement et vous mettre en relation avec notre équipe si besoin.';
+    protected const IDENTITY_REPLY = 'Je suis l\'assistant virtuel de DIABA HOTEL Produits du Sénégal (D.H.P.S) 🌿 Je peux répondre à vos questions sur les produits, les commandes, la livraison, le paiement et vous mettre en relation avec notre équipe si besoin.';
 
     protected const THANKS_REPLIES = [
         'Avec plaisir 😊 Je reste disponible si vous avez d\'autres questions.',
         'Je vous en prie ! N\'hésitez pas si vous avez besoin d\'autre chose.',
     ];
 
-    protected const GOODBYE_REPLY = 'Merci d\'avoir discuté avec DIABA HOTEL 🌿 À bientôt !';
+    protected const GOODBYE_REPLY = 'Merci d\'avoir discuté avec DIABA HOTEL Produits du Sénégal (D.H.P.S) 🌿 À bientôt !';
 
     protected const CLARIFY_REPLY = 'Pas de souci, reformulez votre question ou donnez-moi un peu plus de détails et je vous aide.';
 

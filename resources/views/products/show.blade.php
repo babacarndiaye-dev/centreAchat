@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $product->name." — DIABA HOTEL")
+@section('title', $product->name." — DIABA HOTEL Produits du Sénégal (D.H.P.S)")
 @section('meta_description', str(strip_tags($product->short_description ?? $product->description ?? ''))->limit(155))
 
 @section('content')

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, router, usePage } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'framer-motion';
+import BrandName from '../Components/BrandName';
 import ChatWidget from '../Components/ChatWidget';
 import PageTransition from '../Components/PageTransition';
 import PullToRefresh from '../Components/PullToRefresh';
@@ -92,25 +93,25 @@ export default function SiteLayout({ children }) {
             )}
 
             <header className="sticky top-0 z-50 bg-white/60 backdrop-blur transition-colors duration-300">
-                <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-                    <Link href={route('accueil')} className="flex items-center gap-2">
+                <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8 2xl:max-w-[96rem]">
+                    <Link href={route('accueil')} className="flex shrink-0 items-center gap-2" aria-label={siteName}>
                         <img src={logoUrl || '/images/logo.svg'} alt="" className="h-11 w-auto object-contain" />
-                        <span className="font-display text-3xl uppercase leading-none tracking-wider text-terroir-green">{siteName}</span>
+                        <BrandName name={siteName} size="lg" />
                     </Link>
 
-                    <nav className="ml-10 hidden items-center gap-7 lg:flex">
+                    <nav className="ml-6 hidden items-center gap-6 xl:flex">
                         {NAV_LINKS.map((link) => (
                             <Link
                                 key={link.label}
                                 href={link.href()}
-                                className="text-xs font-semibold uppercase tracking-wide text-terroir-dark/80 transition hover:text-terroir-green"
+                                className="whitespace-nowrap text-xs font-semibold uppercase tracking-wide text-terroir-dark/80 transition hover:text-terroir-green"
                             >
                                 {link.label}
                             </Link>
                         ))}
                     </nav>
 
-                    <form onSubmit={submitSearch} className="relative mx-4 hidden max-w-xs flex-1 xl:flex">
+                    <form onSubmit={submitSearch} className="relative mx-4 hidden max-w-[14rem] flex-1 2xl:flex">
                         <input
                             type="search"
                             value={search}
@@ -123,21 +124,21 @@ export default function SiteLayout({ children }) {
                         </button>
                     </form>
 
-                    <div className="flex items-center gap-3">
+                    <div className="flex shrink-0 items-center gap-3">
                         {user ? (
                             user.is_admin ? (
-                                <a href={route('admin.dashboard')} className="hidden text-xs font-semibold uppercase tracking-wide text-terroir-dark/80 hover:text-terroir-green sm:block">
+                                <a href={route('admin.dashboard')} className="hidden whitespace-nowrap text-xs font-semibold uppercase tracking-wide text-terroir-dark/80 hover:text-terroir-green sm:block">
                                     Administration
                                 </a>
                             ) : (
-                                <Link href={route('compte.index')} className="hidden text-xs font-semibold uppercase tracking-wide text-terroir-dark/80 hover:text-terroir-green sm:block">
+                                <Link href={route('compte.index')} className="hidden whitespace-nowrap text-xs font-semibold uppercase tracking-wide text-terroir-dark/80 hover:text-terroir-green sm:block">
                                     Mon compte
                                 </Link>
                             )
                         ) : (
                             <Link
                                 href={route('login')}
-                                className="btn-outline hidden !px-5 !py-2.5 !text-xs sm:inline-flex"
+                                className="btn-outline hidden whitespace-nowrap !px-5 !py-2.5 !text-xs sm:inline-flex"
                             >
                                 Se connecter
                             </Link>
@@ -145,7 +146,7 @@ export default function SiteLayout({ children }) {
 
                         <Link
                             href={route('produits.index')}
-                            className="btn-gold hidden !px-5 !py-2.5 !text-xs sm:inline-flex"
+                            className="btn-gold hidden whitespace-nowrap !px-5 !py-2.5 !text-xs sm:inline-flex"
                         >
                             Commander
                         </Link>
@@ -176,7 +177,7 @@ export default function SiteLayout({ children }) {
                         <button
                             onClick={() => setMobileOpen((v) => !v)}
                             type="button"
-                            className="inline-flex h-10 w-10 items-center justify-center rounded-[2px] text-2xl text-terroir-dark lg:hidden"
+                            className="inline-flex h-10 w-10 items-center justify-center rounded-[2px] text-2xl text-terroir-dark xl:hidden"
                             aria-label="Menu"
                         >
                             <span className="material-symbols-outlined">{mobileOpen ? 'close' : 'menu'}</span>
@@ -191,9 +192,21 @@ export default function SiteLayout({ children }) {
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
                             transition={{ duration: 0.2 }}
-                            className="overflow-hidden border-t border-terroir-green/10 bg-white lg:hidden"
+                            className="overflow-hidden border-t border-terroir-green/10 bg-white xl:hidden"
                         >
                             <nav className="flex flex-col gap-1 px-4 pb-6 pt-2">
+                                <form onSubmit={submitSearch} className="relative mb-2 mt-1">
+                                    <input
+                                        type="search"
+                                        value={search}
+                                        onChange={(e) => setSearch(e.target.value)}
+                                        placeholder="Rechercher un produit..."
+                                        className="w-full rounded-[2px] border border-terroir-green/15 bg-terroir-cream/60 py-2.5 pl-4 pr-10 text-sm text-terroir-dark placeholder:text-terroir-dark/40 focus:border-terroir-green focus:outline-none"
+                                    />
+                                    <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-lg text-terroir-dark/40" aria-label="Rechercher">
+                                        <span className="material-symbols-outlined">search</span>
+                                    </button>
+                                </form>
                                 {NAV_LINKS.map((link) => (
                                     <Link
                                         key={link.label}
@@ -248,7 +261,7 @@ function SiteFooter({ siteName, logoUrl, address, showNewsletter }) {
                     <div className="hidden sm:block">
                         <div className="flex items-center">
                             <img src={logoUrl || '/images/logo-white.svg'} alt="" className="mr-3 h-12 w-auto object-contain" />
-                            <span className="font-display text-2xl uppercase leading-none tracking-wider text-white">{siteName}</span>
+                            <BrandName name={siteName} tone="light" size="md" />
                         </div>
                         <p className="mt-4 text-sm text-white/70">
                             Du terroir local à votre table. Nous soutenons l'économie locale en facilitant l'accès à des produits frais et authentiques du Sénégal.

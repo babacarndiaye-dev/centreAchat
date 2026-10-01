@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title inertia>@yield('title', 'DIABA HOTEL')</title>
+    <title inertia>@yield('title', 'DIABA HOTEL Produits du Sénégal (D.H.P.S)')</title>
 
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('icons/favicon-32.png') }}">
     <link rel="icon" type="image/png" sizes="64x64" href="{{ asset('icons/favicon-64.png') }}">
@@ -20,8 +20,9 @@
 </head>
 <body class="bg-terroir-cream text-terroir-dark antialiased">
     <div id="boot-splash">
-        <img src="{{ asset('images/logo-white.svg') }}" alt="DIABA HOTEL">
+        <img src="{{ asset('images/logo-white.svg') }}" alt="DIABA HOTEL Produits du Sénégal (D.H.P.S)">
         <span>DIABA HOTEL</span>
+        <small>Produits du Sénégal (D.H.P.S)</small>
     </div>
     <script>
         // Déjà vu pendant cette session de navigation : on retire l'écran

@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'DIABA HOTEL — Le meilleur du terroir sénégalais')</title>
-    <meta name="description" content="@yield('meta_description', 'DIABA HOTEL sélectionne, valorise et livre des produits locaux authentiques aux particuliers, hôtels, restaurants et professionnels à Mbour et au Sénégal.')">
+    <title>@yield('title', 'DIABA HOTEL Produits du Sénégal (D.H.P.S) — Le meilleur du terroir sénégalais')</title>
+    <meta name="description" content="@yield('meta_description', 'DIABA HOTEL Produits du Sénégal (D.H.P.S) sélectionne, valorise et livre des produits locaux authentiques aux particuliers, hôtels, restaurants et professionnels à Mbour et au Sénégal.')">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('icons/favicon-32.png') }}">
     <link rel="icon" type="image/png" sizes="64x64" href="{{ asset('icons/favicon-64.png') }}">
 
@@ -14,7 +14,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="DIABA HOTEL">
+    <meta name="apple-mobile-web-app-title" content="DIABA HOTEL Produits du Sénégal (D.H.P.S)">
     <meta name="vapid-public-key" content="{{ config('services.vapid.public_key') }}">
     <link rel="apple-touch-icon" href="{{ asset('icons/apple-touch-icon.png') }}">
 
@@ -22,8 +22,10 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 @php
-    $siteName = \App\Models\Setting::get('site_name') ?: 'DIABA HOTEL';
+    $siteName = \App\Models\Setting::get('site_name') ?: 'DIABA HOTEL Produits du Sénégal (D.H.P.S)';
     $logoPath = \App\Models\Setting::get('logo_path');
+    $brandMain = trim(\Illuminate\Support\Str::before($siteName, ' Produits du'));
+    $brandSub = $brandMain !== $siteName ? trim(substr($siteName, strlen($brandMain))) : '';
     $announcementActive = \App\Models\Setting::getBool('announcement_active', false);
     $announcementText = \App\Models\Setting::get('announcement_text');
 @endphp
@@ -55,7 +57,10 @@
         <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
             <a href="{{ route('accueil') }}" class="flex items-center gap-2">
                 <img src="{{ $logoPath ? asset('fichiers/'.$logoPath) : asset('images/logo.svg') }}" alt="" class="h-11 w-auto object-contain">
-                <span class="font-display text-3xl uppercase leading-none tracking-wider text-terroir-green">{{ $siteName }}</span>
+                <span class="flex flex-col whitespace-nowrap leading-none">
+                    <span class="font-display text-2xl uppercase tracking-wider text-terroir-green">{{ $brandMain }}</span>
+                    @if($brandSub)<span class="mt-1 text-[9px] font-semibold uppercase tracking-[0.1em] text-terroir-dark/70">{{ $brandSub }}</span>@endif
+                </span>
             </a>
 
             <nav class="ml-10 hidden items-center gap-7 lg:flex">
@@ -147,7 +152,10 @@
                 <div class="hidden sm:block">
                     <div class="flex items-center">
                         <img src="{{ $logoPath ? asset('fichiers/'.$logoPath) : asset('images/logo-white.svg') }}" alt="" class="mr-3 h-12 w-auto object-contain">
-                        <span class="font-display text-2xl uppercase leading-none tracking-wider text-white">{{ $siteName }}</span>
+                        <span class="flex flex-col whitespace-nowrap leading-none">
+                            <span class="font-display text-2xl uppercase tracking-wider text-white">{{ $brandMain }}</span>
+                            @if($brandSub)<span class="mt-1 text-[9px] font-semibold uppercase tracking-[0.1em] text-white/70">{{ $brandSub }}</span>@endif
+                        </span>
                     </div>
                     <p class="mt-4 text-sm text-white/70">Du terroir local à votre table. Nous soutenons l'économie locale en facilitant l'accès à des produits frais et authentiques du Sénégal.</p>
                     <p class="mt-3 text-sm text-white/70">📍 {{ \App\Models\Setting::get('address', 'Rond-Point Malicounda, Mbour – Sénégal') }}</p>

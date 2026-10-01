@@ -138,7 +138,7 @@
         <div class="flex-1 space-y-3 overflow-y-auto px-4 py-3" x-ref="scrollArea">
             <template x-if="messages.length === 0">
                 <div>
-                    <p class="text-sm text-terroir-dark">👋 Bonjour et bienvenue chez DIABA HOTEL !</p>
+                    <p class="text-sm text-terroir-dark">👋 Bonjour et bienvenue chez DIABA HOTEL Produits du Sénégal (D.H.P.S) !</p>
                     <p class="mt-1 text-sm text-terroir-dark/60">Comment puis-je vous aider aujourd'hui ?</p>
                     <div class="mt-3 flex flex-wrap gap-1.5">
                         <button type="button" @click="send('Comment voir vos produits ?')" class="rounded-full border border-terroir-green/20 px-2.5 py-1 text-xs text-terroir-green hover:bg-terroir-green/5">🛒 Voir les produits</button>

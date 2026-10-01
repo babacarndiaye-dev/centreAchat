@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', "Actualités & recettes — DIABA HOTEL")
+@section('title', "Actualités & recettes — DIABA HOTEL Produits du Sénégal (D.H.P.S)")
 
 @section('content')
 <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">

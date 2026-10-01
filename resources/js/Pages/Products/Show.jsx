@@ -115,7 +115,7 @@ export default function ProductsShow({ product, reviews, related }) {
 
     return (
         <SiteLayout>
-            <Head title={`${product.name} — DIABA HOTEL`} />
+            <Head title={`${product.name} — DIABA HOTEL Produits du Sénégal (D.H.P.S)`} />
 
             <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
                 <nav className="text-xs text-terroir-dark/50">

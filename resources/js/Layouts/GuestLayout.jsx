@@ -1,4 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
+import BrandName from '../Components/BrandName';
 import PageTransition from '../Components/PageTransition';
 
 export default function GuestLayout({ children }) {
@@ -11,7 +12,7 @@ export default function GuestLayout({ children }) {
                 <div className="mx-auto flex max-w-7xl justify-center px-4 sm:px-6 lg:px-8">
                     <Link href={route('accueil')} className="flex items-center gap-2">
                         <img src={logoUrl || '/images/logo.svg'} alt="" className="h-12 w-auto object-contain" />
-                        <span className="font-display text-3xl uppercase leading-none tracking-wider text-terroir-green">{siteName}</span>
+                        <BrandName name={siteName} size="lg" />
                     </Link>
                 </div>
             </header>

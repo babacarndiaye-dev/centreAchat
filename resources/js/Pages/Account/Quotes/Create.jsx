@@ -18,7 +18,7 @@ export default function QuotesCreate({ products }) {
 
     return (
         <SiteLayout>
-            <Head title="Demander un devis — DIABA HOTEL" />
+            <Head title="Demander un devis — DIABA HOTEL Produits du Sénégal (D.H.P.S)" />
 
             <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
                 <span className="section-eyebrow">Espace professionnel</span>

@@ -13,7 +13,7 @@ export default function RecurringOrdersIndex({ recurringOrders }) {
 
     return (
         <SiteLayout>
-            <Head title="Commandes récurrentes — DIABA HOTEL" />
+            <Head title="Commandes récurrentes — DIABA HOTEL Produits du Sénégal (D.H.P.S)" />
 
             <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
                 <div className="flex flex-wrap items-center justify-between gap-4">

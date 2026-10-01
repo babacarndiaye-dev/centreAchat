@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', "Créer un compte — DIABA HOTEL")
+@section('title', "Créer un compte — DIABA HOTEL Produits du Sénégal (D.H.P.S)")
 
 @section('content')
 <section class="mx-auto flex max-w-lg flex-col px-4 py-24 sm:px-6 lg:px-8">
     <h1 class="section-title text-center">Créer un compte</h1>
-    <p class="mt-2 text-center text-sm text-terroir-dark/60">Particulier, hôtel, restaurant, entreprise... rejoignez DIABA HOTEL.</p>
+    <p class="mt-2 text-center text-sm text-terroir-dark/60">Particulier, hôtel, restaurant, entreprise... rejoignez DIABA HOTEL Produits du Sénégal (D.H.P.S).</p>
 
     @php
         $b2bTypes = ['professionnel', 'hotel', 'restaurant', 'entreprise', 'institution', 'revendeur'];

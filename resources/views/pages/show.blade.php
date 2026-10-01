@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', $page->meta_title ?: $page->title." — DIABA HOTEL")
+@section('title', $page->meta_title ?: $page->title." — DIABA HOTEL Produits du Sénégal (D.H.P.S)")
 @section('meta_description', $page->meta_description ?? '')
 
 @section('content')
 <section class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
     <div class="text-center">
-        <span class="section-eyebrow">DIABA HOTEL</span>
+        <span class="section-eyebrow">DIABA HOTEL Produits du Sénégal (D.H.P.S)</span>
         <h1 class="section-title mt-2">{{ $page->title }}</h1>
     </div>
 

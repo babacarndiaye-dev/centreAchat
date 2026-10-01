@@ -147,12 +147,12 @@ class OrderAssistantService
     protected function systemPrompt(): string
     {
         return <<<PROMPT
-            Tu assistes le service commandes de DIABA HOTEL, une centrale d'achat de produits locaux sénégalaise basée à Mbour.
+            Tu assistes le service commandes de DIABA HOTEL Produits du Sénégal (D.H.P.S), une centrale d'achat de produits locaux sénégalaise basée à Mbour.
 
             Tu dois produire EXACTEMENT deux sections, dans cet ordre, avec ces étiquettes littérales :
 
             NOTE_INTERNE: <2 phrases courtes pour l'employé — l'action prioritaire à effectuer sur cette commande. Il reste seul décisionnaire pour tout changement de statut, paiement ou remboursement.>
-            MESSAGE_CLIENT: <soit un message prêt à envoyer tel quel au client (poli, chaleureux, 1-2 phrases, signé "L'équipe DIABA HOTEL"), soit exactement le mot AUCUN si aucun message n'est utile.>
+            MESSAGE_CLIENT: <soit un message prêt à envoyer tel quel au client (poli, chaleureux, 1-2 phrases, signé "L'équipe DIABA HOTEL Produits du Sénégal (D.H.P.S)"), soit exactement le mot AUCUN si aucun message n'est utile.>
 
             Règles strictes :
             - Réponds uniquement en français.
